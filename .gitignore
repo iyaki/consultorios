@@ -1,0 +1,8 @@
+.ecs_cache
+.phpunit.result.cache
+.psalm_cache
+composer.lock
+phpunit.xml
+tools/*
+!tools/composer-scripts/
+vendor

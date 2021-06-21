@@ -1,0 +1,21 @@
+composer run check-style-precommit
+
+if [ $? != 0 ]
+then
+	echo -e "\e[31m *** Algunos archivos no se encuentran ajustados a convenciones *** \e[39m
+Puede corregir esto ejecutando:
+		composer fix-style
+"
+	exit 1
+fi
+
+composer run check-types-precommit
+
+if [ $? != 0 ]
+then
+	echo -e "\e[31m *** El análisis estático ha detectado problemas de tipos *** \e[39m
+Puede repetir esta prueba ejecutando:
+		composer run check-types
+"
+	exit 1
+fi

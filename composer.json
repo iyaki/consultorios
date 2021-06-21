@@ -1,0 +1,31 @@
+{
+	"require": {
+		"php": ">=8.0",
+		"ext-intl": "*"
+	},
+	"config": {
+		"sort-packages": true
+	},
+	"autoload": {
+		"psr-4": {
+			"Consultorio\\": "app"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"ComposerScripts\\": "tools/composer-scripts"
+		}
+	},
+	"require-dev": {
+		"rector/rector": "^0.11.20",
+		"symplify/easy-coding-standard": "^9.3"
+	},
+	"scripts": {
+		"check-style": "ComposerScripts\\StyleConventios::check",
+		"check-style-precommit": "ComposerScripts\\StyleConventios::checkPreCommit",
+		"fix-style": "ComposerScripts\\StyleConventios::fix",
+		"check-types": "ComposerScripts\\StaticAnalysis::check",
+		"check-types-precommit": "ComposerScripts\\StaticAnalysis::checkPreCommit",
+		"fix-types": "ComposerScripts\\StaticAnalysis::fix"
+	}
+}
