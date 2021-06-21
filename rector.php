@@ -8,8 +8,9 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
-    $parameters->set(Option::ENABLE_CACHE, true);
     $parameters->set(Option::PATHS, [__DIR__ . '/app']);
+    $parameters->set(Option::ENABLE_CACHE, true);
+    $parameters->set(Option::CACHE_DIR, '.rector_cache');
 
     $containerConfigurator->import(SetList::CODE_QUALITY);
     $containerConfigurator->import(SetList::CODING_STYLE);

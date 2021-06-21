@@ -26,6 +26,9 @@
 		"fix-style": "ComposerScripts\\StyleConventios::fix",
 		"check-types": "ComposerScripts\\StaticAnalysis::check",
 		"check-types-precommit": "ComposerScripts\\StaticAnalysis::checkPreCommit",
-		"fix-types": "ComposerScripts\\StaticAnalysis::fix"
+		"fix-types": "ComposerScripts\\StaticAnalysis::fix",
+		"refactor-dry": "ComposerScripts\\Refactor::dry",
+		"refactor-postcommit": "ComposerScripts\\Refactor::postcommit",
+		"refactor": "ComposerScripts\\Refactor::run"
 	}
 }
