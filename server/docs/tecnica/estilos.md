@@ -13,6 +13,7 @@
 - Test: Para nombres de archivos y clases (como sufijo del nombre de la clase).
 - Handler: Para nombres de archivos y clases (como sufijo del nombre de la clase).
 - Middleware: Para nombres de archivos y clases (como sufijo del nombre de la clase).
+- Factory: Para nombres de archivos y clases (como sufijo del nombre de la clase).
 
 En entidades, NO getters pero si fuesen necesarios, no utilizar la palabra get, simplemente el nombre del atributo a devolver.
 
