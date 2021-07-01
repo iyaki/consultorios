@@ -37,3 +37,14 @@ services:
         - ../server/.githooks/post-commit:/application/.git/hooks/post-commit
         - ../server/.githooks/pre-commit:/application/.git/hooks/pre-commit
 
+    node:
+      build:
+        context: ../
+        dockerfile: ./docker/node/Dockerfile
+      working_dir: /application/client
+      volumes:
+        - ..:/application
+      ports:
+        - 3001:3000
+      environment:
+        - CHOKIDAR_USEPOLLING=true
