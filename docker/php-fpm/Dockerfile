@@ -1,5 +1,8 @@
 FROM phpdockerio/php80-fpm:latest
-WORKDIR "/application"
+WORKDIR "/application/server"
+
+# Add `vendor/bin` to $PATH
+ENV PATH /application/server/vendor/bin:$PATH
 
 # Install selected extensions and other stuff
 RUN apt-get update \
@@ -13,5 +16,12 @@ RUN apt-get update \
 
 # Install phive
 RUN curl -Lo phive.phar https://phar.io/releases/phive.phar \
-	&& chmod +x phive.phar \
-	&& mv phive.phar /usr/local/bin/phive
+    && chmod +x phive.phar \
+    && mv phive.phar /usr/local/bin/phive
+
+# Add application
+COPY ./server/ ./
+
+# Install dependencies
+RUN composer install \
+    && phive install --copy --trust-gpg-keys 4AA394086372C20A,4F2AB4D11A9A65F7,12CE0F1D262429A5
