@@ -1,0 +1,12 @@
+cd client
+
+standard
+
+if [ $? != 0 ]
+then
+	echo -e "\e[31m *** Algunos archivos no se encuentran ajustados a convenciones *** \e[39m
+Puede corregir esto ejecutando:
+		standard --fix
+"
+	exit 1
+fi
