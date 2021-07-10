@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+}
+
 .Toolbar-text-color {
   color: white !important;
 }

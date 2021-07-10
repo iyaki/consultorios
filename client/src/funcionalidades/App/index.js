@@ -1,11 +1,11 @@
 import { AppBar, Button, IconButton, Toolbar } from '@material-ui/core'
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded'
-import { Link, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Switch } from 'react-router-dom'
 import './styles.css'
 
 function App () {
   return (
-    <div>
+    <BrowserRouter>
       <AppBar position='static'>
         <Toolbar>
           <IconButton className='Toolbar-text-color' component={Link} to='/'>
@@ -29,7 +29,7 @@ function App () {
           404 - Page No Found
         </Route>
       </Switch>
-    </div>
+    </BrowserRouter>
   )
 }
 
