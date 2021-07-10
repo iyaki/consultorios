@@ -28,22 +28,23 @@ services:
 
     php-fpm:
       build:
-        context: ../
-        dockerfile: ./docker/php-fpm/Dockerfile
+        context: ../../
+        dockerfile: ./deployment/dev/php-fpm/Dockerfile
       working_dir: /application/server
       volumes:
-        - ..:/application
+        - ../..:/application
         - ./php-fpm/php-ini-overrides.ini:/etc/php/8.0/fpm/conf.d/99-overrides.ini
-        - ../server/.githooks/post-commit:/application/.git/hooks/post-commit
-        - ../server/.githooks/pre-commit:/application/.git/hooks/pre-commit
+        - ../../server/.githooks/post-commit:/application/.git/hooks/post-commit
+        - ../../server/.githooks/pre-commit:/application/.git/hooks/pre-commit
 
     node:
       build:
-        context: ../
-        dockerfile: ./docker/node/Dockerfile
+        context: ../../
+        dockerfile: ./deployment/dev/node/Dockerfile
       working_dir: /application/client
       volumes:
-        - ..:/application
+        - ../..:/application
+        - ../../client/.githooks/pre-commit:/application/.git/hooks/pre-commit
       ports:
         - 3001:3000
       environment:
