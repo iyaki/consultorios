@@ -28,5 +28,4 @@ final class ConfigDiscover
         }
         return $configs;
     }
-
 }

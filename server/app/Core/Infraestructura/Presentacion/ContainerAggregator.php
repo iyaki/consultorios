@@ -11,7 +11,8 @@ final class ContainerAggregator
     ) {
     }
 
-    public function getContainers(): array {
+    public function getContainers(): array
+    {
         // TODO: Implement cache strategy for production
         return $this->configDiscover->find('container');
     }

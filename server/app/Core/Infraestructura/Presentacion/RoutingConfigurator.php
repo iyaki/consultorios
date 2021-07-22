@@ -13,7 +13,8 @@ final class RoutingConfigurator
     ) {
     }
 
-    public function configureRoutes(Application $app): void {
+    public function configureRoutes(Application $app): void
+    {
         $routes = $this->getRoutesConfigs();
         foreach ($routes as $route) {
             $route($app);
@@ -23,7 +24,8 @@ final class RoutingConfigurator
     /**
      * @return callable[]
      */
-    private function getRoutesConfigs(): array {
+    private function getRoutesConfigs(): array
+    {
         // TODO: Implement cache strategy for production
         return $this->configDiscover->find('routes');
     }
