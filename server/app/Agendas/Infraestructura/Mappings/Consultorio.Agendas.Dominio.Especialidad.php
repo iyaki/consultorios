@@ -2,16 +2,13 @@
 
 declare(strict_types=1);
 
-use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
+namespace Consultorio\Agendas\Infraestructura\Mappings;
 
-$builder = new ClassMetadataBuilder($metadata);
-
+$builder = new \Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder($metadata);
 $builder->setTable('agendas_especialidades');
-
 $builder
     ->createField('id', 'guid')
     ->makePrimaryKey()
     ->build()
 ;
-
 $builder->addField('nombre', 'string');

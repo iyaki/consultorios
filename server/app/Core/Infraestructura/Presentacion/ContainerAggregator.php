@@ -11,6 +11,9 @@ final class ContainerAggregator
     ) {
     }
 
+    /**
+     * @return mixed[]
+     */
     public function getContainers(): array
     {
         // TODO: Implement cache strategy for production

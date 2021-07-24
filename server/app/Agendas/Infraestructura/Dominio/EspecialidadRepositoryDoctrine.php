@@ -26,6 +26,9 @@ final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInte
         return new EspecialidadId((string) Uuid::uuid4());
     }
 
+    /**
+     * @return Especialidad[]
+     */
     public function findBy(
         array $criteria,
         ?array $orderBy = null,

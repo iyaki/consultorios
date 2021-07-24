@@ -36,7 +36,7 @@ final class PostEspecialidadesHandler implements RequestHandlerInterface
         $response->getBody()->write(json_encode([
             'data' => [],
             'status' => 'ni',
-        ]));
+        ], JSON_THROW_ON_ERROR));
         return $response;
     }
 }

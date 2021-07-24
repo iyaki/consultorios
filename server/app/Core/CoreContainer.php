@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Consultorio\Core;
 
-use Consultorio\Core\Aplicacion\UnitOfWorkInterface;
 use Consultorio\Core\Infraestructura\Aplicacion\UnitOfWorkDoctrine;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
@@ -16,14 +15,14 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 final class CoreContainer
 {
-    private static $entityManager;
+    private static ?\Doctrine\ORM\EntityManager $entityManager = null;
 
     public function __construct(
         private ContainerInterface $serviceLocator
     ) {
     }
 
-    public function getUnitOfWork(): UnitOfWorkInterface
+    public function getUnitOfWork(): \Consultorio\Core\Infraestructura\Aplicacion\UnitOfWorkDoctrine
     {
         return new UnitOfWorkDoctrine(
             $this->getEntityManager()
@@ -32,7 +31,7 @@ final class CoreContainer
 
     public function getEntityManager(): EntityManager
     {
-        if (self::$entityManager) {
+        if (self::$entityManager !== null) {
             return self::$entityManager;
         }
 

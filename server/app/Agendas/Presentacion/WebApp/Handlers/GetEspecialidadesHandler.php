@@ -16,6 +16,6 @@ final class GetEspecialidadesHandler implements RequestHandlerInterface
         return new HtmlResponse(json_encode([
             'data' => [],
             'status' => 'success',
-        ]));
+        ], JSON_THROW_ON_ERROR));
     }
 }

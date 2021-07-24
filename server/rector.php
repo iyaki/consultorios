@@ -9,7 +9,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
     $parameters->set(Option::PATHS, [__DIR__ . '/app']);
-    $parameters->set(Option::ENABLE_CACHE, true);
     $parameters->set(Option::CACHE_DIR, '.rector_cache');
 
     $containerConfigurator->import(SetList::CODE_QUALITY);
@@ -33,7 +32,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(\Rector\Privatization\Rector\Class_\ChangeReadOnlyVariableWithDefaultValueToConstantRector::class);
     $services->set(\Rector\Privatization\Rector\Class_\RepeatedLiteralToClassConstantRector::class);
     $services->set(\Rector\Privatization\Rector\MethodCall\PrivatizeLocalGetterToPropertyRector::class);
-    $services->set(\Rector\Privatization\Rector\Property\PrivatizeLocalPropertyToPrivatePropertyRector::class);
     $services->set(\Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector::class);
     $services->set(\Rector\Privatization\Rector\ClassMethod\PrivatizeFinalClassMethodRector::class);
 };

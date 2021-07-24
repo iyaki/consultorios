@@ -32,9 +32,9 @@ final class Especialidades
             $this->unitOfWork->commit();
 
             return EspecialidadDTO::fromEntity($especialidad);
-        } catch (\Throwable $e) {
+        } catch (\Throwable $throwable) {
             $this->unitOfWork->rollback();
-            throw $e;
+            throw $throwable;
         }
     }
 
