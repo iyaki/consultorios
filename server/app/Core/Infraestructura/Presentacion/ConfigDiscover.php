@@ -12,12 +12,13 @@ final class ConfigDiscover
     private const ROOT_PATH = __DIR__ . '/../../../..';
 
     /**
+     * @psalm-suppress MixedInferredReturnType
      * @return mixed[]
      */
     public function find(string $fileName): array
     {
+        $configs = [];
         foreach (new \DirectoryIterator(self::ROOT_PATH . '/app') as $directory) {
-            $configs = [];
             if (! $directory->isDir()) {
                 continue;
             }
@@ -34,6 +35,7 @@ final class ConfigDiscover
                 }
                 $configPath = $directory->getPathname() . sprintf('/%s.php', $fileName);
                 if (file_exists($configPath)) {
+                    /** @psalm-suppress MixedAssignment */
                     $configs[] = require $configPath;
                 }
             }

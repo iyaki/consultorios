@@ -12,10 +12,14 @@ final class PostEspecialidadesHandlerFactory
 {
     public function __invoke(ContainerInterface $container): PostEspecialidadesHandler
     {
-        $agendasContainer = (fn ($c): AgendasContainer => $c)($container->get(AgendasContainer::class));
+        /** @var AgendasContainer $agendasContainer */
+        $agendasContainer = $container->get(AgendasContainer::class);
+
+        /** @var ResponseFactoryInterface $responseFactory */
+        $responseFactory = $container->get(ResponseFactoryInterface::class);
 
         return new PostEspecialidadesHandler(
-            $container->get(ResponseFactoryInterface::class),
+            $responseFactory,
             $agendasContainer->getCasosDeUsoEspecialidades()
         );
     }

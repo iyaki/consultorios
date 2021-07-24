@@ -21,16 +21,16 @@ final class PostEspecialidadesHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $body = json_decode((string) $request->getBody());
+        $body = (object) json_decode((string) $request->getBody());
         if (
-            $body === null
+            $body === (new \stdClass())
             && json_last_error() !== JSON_ERROR_NONE
         ) {
             throw new \Exception('Error Processing Body Request');
         }
 
-        $data = $body->data;
-        $this->especialidades->crear(new EspecialidadDTO(null, $data->nombre));
+        $data = (object) $body->data;
+        $this->especialidades->crear(new EspecialidadDTO(null, (string) $data->nombre));
 
         $response = $this->responseFactory->createResponse(201);
         $response->getBody()->write(json_encode([

@@ -35,36 +35,39 @@ final class CoreContainer
             return self::$entityManager;
         }
 
-        $config = Setup::createConfiguration(
-            $this->serviceLocator->get('config')['dev_mode']
+        $config = (array) $this->serviceLocator->get('config');
+
+        $doctrineConfig = Setup::createConfiguration(
+            (bool) $config['dev_mode']
         );
 
-        $config->setMetadataDriverImpl(
+        $doctrineConfig->setMetadataDriverImpl(
             new PHPDriver([
                 __DIR__ . '/../Agendas/Infraestructura/Mappings',
             ])
         );
 
-        $config->setMetadataCache(
+        $doctrineConfig->setMetadataCache(
             new ChainAdapter([
                 new ArrayAdapter(),
                 new FilesystemAdapter(),
             ])
         );
 
-        $dbConf = $this->serviceLocator->get('config')['database']['primary'];
+        $dbConf = (array) $config['database'];
+        $primaryDbConf = (array) $dbConf['primary'];
 
         self::$entityManager = EntityManager::create(
             [
                 'driver' => 'pdo_mysql',
-                'host' => $dbConf['host'],
+                'host' => $primaryDbConf['host'],
                 'port' => 3306,
-                'dbname' => $dbConf['database'],
-                'user' => $dbConf['user'],
-                'password' => $dbConf['password'],
+                'dbname' => $primaryDbConf['database'],
+                'user' => $primaryDbConf['user'],
+                'password' => $primaryDbConf['password'],
                 'charset' => 'utf8',
             ],
-            $config
+            $doctrineConfig
         );
 
         return self::$entityManager;

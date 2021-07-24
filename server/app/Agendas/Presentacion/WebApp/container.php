@@ -19,6 +19,11 @@ return [
     'factories' => [
         HomeHandler::class => HomeHandlerFactory::class,
         PostEspecialidadesHandler::class => PostEspecialidadesHandlerFactory::class,
-        AgendasContainer::class => (fn (ContainerInterface $c): AgendasContainer => new AgendasContainer($c->get(CoreContainer::class))),
+        AgendasContainer::class => function (ContainerInterface $c): AgendasContainer {
+            /** @var CoreContainer $coreContainer */
+            $coreContainer = $c->get(CoreContainer::class);
+
+            return new AgendasContainer($coreContainer);
+        },
     ],
 ];

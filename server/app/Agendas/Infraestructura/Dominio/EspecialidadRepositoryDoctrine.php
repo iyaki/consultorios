@@ -27,15 +27,16 @@ final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInte
     }
 
     /**
+     * @param array<string, mixed> $criteria
+     *
      * @return Especialidad[]
      */
-    public function findBy(
-        array $criteria,
-        ?array $orderBy = null,
-        $limit = null,
-        $offset = null
-    ): array {
-        return $this->repository->findBy($criteria);
+    public function findBy(array $criteria): array
+    {
+        /** @var Especialidad[] $especialidades */
+        $especialidades = $this->repository->findBy($criteria);
+        // Verifico que el $especialidades este compuesto por elementos de tipo Especialidad
+        return (fn (Especialidad ...$especialidades): array => $especialidades)(...$especialidades);
     }
 
     public function add(Especialidad $especialidad): void

@@ -27,6 +27,9 @@ final class RoutingConfigurator
     private function getRoutesConfigs(): array
     {
         // TODO: Implement cache strategy for production
-        return $this->configDiscover->find('routes');
+
+        /** @var callable[] $routes */
+        $routes = $this->configDiscover->find('routes');
+        return $routes;
     }
 }

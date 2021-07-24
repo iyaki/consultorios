@@ -9,7 +9,9 @@ interface EspecialidadRepositoryInterface
     public function crearId(): EspecialidadId;
 
     /**
-     * @return []Especialidad
+     * @param array<string, mixed> $criteria
+     *
+     * @return Especialidad[]
      */
     public function findBy(array $criteria): array;
 
