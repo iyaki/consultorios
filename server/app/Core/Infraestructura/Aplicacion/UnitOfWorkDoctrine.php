@@ -16,7 +16,7 @@ final class UnitOfWorkDoctrine implements UnitOfWorkInterface
 
     public function beginTransaction(): void
     {
-        $this->em->beginTransaction();
+        $this->em->getConnection()->beginTransaction();
     }
 
     public function commit(): void

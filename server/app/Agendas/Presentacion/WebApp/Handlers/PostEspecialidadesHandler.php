@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Consultorio\Agendas\Presentacion\WebApp\Handlers;
 
+use Consultorio\Agendas\CasosDeUso\EspecialidadDTO;
 use Consultorio\Agendas\CasosDeUso\Especialidades;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -27,8 +28,10 @@ final class PostEspecialidadesHandler implements RequestHandlerInterface
         ) {
             throw new \Exception('Error Processing Body Request');
         }
+
         $data = $body->data;
-        $this->especialidades->crear($data->nombre);
+        $this->especialidades->crear(new EspecialidadDTO(null, $data->nombre));
+
         $response = $this->responseFactory->createResponse(201);
         $response->getBody()->write(json_encode([
             'data' => [],

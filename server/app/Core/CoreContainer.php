@@ -16,6 +16,8 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 final class CoreContainer
 {
+    private static $entityManager;
+
     public function __construct(
         private ContainerInterface $serviceLocator
     ) {
@@ -30,6 +32,10 @@ final class CoreContainer
 
     public function getEntityManager(): EntityManager
     {
+        if (self::$entityManager) {
+            return self::$entityManager;
+        }
+
         $config = Setup::createConfiguration(
             $this->serviceLocator->get('config')['dev_mode']
         );
@@ -49,7 +55,7 @@ final class CoreContainer
 
         $dbConf = $this->serviceLocator->get('config')['database']['primary'];
 
-        return EntityManager::create(
+        self::$entityManager = EntityManager::create(
             [
                 'driver' => 'pdo_mysql',
                 'host' => $dbConf['host'],
@@ -61,5 +67,7 @@ final class CoreContainer
             ],
             $config
         );
+
+        return self::$entityManager;
     }
 }

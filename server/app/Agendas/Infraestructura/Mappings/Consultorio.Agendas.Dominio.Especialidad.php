@@ -6,10 +6,12 @@ use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 
 $builder = new ClassMetadataBuilder($metadata);
 
+$builder->setTable('agendas_especialidades');
+
 $builder
-    ->setTable('agendas_especialidades')
-    ->createField('id', 'integer')
-        ->makePrimaryKey()
-        ->build()
-    ->addField('nombre', 'string')
+    ->createField('id', 'guid')
+    ->makePrimaryKey()
+    ->build()
 ;
+
+$builder->addField('nombre', 'string');
