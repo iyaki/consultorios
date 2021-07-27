@@ -6,6 +6,7 @@
     "doctrine/orm": "^2.9",
     "laminas/laminas-diactoros": "^2.6",
     "laminas/laminas-servicemanager": "^3.6",
+    "league/fractal": "^0.19.2",
     "mezzio/mezzio": "^3.5",
     "mezzio/mezzio-cors": "^1.0",
     "mezzio/mezzio-fastroute": "^3.2",
