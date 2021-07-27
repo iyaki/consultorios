@@ -38,6 +38,17 @@ final class Especialidades
         }
     }
 
+    /**
+     * @return EspecialidadDTO[]
+     */
+    public function getAll(): array
+    {
+        return array_map(
+            fn (Especialidad $especialidad): EspecialidadDTO => EspecialidadDTO::fromEntity($especialidad),
+            $this->especialidadRepository->findBy([])
+        );
+    }
+
     private function assertEsNombreUnico(string $nombre): void
     {
         $especialidades = $this->especialidadRepository->findBy([

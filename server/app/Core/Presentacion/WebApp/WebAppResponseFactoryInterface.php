@@ -8,5 +8,10 @@ use Psr\Http\Message\ResponseInterface;
 
 interface WebAppResponseFactoryInterface
 {
-    public function createResponseFromItem(object $resource, int $code, string $reasonPhrase = ''): ResponseInterface;
+    public function createResponseFromItem(?object $resource, int $code = 200, string $reasonPhrase = ''): ResponseInterface;
+
+    /**
+     * @param object[] $resources
+     */
+    public function createResponseFromCollection(array $resources, int $code = 200, string $reasonPhrase = ''): ResponseInterface;
 }

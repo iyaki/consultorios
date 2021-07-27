@@ -29,5 +29,17 @@ return [
                 $responseFactory
             );
         },
+        EspecialidadesGetHandler::class => function (ContainerInterface $c): EspecialidadesGetHandler {
+            /** @var AgendasContainer $agendasContainer */
+            $agendasContainer = $c->get(AgendasContainer::class);
+
+            /** @var WebAppResponseFactoryAgendasFractal $webAppTransformer */
+            $webAppTransformer = $c->get(WebAppResponseFactoryAgendasInterface::class);
+
+            return new EspecialidadesGetHandler(
+                $webAppTransformer,
+                $agendasContainer->getCasosDeUsoEspecialidades()
+            );
+        },
     ],
 ];

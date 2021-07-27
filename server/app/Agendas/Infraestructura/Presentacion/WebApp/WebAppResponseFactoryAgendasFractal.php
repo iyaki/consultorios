@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Consultorio\Agendas\Infraestructura\Presentacion\WebApp;
 
 use Consultorio\Agendas\CasosDeUso\EspecialidadDTO;
+use Consultorio\Agendas\Presentacion\WebApp\WebAppResponseFactoryAgendasInterface;
 use Consultorio\Core\Infraestructura\Presentacion\WebApp\AbstractWebAppResponseFactoryFractal;
 use Psr\Http\Message\ResponseFactoryInterface;
 
-final class WebAppResponseFactoryAgendasFractal extends AbstractWebAppResponseFactoryFractal
+final class WebAppResponseFactoryAgendasFractal extends AbstractWebAppResponseFactoryFractal implements WebAppResponseFactoryAgendasInterface
 {
     public function __construct(
         ResponseFactoryInterface $responseFactory,
