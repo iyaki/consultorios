@@ -24,7 +24,7 @@ abstract class AbstractJsendSerializer extends ArraySerializer
     public const STATUS_ERROR = 'error';
 
     /**
-     * @return mixed[]
+     * @return array<string, mixed>
      */
     protected function responseWithStatus(array $response, string $status): array
     {

@@ -11,7 +11,7 @@ use League\Fractal\TransformerAbstract;
 final class EspecialidadTransformerFractal extends TransformerAbstract implements EspecialidadTransformerInterface
 {
     /**
-     * @return array<string, string>|array<string, null>
+     * @return array<string, string|null>
      */
     public function transform(EspecialidadDTO $especialidad): array
     {

@@ -9,7 +9,7 @@ use Consultorio\Agendas\CasosDeUso\EspecialidadDTO;
 interface EspecialidadTransformerInterface
 {
     /**
-     * @return mixed[]
+     * @return array<string, string|null>
      */
     public function transform(EspecialidadDTO $especialidad): array;
 }

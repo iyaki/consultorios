@@ -12,7 +12,7 @@ final class JsendErrorSerializer extends AbstractJsendSerializer
     }
 
     /**
-     * {@inheritdoc}
+     * @return array<string, mixed>
      */
     public function item($resourceKey, array $data): array
     {

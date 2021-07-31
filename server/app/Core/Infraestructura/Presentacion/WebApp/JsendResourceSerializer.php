@@ -12,7 +12,7 @@ final class JsendResourceSerializer extends AbstractJsendSerializer
     private const DATA = 'data';
 
     /**
-     * {@inheritdoc}
+     * @return array<string, mixed>
      */
     public function collection($resourceKey, array $data): array
     {
@@ -22,7 +22,7 @@ final class JsendResourceSerializer extends AbstractJsendSerializer
     }
 
     /**
-     * {@inheritdoc}
+     * @return array<string, mixed>
      */
     public function item($resourceKey, array $data): array
     {
@@ -32,7 +32,7 @@ final class JsendResourceSerializer extends AbstractJsendSerializer
     }
 
     /**
-     * {@inheritdoc}
+     * @return array<string, mixed[]>
      */
     public function null(): array
     {

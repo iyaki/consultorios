@@ -83,7 +83,6 @@ abstract class AbstractWebAppResponseFactoryFractal implements WebAppResponseFac
         }
         foreach ($this->transformers as $resourceFrom => $transformer) {
             if ($resource instanceof $resourceFrom) {
-                /** @psalm-suppress MixedMethodCall */
                 return new Item($resource, new $transformer());
             }
         }

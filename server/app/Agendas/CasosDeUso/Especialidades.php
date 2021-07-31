@@ -54,7 +54,7 @@ final class Especialidades
         try {
             $this->unitOfWork->beginTransaction();
 
-            $especialidad = $this->especialidadRepository->get(new EspecialidadId($especialidadDTO->id()));
+            $especialidad = $this->especialidadRepository->get(new EspecialidadId((string) $especialidadDTO->id()));
 
             $especialidad->renombrar($especialidadDTO->nombre());
 
@@ -74,7 +74,7 @@ final class Especialidades
         try {
             $this->unitOfWork->beginTransaction();
 
-            $especialidad = $this->especialidadRepository->get(new EspecialidadId($especialidadDTO->id()));
+            $especialidad = $this->especialidadRepository->get(new EspecialidadId((string) $especialidadDTO->id()));
 
             $this->especialidadRepository->remove($especialidad);
 
