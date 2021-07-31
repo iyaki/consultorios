@@ -28,4 +28,9 @@ final class Especialidad
     {
         return $this->nombre;
     }
+
+    public function renombrar(string $nombre): void
+    {
+        $this->nombre = $nombre;
+    }
 }

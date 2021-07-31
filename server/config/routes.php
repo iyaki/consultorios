@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Consultorio\Core\Infraestructura\Presentacion\ConfigDiscover;
-use Consultorio\Core\Infraestructura\Presentacion\RoutingConfigurator;
-use Mezzio\Application;
+use Consultorio\Core\CoreContainer;
+use Consultorio\Core\Infraestructura\Presentacion\RoutesConfiguratorAggregator;
+use Laminas\ServiceManager\ServiceManager;
 use Mezzio\Cors\Middleware\CorsMiddleware;
 use Mezzio\Handler\NotFoundHandler;
 use Mezzio\Helper\ServerUrlMiddleware;
@@ -14,7 +14,9 @@ use Mezzio\Router\Middleware\ImplicitOptionsMiddleware;
 use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
 
-return static function (Application $app): void {
+return static function (ServiceManager $container): void {
+    $app = $container->get(\Mezzio\Application::class);
+
     $app->pipe(ServerUrlMiddleware::class);
 
     $app->pipe(CorsMiddleware::class);
@@ -25,8 +27,8 @@ return static function (Application $app): void {
     $app->pipe(ImplicitOptionsMiddleware::class);
     $app->pipe(MethodNotAllowedMiddleware::class);
 
-    $routingConfigurator = new RoutingConfigurator(new ConfigDiscover());
-    $routingConfigurator->configureRoutes($app);
+    $routesConfigurator = RoutesConfiguratorAggregator::create($container, new CoreContainer($container));
+    $routesConfigurator->configure();
 
     $app->pipe(DispatchMiddleware::class);
 

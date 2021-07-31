@@ -11,7 +11,7 @@ ini_set('display_errors', '1');
  * Self-called anonymous function that creates its own scope and keeps the global namespace clean.
  */
 (function () {
-    /** @var \Psr\Container\ContainerInterface $container */
+    /** @var \Laminas\ServiceManager\ServiceManager $container */
     $container = require __DIR__ . '/../config/container.php';
 
     /** @var \Mezzio\Application $app */
@@ -20,7 +20,7 @@ ini_set('display_errors', '1');
     // Execute programmatic/declarative middleware pipeline and routing
     // configuration statements
     // (require 'config/pipeline.php')($app, $factory, $container);
-    (require __DIR__ . '/../config/routes.php')($app);
+    (require __DIR__ . '/../config/routes.php')($container);
 
     $app->run();
 })();

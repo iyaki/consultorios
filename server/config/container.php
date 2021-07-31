@@ -29,9 +29,9 @@ return (function () {
         ]
     );
 
-    $conatinerAggregator = new ContainerAggregator(new ConfigDiscover());
+    // $conatinerAggregator = new ContainerAggregator(new ConfigDiscover());
 
-    $dependencies = array_merge_recursive($dependencies, ...$configProviders, ...$conatinerAggregator->getContainers());
+    $dependencies = array_merge_recursive($dependencies, ...$configProviders/* , ...$conatinerAggregator->getContainers() */);
 
     $dependencies['services']['config'] = array_merge_recursive(
         require __DIR__ . '/config.php',
@@ -41,7 +41,7 @@ return (function () {
 
     $serviceContainer = new ServiceManager($dependencies);
 
-    $serviceContainer->setFactory(CoreContainer::class, fn () => new CoreContainer($serviceContainer));
+    // $serviceContainer->setFactory(CoreContainer::class, fn () => new CoreContainer($serviceContainer));
 
     return $serviceContainer;
 })();

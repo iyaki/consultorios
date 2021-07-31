@@ -26,6 +26,17 @@ final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInte
         return new EspecialidadId((string) Uuid::uuid4());
     }
 
+    public function get(EspecialidadId $id): Especialidad
+    {
+        $especialidad = $this->repository->find((string) $id);
+
+        if ($especialidad === null) {
+            throw new \UnexpectedValueException('El id ' . $id . ' no corresponse a ninguna especialidad');
+        }
+
+        return $especialidad;
+    }
+
     /**
      * @param array<string, mixed> $criteria
      *
@@ -42,5 +53,10 @@ final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInte
     public function add(Especialidad $especialidad): void
     {
         $this->em->persist($especialidad);
+    }
+
+    public function remove(Especialidad $especialidad): void
+    {
+        $this->em->remove($especialidad);
     }
 }

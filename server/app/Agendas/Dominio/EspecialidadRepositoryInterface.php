@@ -9,6 +9,11 @@ interface EspecialidadRepositoryInterface
     public function crearId(): EspecialidadId;
 
     /**
+     * @throws \UnexpectedValueException
+     */
+    public function get(EspecialidadId $id): Especialidad;
+
+    /**
      * @param array<string, mixed> $criteria
      *
      * @return Especialidad[]
@@ -16,4 +21,6 @@ interface EspecialidadRepositoryInterface
     public function findBy(array $criteria): array;
 
     public function add(Especialidad $especialidad): void;
+
+    public function remove(Especialidad $especialidad): void;
 }
