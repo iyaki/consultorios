@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Consultorio\Agendas\Dominio;
 
-final class Especialidad
+class Especialidad
 {
     private string $id;
 

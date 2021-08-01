@@ -8,12 +8,12 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
-        <directory name="app" />
+        <directory name="app"/>
         <ignoreFiles>
-            <directory name="vendor" />
-            <directory name="tools" />
-            <file name="ecs.php" />
-            <file name="rector.php" />
+            <directory name="vendor"/>
+            <directory name="tools"/>
+            <file name="ecs.php"/>
+            <file name="rector.php"/>
         </ignoreFiles>
     </projectFiles>
-</psalm>
+<plugins><pluginClass class="Psalm\PhpUnitPlugin\Plugin"/></plugins></psalm>

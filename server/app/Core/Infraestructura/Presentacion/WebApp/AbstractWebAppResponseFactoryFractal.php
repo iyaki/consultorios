@@ -16,13 +16,16 @@ abstract class AbstractWebAppResponseFactoryFractal implements WebAppResponseFac
     /**
      * @var array<string, class-string>
      */
-    protected array $transformers = [
+    private const BASE_TRANSFORMERS = [
         \Throwable::class => ThrowableTransformer::class,
     ];
+
+    protected array $transformers = [];
 
     public function __construct(
         private ResponseFactoryInterface $responseFactory
     ) {
+        $this->transformers = array_merge(self::BASE_TRANSFORMERS, $this->transformers);
     }
 
     public function createResponseFromItem(?object $resource, int $code = 200, string $reasonPhrase = ''): ResponseInterface
@@ -101,7 +104,6 @@ abstract class AbstractWebAppResponseFactoryFractal implements WebAppResponseFac
         $resource = reset($resources);
         foreach ($this->transformers as $resourceFrom => $transformer) {
             if ($resource instanceof $resourceFrom) {
-                /** @psalm-suppress MixedMethodCall */
                 return new Collection($resources, new $transformer());
             }
         }

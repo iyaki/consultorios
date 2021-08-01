@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<phive xmlns="https://phar.io/phive">
-  <phar name="phpunit" version="^9.5.5" installed="9.5.5" location="./tools/phpunit" copy="true"/>
-  <phar name="qossmic/deptrac" version="^0.13.0" installed="0.13.0" location="./tools/deptrac" copy="true"/>
-  <phar name="psalm" version="^4.8.0" installed="4.8.0" location="./tools/psalm" copy="true"/>
-</phive>

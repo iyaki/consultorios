@@ -18,13 +18,13 @@ RUN apt-get update && \
     apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 # Install phive
-RUN curl -Lo phive.phar https://phar.io/releases/phive.phar && \
-    chmod +x phive.phar && \
-    mv phive.phar /usr/local/bin/phive
+# RUN curl -Lo phive.phar https://phar.io/releases/phive.phar && \
+#     chmod +x phive.phar && \
+#     mv phive.phar /usr/local/bin/phive
 
 # Add application
 COPY ./server/ ./
 
 # Install dependencies
-RUN composer install && \
-    phive install --copy --trust-gpg-keys 4AA394086372C20A,4F2AB4D11A9A65F7,12CE0F1D262429A5
+RUN composer install
+#    phive install --copy --trust-gpg-keys 4F2AB4D11A9A65F7
