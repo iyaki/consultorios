@@ -8,7 +8,7 @@ import LeftFiltersGrid from '../../App/LeftFiltersGrid'
 import Loading from '../../App/Loading'
 import axios from 'axios'
 import { useSnackbar } from 'notistack'
-import { getErrorMessage } from '../../../utils/http/jsend'
+import { getErrorMessage } from '../../../utils/http/webApp'
 
 function EspecialiadesList ({ loading, especialidades, editCallback, deleteCallback }) {
   if (loading) {
@@ -137,9 +137,13 @@ export default function Especialidades () {
     axios
       .get('http://localhost:8080/agendas/webapp/especialidades')
       .then(r => {
-        if (r.data.status === 'success') {
+        if (r.status === 200) {
           setEspecialidades(r.data.data)
         }
+      })
+      .catch(r => {
+        const message = getErrorMessage(r)
+        enqueueSnackbar(message, { variant: 'error' })
       })
       .finally(() => {
         setLoadingEspecialidades(false)

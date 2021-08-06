@@ -8,6 +8,8 @@ use Consultorio\Core\Presentacion\WebApp\WebAppResponseFactoryInterface;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
+use League\Fractal\Resource\NullResource;
+use League\Fractal\Resource\ResourceAbstract;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -32,22 +34,13 @@ abstract class AbstractWebAppResponseFactoryFractal implements WebAppResponseFac
     {
         $response = $this->responseFactory->createResponse($code, $reasonPhrase);
 
-        $manager = new Manager();
-
-        $manager->setSerializer(
-            $resource instanceof \Throwable
-            ? new JsendErrorSerializer()
-            : new JsendResourceSerializer()
+        $item = (
+            $resource === null
+            ? new NullResource()
+            : $this->getItem($resource)
         );
 
-        $body = $manager
-            ->createData(
-                $this->getItemTransformer($resource)
-            )
-            ->toJson()
-        ;
-
-        $response->getBody()->write($body);
+        $response->getBody()->write($this->transformResourceToJson($item));
 
         return $response;
     }
@@ -59,31 +52,15 @@ abstract class AbstractWebAppResponseFactoryFractal implements WebAppResponseFac
     {
         $response = $this->responseFactory->createResponse($code, $reasonPhrase);
 
-        $manager = new Manager();
+        $collection = $this->getCollection($resources);
 
-        $manager->setSerializer(
-            reset($resources) instanceof \Throwable
-            ? new JsendErrorSerializer()
-            : new JsendResourceSerializer()
-        );
-
-        $body = $manager
-            ->createData(
-                $this->getCollectionTransformer($resources)
-            )
-            ->toJson()
-        ;
-
-        $response->getBody()->write($body);
+        $response->getBody()->write($this->transformResourceToJson($collection));
 
         return $response;
     }
 
-    private function getItemTransformer(?object $resource): Item
+    private function getItem(object $resource): Item
     {
-        if ($resource === null) {
-            return new Item($resource, $this->getVoidTransformer());
-        }
         foreach ($this->transformers as $resourceFrom => $transformer) {
             if ($resource instanceof $resourceFrom) {
                 return new Item($resource, new $transformer());
@@ -92,13 +69,22 @@ abstract class AbstractWebAppResponseFactoryFractal implements WebAppResponseFac
         throw new \UnexpectedValueException('There is no transformer configured for ' . $resource::class);
     }
 
+    private function transformResourceToJson(ResourceAbstract $resource): string
+    {
+        return (new Manager())
+            ->setSerializer(new WebAppSerializer())
+            ->createData($resource)
+            ->toJson()
+        ;
+    }
+
     /**
      * @param object[] $resources
      */
-    private function getCollectionTransformer(array $resources): Collection
+    private function getCollection(array $resources): Collection
     {
         if ($resources === []) {
-            return new Collection($resources, $this->getVoidTransformer());
+            return new Collection([], fn () => []);
         }
 
         $resource = reset($resources);
@@ -108,10 +94,5 @@ abstract class AbstractWebAppResponseFactoryFractal implements WebAppResponseFac
             }
         }
         throw new \UnexpectedValueException('There is no transformer configured for ' . $resource::class);
-    }
-
-    private function getVoidTransformer(): callable
-    {
-        return fn (): array => [];
     }
 }

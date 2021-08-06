@@ -31,7 +31,7 @@ final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInte
         $especialidad = $this->repository->find((string) $id);
 
         if ($especialidad === null) {
-            throw new \UnexpectedValueException('El id ' . $id . ' no corresponse a ninguna especialidad');
+            throw new \UnexpectedValueException('El id ' . $id . ' no corresponde a ninguna especialidad');
         }
 
         return $especialidad;
