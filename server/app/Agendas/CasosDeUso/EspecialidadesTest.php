@@ -10,9 +10,19 @@ use Consultorio\Agendas\Dominio\EspecialidadId;
 final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
 {
     /**
+     * @var string
+     */
+    private const NOMBRE = 'Especialidad3';
+
+    /**
+     * @var string
+     */
+    private const ID = '55';
+
+    /**
      * @var Especialidad[]
      */
-    private array $repositoryStorage;
+    private array $repositoryStorage = [];
 
     protected function setUp(): void
     {
@@ -24,21 +34,20 @@ final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
 
     public function testGetAll(): void
     {
-        $result = $this->especialidadesCasosDeUso()->getAll();
+        $results = $this->especialidadesCasosDeUso()->getAll();
 
-        $expectedResult = array_map(
+        $expectedResults = array_map(
             fn (Especialidad $e) => EspecialidadDTO::fromEntity($e),
             $this->repositoryStorage
         );
-        $this->assertSame($result, $expectedResult);
+        $this->assertEquals($results, $expectedResults);
     }
 
     public function testCrearOk(): void
     {
-        $nombre = 'Especialidad3';
-        $result = $this->especialidadesCasosDeUso()->crear(new EspecialidadDTO(null, $nombre));
+        $result = $this->especialidadesCasosDeUso()->crear(new EspecialidadDTO(null, self::NOMBRE));
 
-        $this->assertSame($nombre, $result->nombre());
+        $this->assertSame(self::NOMBRE, $result->nombre());
         $this->assertIsString($result->id());
         $especialidadGuardada = end($this->repositoryStorage);
         $this->assertSame($result->id(), (string) $especialidadGuardada->id());
@@ -73,13 +82,12 @@ final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
 
     public function testEditarIdErroneo(): void
     {
-        $id = '55';
         $nombreNuevo = 'Especialidad3';
 
         $this->expectException(\UnexpectedValueException::class);
 
         $this->especialidadesCasosDeUso()->editar(new EspecialidadDTO(
-            $id,
+            self::ID,
             $nombreNuevo
         ));
     }
@@ -106,25 +114,23 @@ final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
         $repository = $this->createStub(\Consultorio\Agendas\Dominio\EspecialidadRepositoryInterface::class);
 
         $repository->method('findBy')
-            ->willReturnCallback(function (array $criteria) {
-                return array_filter(
-                    $this->repositoryStorage,
-                    function (Especialidad $e) use ($criteria) {
-                        foreach ($criteria as $key => $value) {
-                            if ($value !== $e->{$key}()) {
-                                return false;
-                            }
+            ->willReturnCallback(fn (array $criteria) => array_filter(
+                $this->repositoryStorage,
+                function (Especialidad $e) use ($criteria): bool {
+                    foreach ($criteria as $key => $value) {
+                        if ($value !== $e->{$key}()) {
+                            return false;
                         }
-                        return true;
                     }
-                );
-            })
+                    return true;
+                }
+            ))
         ;
 
         $repository->method('get')
             ->willReturnCallback(fn (EspecialidadId $id) => array_values(array_filter(
                 $this->repositoryStorage,
-                fn (Especialidad $e) => $e->id() === $id
+                fn (Especialidad $e) => (string) $e->id() === (string) $id
             ))[0] ?? throw new \UnexpectedValueException())
         ;
 
@@ -133,7 +139,7 @@ final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
         ;
 
         $repository->method('add')
-            ->willReturnCallback(function (Especialidad $e) {
+            ->willReturnCallback(function (Especialidad $e): void {
                 $this->repositoryStorage[] = $e;
             })
         ;

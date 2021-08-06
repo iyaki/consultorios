@@ -9,6 +9,9 @@ namespace Consultorio\Core\Infraestructura\Presentacion\WebApp;
  */
 class DummyTransformer extends \League\Fractal\TransformerAbstract
 {
+    /**
+     * @return array<string, string>
+     */
     public function transform(\Consultorio\Core\Infraestructura\Presentacion\WebApp\DummyDTO $dto): array
     {
         return [

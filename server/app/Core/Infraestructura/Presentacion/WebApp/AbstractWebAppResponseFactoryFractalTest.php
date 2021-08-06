@@ -21,7 +21,7 @@ final class AbstractWebAppResponseFactoryFractalTest extends \PHPUnit\Framework\
         $response = $webAppResponseFactory->createResponseFromItem(new DummyDTO(':D'));
 
         $this->assertJsonStringEqualsJsonString(
-            '{"data":{"property":":D"},"status":"success"}',
+            '{"data":{"property":":D"}}',
             (string) $response->getBody()
         );
     }
@@ -33,7 +33,7 @@ final class AbstractWebAppResponseFactoryFractalTest extends \PHPUnit\Framework\
         $response = $webAppResponseFactory->createResponseFromItem(null);
 
         $this->assertJsonStringEqualsJsonString(
-            '{"data": [],"status":"success"}',
+            '{"data": null}',
             (string) $response->getBody()
         );
     }
@@ -45,8 +45,7 @@ final class AbstractWebAppResponseFactoryFractalTest extends \PHPUnit\Framework\
         $response = $webAppResponseFactory->createResponseFromItem(new \Exception(self::EXCEPTION_MESSAGE));
 
         $decodedResponseBody = json_decode((string) $response->getBody(), null, 512, JSON_THROW_ON_ERROR);
-        $this->assertSame(self::EXCEPTION_MESSAGE, $decodedResponseBody->message);
-        $this->assertSame('error', $decodedResponseBody->status);
+        $this->assertSame(self::EXCEPTION_MESSAGE, $decodedResponseBody->data->message);
     }
 
     public function testCreateResponseFromCollectionResource(): void
@@ -59,7 +58,7 @@ final class AbstractWebAppResponseFactoryFractalTest extends \PHPUnit\Framework\
         ]);
 
         $this->assertJsonStringEqualsJsonString(
-            '{"data":[{"property":":D"},{"property":":c"}],"status":"success"}',
+            '{"data":[{"property":":D"},{"property":":c"}]}',
             (string) $response->getBody()
         );
     }
@@ -71,7 +70,7 @@ final class AbstractWebAppResponseFactoryFractalTest extends \PHPUnit\Framework\
         $response = $webAppResponseFactory->createResponseFromCollection([]);
 
         $this->assertJsonStringEqualsJsonString(
-            '{"data":[],"status":"success"}',
+            '{"data": []}',
             (string) $response->getBody()
         );
     }

@@ -19,6 +19,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     ]);
     $parameters->set(Option::CACHE_DIRECTORY, '.ecs_cache');
     $parameters->set(Option::LINE_ENDING, "\n");
+    $parameters->set(Option::SKIP, [
+        PhpCsFixer\Fixer\PhpUnit\PhpUnitStrictFixer::class,
+    ]);
 
     $containerConfigurator->import(SetList::PSR_12);
     $containerConfigurator->import(SetList::CLEAN_CODE);
