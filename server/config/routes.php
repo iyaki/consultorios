@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Consultorio\Core\CoreContainer;
-use Consultorio\Core\Infraestructura\Presentacion\RoutesConfiguratorAggregator;
+use Consultorio\Core\Infraestructura\Presentacion\ConfigDiscover;
+use Consultorio\Core\Presentacion\RoutesConfigurator;
 use Laminas\ServiceManager\ServiceManager;
 use Mezzio\Cors\Middleware\CorsMiddleware;
 use Mezzio\Handler\NotFoundHandler;
@@ -27,8 +27,12 @@ return static function (ServiceManager $container): void {
     $app->pipe(ImplicitOptionsMiddleware::class);
     $app->pipe(MethodNotAllowedMiddleware::class);
 
-    $routesConfigurator = RoutesConfiguratorAggregator::create($container, new CoreContainer($container));
-    $routesConfigurator->configure();
+    $routesConfigurator = new RoutesConfigurator($container);
+
+    $configDiscover = new ConfigDiscover();
+    foreach ($configDiscover->find('routes') as $routes) {
+        (require $routes)($routesConfigurator);
+    }
 
     $app->pipe(DispatchMiddleware::class);
 
