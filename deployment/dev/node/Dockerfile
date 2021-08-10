@@ -12,7 +12,7 @@ RUN apk update && apk upgrade && \
 COPY ./client/ ./
 
 # Install dependencies
-RUN npm ci --silent
+RUN npm ci
 
 # Start dev server
 CMD ["npm", "start"]
