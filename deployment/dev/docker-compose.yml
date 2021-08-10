@@ -34,8 +34,8 @@ services:
       volumes:
         - ../..:/application
         - ./php-fpm/php-ini-overrides.ini:/etc/php/8.0/fpm/conf.d/99-overrides.ini
-        - ../../server/.githooks/post-commit:/application/.git/hooks/post-commit
-        - ../../server/.githooks/pre-commit:/application/.git/hooks/pre-commit
+        # - ../../server/.githooks/post-commit:/application/.git/hooks/post-commit
+        # - ../../server/.githooks/pre-commit:/application/.git/hooks/pre-commit
 
     node:
       build:
@@ -44,7 +44,7 @@ services:
       working_dir: /application/client
       volumes:
         - ../..:/application
-        - ../../client/.githooks/pre-commit:/application/.git/hooks/pre-commit
+        # - ../../client/.githooks/pre-commit:/application/.git/hooks/pre-commit
       ports:
         - 3001:3000
       environment:
