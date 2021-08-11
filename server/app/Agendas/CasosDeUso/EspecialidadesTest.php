@@ -36,21 +36,19 @@ final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
     {
         $results = $this->especialidadesCasosDeUso()->getAll();
 
-        $expectedResults = array_map(
-            fn (Especialidad $e) => EspecialidadDTO::fromEntity($e),
-            $this->repositoryStorage
-        );
+        $expectedResults = $this->repositoryStorage;
+
         $this->assertEquals($results, $expectedResults);
     }
 
     public function testCrearOk(): void
     {
-        $result = $this->especialidadesCasosDeUso()->crear(new EspecialidadDTO(null, self::NOMBRE));
+        $result = $this->especialidadesCasosDeUso()->crear(self::NOMBRE);
 
         $this->assertSame(self::NOMBRE, $result->nombre());
-        $this->assertIsString($result->id());
+        $this->assertInstanceOf(EspecialidadId::class, $result->id());
         $especialidadGuardada = end($this->repositoryStorage);
-        $this->assertSame($result->id(), (string) $especialidadGuardada->id());
+        $this->assertEquals($result->id(), $especialidadGuardada->id());
         $this->assertSame($result->nombre(), $especialidadGuardada->nombre());
     }
 
@@ -60,7 +58,7 @@ final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
 
         $this->expectException(\Exception::class);
 
-        $this->especialidadesCasosDeUso()->crear(new EspecialidadDTO(null, $nombre));
+        $this->especialidadesCasosDeUso()->crear($nombre);
     }
 
     public function testEditarOk(): void
@@ -70,13 +68,13 @@ final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
         $id = (string) $especialidadGuardada->id();
         $nombreNuevo = 'Especialidad3';
 
-        $result = $this->especialidadesCasosDeUso()->editar(new EspecialidadDTO(
-            $id,
+        $result = $this->especialidadesCasosDeUso()->editar(
+            new EspecialidadId($id),
             $nombreNuevo
-        ));
+        );
 
         $this->assertSame($nombreNuevo, $result->nombre());
-        $this->assertSame($id, $result->id());
+        $this->assertSame($id, (string) $result->id());
         $this->assertSame($result->nombre(), $especialidadGuardada->nombre());
     }
 
@@ -86,10 +84,10 @@ final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
 
         $this->expectException(\UnexpectedValueException::class);
 
-        $this->especialidadesCasosDeUso()->editar(new EspecialidadDTO(
-            self::ID,
+        $this->especialidadesCasosDeUso()->editar(
+            new EspecialidadId(self::ID),
             $nombreNuevo
-        ));
+        );
     }
 
     public function testEditarNombreRepetido(): void
@@ -102,10 +100,10 @@ final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
 
         $this->expectException(\Exception::class);
 
-        $this->especialidadesCasosDeUso()->editar(new EspecialidadDTO(
-            $id,
+        $this->especialidadesCasosDeUso()->editar(
+            new EspecialidadId($id),
             $nombreNuevo
-        ));
+        );
     }
 
     private function especialidadesCasosDeUso(): Especialidades

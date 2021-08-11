@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Consultorio\Agendas\Presentacion\WebApp;
 
-use Consultorio\Agendas\CasosDeUso\EspecialidadDTO;
 use Consultorio\Agendas\CasosDeUso\Especialidades;
+use Consultorio\Agendas\Dominio\EspecialidadId;
 use Consultorio\Core\Presentacion\WebApp\WebAppResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -32,7 +32,7 @@ final class EspecialidadesPatchHandler implements RequestHandlerInterface
 
             $data = (object) $body->data;
             $id = explode('/', $request->getUri()->getPath())[4];
-            $especialidad = $this->especialidades->editar(new EspecialidadDTO($id, (string) $data->nombre));
+            $especialidad = $this->especialidades->editar(new EspecialidadId($id), (string) $data->nombre);
 
             return $this->responseFactory->createResponseFromItem($especialidad, 200);
         } catch (\Throwable $throwable) {

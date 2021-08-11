@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Consultorio\Agendas\Presentacion\WebApp;
 
-use Consultorio\Agendas\CasosDeUso\EspecialidadDTO;
 use Consultorio\Agendas\CasosDeUso\Especialidades;
 use Consultorio\Core\Presentacion\WebApp\WebAppResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -31,7 +30,7 @@ final class EspecialidadesPostHandler implements RequestHandlerInterface
             }
 
             $data = (object) $body->data;
-            $especialidad = $this->especialidades->crear(new EspecialidadDTO(null, (string) $data->nombre));
+            $especialidad = $this->especialidades->crear((string) $data->nombre);
 
             return $this->responseFactory->createResponseFromItem($especialidad, 201);
         } catch (\Throwable $throwable) {

@@ -18,23 +18,20 @@ final class Especialidades
     }
 
     /**
-     * @return EspecialidadDTO[]
+     * @return Especialidad[]
      */
     public function getAll(): array
     {
-        return array_map(
-            fn (Especialidad $especialidad): EspecialidadDTO => EspecialidadDTO::fromEntity($especialidad),
-            $this->especialidadRepository->findBy([])
-        );
+        return $this->especialidadRepository->findBy([]);
     }
 
-    public function crear(EspecialidadDTO $especialidadDTO): EspecialidadDTO
+    public function crear(string $nombre): Especialidad
     {
         try {
             $this->unitOfWork->beginTransaction();
 
             $especialidadId = $this->especialidadRepository->crearId();
-            $especialidad = new Especialidad($especialidadId, $especialidadDTO->nombre());
+            $especialidad = new Especialidad($especialidadId, $nombre);
 
             $this->assertEsNombreUnico($especialidad);
 
@@ -42,39 +39,39 @@ final class Especialidades
 
             $this->unitOfWork->commit();
 
-            return EspecialidadDTO::fromEntity($especialidad);
+            return $especialidad;
         } catch (\Throwable $throwable) {
             $this->unitOfWork->rollback();
             throw $throwable;
         }
     }
 
-    public function editar(EspecialidadDTO $especialidadDTO): EspecialidadDTO
+    public function editar(EspecialidadId $id, string $nombre): Especialidad
     {
         try {
             $this->unitOfWork->beginTransaction();
 
-            $especialidad = $this->especialidadRepository->get(new EspecialidadId((string) $especialidadDTO->id()));
+            $especialidad = $this->especialidadRepository->get($id);
 
-            $especialidad->renombrar($especialidadDTO->nombre());
+            $especialidad->renombrar($nombre);
 
             $this->assertEsNombreUnico($especialidad);
 
             $this->unitOfWork->commit();
 
-            return EspecialidadDTO::fromEntity($especialidad);
+            return $especialidad;
         } catch (\Throwable $throwable) {
             $this->unitOfWork->rollback();
             throw $throwable;
         }
     }
 
-    public function eliminar(EspecialidadDTO $especialidadDTO): void
+    public function eliminar(EspecialidadId $id): void
     {
         try {
             $this->unitOfWork->beginTransaction();
 
-            $especialidad = $this->especialidadRepository->get(new EspecialidadId((string) $especialidadDTO->id()));
+            $especialidad = $this->especialidadRepository->get($id);
 
             $this->especialidadRepository->remove($especialidad);
 
