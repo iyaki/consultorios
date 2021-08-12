@@ -7,6 +7,10 @@ namespace Consultorio\Agendas\Infraestructura\Presentacion\WebApp;
 use Consultorio\Agendas\Dominio\Especialidad;
 use League\Fractal\TransformerAbstract;
 
+/**
+ * Clase utilizada para formatear las respuestas JSON que incluyen "entidades" de la clase Especialidad.
+ * Esta clase depende de la libreria PHP League - Fractal.
+ */
 final class EspecialidadTransformerFractal extends TransformerAbstract
 {
     /**

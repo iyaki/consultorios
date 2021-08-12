@@ -10,6 +10,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+/**
+ * Envoltura para la configuración de rutas de Mezzio.
+ */
 final class RoutesConfigurator
 {
     private Application $app;

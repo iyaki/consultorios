@@ -11,6 +11,9 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Ramsey\Uuid\Uuid;
 
+/**
+ * Implementación del repositorio de especialidades utilizando la libreria Doctrine ORM como base.
+ */
 final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInterface
 {
     private EntityRepository $repository;

@@ -13,6 +13,9 @@ use League\Fractal\Resource\ResourceAbstract;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Clase base utilizada para convertir entidades en respuestas JSON utilizadas por las APIs REST de la aplicación.
+ */
 abstract class AbstractWebAppResponseFactoryFractal implements WebAppResponseFactoryInterface
 {
     /**

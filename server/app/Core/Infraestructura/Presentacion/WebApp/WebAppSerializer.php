@@ -6,6 +6,10 @@ namespace Consultorio\Core\Infraestructura\Presentacion\WebApp;
 
 use League\Fractal\Serializer\DataArraySerializer;
 
+/**
+ * Implementación personalizada de un Serizalizer de la libreria PHP League - Fractal para convertir
+ * objetos (entidades o excepciones) en respuestas JSON.
+ */
 final class WebAppSerializer extends DataArraySerializer
 {
     /**

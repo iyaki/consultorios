@@ -26,6 +26,10 @@
 - remove(Id $id): void
 
 ## Reglas
+### Documentación
+- En español.
+- Con los signos de puntuación pertinentes (incluido el punto final).
+
 ### Entidades
 - NO usar getters pero si fuesen necesarios, no utilizar la palabra get, simplemente el nombre del atributo a devolver.
 - Todos los métodos y propiedades deben estar en español (salvo, tal vez, los getters).
