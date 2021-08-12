@@ -8,24 +8,28 @@ use PHPUnit\Framework\TestCase;
 
 final class EspecialidadTest extends TestCase
 {
-    public function testConstructorOk()
+    /**
+     * @var string
+     */
+    private const NOMBRE = 'Cardiologia';
+
+    public function testConstructorOk(): void
     {
         $id = new EspecialidadId('aaaaaahhhhhhhhhhhhh');
-        $nombre = 'Cardiologia';
-        $especialidad = new Especialidad($id, $nombre);
+        $especialidad = new Especialidad($id, self::NOMBRE);
 
         $this->assertEquals($id, $especialidad->id());
-        $this->assertSame($nombre, $especialidad->nombre());
+        $this->assertSame(self::NOMBRE, $especialidad->nombre());
     }
 
-    public function testConstructorNombreVacio()
+    public function testConstructorNombreVacio(): void
     {
         $this->expectException(\DomainException::class);
 
         new Especialidad(new EspecialidadId(''), '');
     }
 
-    public function testConstructorNombreSoloEspacios()
+    public function testConstructorNombreSoloEspacios(): void
     {
         $this->expectException(\DomainException::class);
 
