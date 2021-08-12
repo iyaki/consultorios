@@ -71,9 +71,7 @@ final class Especialidades
         try {
             $this->unitOfWork->beginTransaction();
 
-            $especialidad = $this->especialidadRepository->get($id);
-
-            $this->especialidadRepository->remove($especialidad);
+            $this->especialidadRepository->remove($id);
 
             $this->unitOfWork->commit();
         } catch (\Throwable $throwable) {

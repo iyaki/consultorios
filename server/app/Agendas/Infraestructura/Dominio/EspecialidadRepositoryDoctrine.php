@@ -55,8 +55,10 @@ final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInte
         $this->em->persist($especialidad);
     }
 
-    public function remove(Especialidad $especialidad): void
+    public function remove(EspecialidadId $id): void
     {
-        $this->em->remove($especialidad);
+        $this->em->remove(
+            $this->get($id)
+        );
     }
 }

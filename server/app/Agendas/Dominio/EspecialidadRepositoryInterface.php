@@ -22,5 +22,5 @@ interface EspecialidadRepositoryInterface
 
     public function add(Especialidad $especialidad): void;
 
-    public function remove(Especialidad $especialidad): void;
+    public function remove(EspecialidadId $id): void;
 }
