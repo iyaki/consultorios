@@ -8,6 +8,7 @@ use Consultorio\Agendas\AgendasContainer;
 use Consultorio\Agendas\Infraestructura\Presentacion\WebApp\WebAppResponseFactoryAgendasFractal;
 use Consultorio\Core\CoreContainer;
 use Consultorio\Core\Presentacion\RoutesConfigurator;
+use Consultorio\Core\Presentacion\WebApp\ExceptionMiddleware;
 use Psr\Http\Message\ResponseFactoryInterface;
 
 return function (RoutesConfigurator $routes): void {
@@ -22,6 +23,8 @@ return function (RoutesConfigurator $routes): void {
     );
 
     $routes = $routes->withBasePath('/agendas/webapp/');
+
+    $routes->pipe(fn () => new ExceptionMiddleware($responseFactory()));
 
     $especialidadesPath = 'especialidades';
     $routes->delete($especialidadesPath . '/{id}', fn () => new EspecialidadesDeleteHandler(

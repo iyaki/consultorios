@@ -8,6 +8,7 @@ use Mezzio\Application;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
@@ -100,6 +101,17 @@ final class RoutesConfigurator
         );
     }
 
+    /**
+     * @param callable(): MiddlewareInterface $middlewareFactory
+     */
+    public function pipe(callable $middlewareFactory): void
+    {
+        $this->app->pipe(
+            $this->basePath,
+            $this->lazyMiddleware($middlewareFactory)
+        );
+    }
+
     private function fullPath(string $path): string
     {
         return $this->basePath . $path;
@@ -114,5 +126,16 @@ final class RoutesConfigurator
     private function lazyRequestHandler(callable $requestHandlerFactory): callable
     {
         return fn (ServerRequestInterface $request) => $requestHandlerFactory()->handle($request);
+    }
+
+    /**
+     * Este método permite que los middlewares sean instanciados solo cuando son necesarios
+     *
+     * @param callable(): MiddlewareInterface $middlewareFactory
+     * @return callable(ServerRequestInterface, RequestHandlerInterface): ResponseInterface
+     */
+    private function lazyMiddleware(callable $middlewareFactory): callable
+    {
+        return fn (ServerRequestInterface $request, RequestHandlerInterface $handler) => $middlewareFactory()->process($request, $handler);
     }
 }

@@ -20,12 +20,8 @@ final class EspecialidadesGetHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        try {
-            return $this->responseFactory->createResponseFromCollection(
-                $this->especialidades->getAll()
-            );
-        } catch (\Throwable $throwable) {
-            return $this->responseFactory->createResponseFromItem($throwable, 500);
-        }
+        return $this->responseFactory->createResponseFromCollection(
+            $this->especialidades->getAll()
+        );
     }
 }
