@@ -33,7 +33,7 @@ final class Especialidades
             $especialidadId = $this->especialidadRepository->crearId();
             $especialidad = new Especialidad($especialidadId, $nombre);
 
-            $this->assertEsNombreUnico($especialidad);
+            $this->assertTieneNombreUnico($especialidad);
 
             $this->especialidadRepository->add($especialidad);
 
@@ -55,7 +55,7 @@ final class Especialidades
 
             $especialidad->renombrar($nombre);
 
-            $this->assertEsNombreUnico($especialidad);
+            $this->assertTieneNombreUnico($especialidad);
 
             $this->unitOfWork->commit();
 
@@ -80,7 +80,7 @@ final class Especialidades
         }
     }
 
-    private function assertEsNombreUnico(Especialidad $especialidad): void
+    private function assertTieneNombreUnico(Especialidad $especialidad): void
     {
         $especialidades = $this->especialidadRepository->findBy([
             'nombre' => $especialidad->nombre(),
