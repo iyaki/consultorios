@@ -19,7 +19,9 @@ final class AgendasContainer
     {
         return new Especialidades(
             $this->coreContainer->getUnitOfWork(),
-            new EspecialidadRepositoryDoctrine($this->coreContainer->getEntityManager())
+            new EspecialidadRepositoryDoctrine(
+                $this->coreContainer->getEntityManager()
+            )
         );
     }
 }

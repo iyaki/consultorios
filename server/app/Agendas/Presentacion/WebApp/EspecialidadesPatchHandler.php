@@ -29,7 +29,10 @@ final class EspecialidadesPatchHandler implements RequestHandlerInterface
         $id = $this->getId($request);
         $data = $this->getData($request);
 
-        $especialidad = $this->especialidades->editar(new EspecialidadId($id), (string) $data->nombre);
+        $especialidad = $this->especialidades->editar(
+            new EspecialidadId($id),
+            (string) $data->nombre
+        );
 
         return $this->responseFactory->createResponseFromItem($especialidad, 200);
     }

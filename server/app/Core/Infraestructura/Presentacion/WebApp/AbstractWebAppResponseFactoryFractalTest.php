@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Consultorio\Core\Infraestructura\Presentacion\WebApp;
 
 use Laminas\Diactoros\Response\TextResponse;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 
-final class AbstractWebAppResponseFactoryFractalTest extends \PHPUnit\Framework\TestCase
+final class AbstractWebAppResponseFactoryFractalTest extends TestCase
 {
     /**
      * @var string
@@ -18,7 +19,9 @@ final class AbstractWebAppResponseFactoryFractalTest extends \PHPUnit\Framework\
     {
         $webAppResponseFactory = $this->getWebAppResponseFactory();
 
-        $response = $webAppResponseFactory->createResponseFromItem(new DummyDTO(':D'));
+        $response = $webAppResponseFactory->createResponseFromItem(
+            new DummyDTO(':D')
+        );
 
         $this->assertJsonStringEqualsJsonString(
             '{"data":{"property":":D"}}',
@@ -42,10 +45,20 @@ final class AbstractWebAppResponseFactoryFractalTest extends \PHPUnit\Framework\
     {
         $webAppResponseFactory = $this->getWebAppResponseFactory();
 
-        $response = $webAppResponseFactory->createResponseFromItem(new \Exception(self::EXCEPTION_MESSAGE));
+        $response = $webAppResponseFactory->createResponseFromItem(
+            new \Exception(self::EXCEPTION_MESSAGE)
+        );
 
-        $decodedResponseBody = json_decode((string) $response->getBody(), null, 512, JSON_THROW_ON_ERROR);
-        $this->assertSame(self::EXCEPTION_MESSAGE, $decodedResponseBody->data->message);
+        $decodedResponseBody = json_decode(
+            (string) $response->getBody(),
+            false,
+            512,
+            JSON_THROW_ON_ERROR
+        );
+        $this->assertSame(
+            self::EXCEPTION_MESSAGE,
+            $decodedResponseBody->data->message
+        );
     }
 
     public function testCreateResponseFromCollectionResource(): void

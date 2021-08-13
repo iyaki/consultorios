@@ -9,7 +9,8 @@ interface EspecialidadRepositoryInterface
     public function crearId(): EspecialidadId;
 
     /**
-     * @throws \UnexpectedValueException excepción lanzada al intentar obtener una especialidad inexistente.
+     * @throws \UnexpectedValueException excepción lanzada al intentar obtener
+     * una especialidad inexistente.
      */
     public function get(EspecialidadId $id): Especialidad;
 
@@ -23,7 +24,8 @@ interface EspecialidadRepositoryInterface
     public function add(Especialidad $especialidad): void;
 
     /**
-     * @throws \UnexpectedValueException excepción lanzada al intentar eliminar una especialidad inexistente.
+     * @throws \UnexpectedValueException excepción lanzada al intentar eliminar
+     * una especialidad inexistente.
      */
     public function remove(EspecialidadId $id): void;
 }

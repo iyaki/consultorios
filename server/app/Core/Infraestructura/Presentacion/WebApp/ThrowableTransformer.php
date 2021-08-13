@@ -7,7 +7,8 @@ namespace Consultorio\Core\Infraestructura\Presentacion\WebApp;
 use League\Fractal\TransformerAbstract;
 
 /**
- * Clase utilizada para formatear las respuestas JSON que incluyen excepciones de la clase Throwable.
+ * Clase utilizada para formatear las respuestas JSON que incluyen excepciones
+ * de la clase Throwable.
  * Esta clase depende de la libreria PHP League - Fractal.
  */
 final class ThrowableTransformer extends TransformerAbstract

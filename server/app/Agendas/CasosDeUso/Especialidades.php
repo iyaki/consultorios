@@ -11,8 +11,9 @@ use Consultorio\Core\Aplicacion\UnitOfWorkInterface;
 
 /**
  * Servicio de casos de uso existentes para trabajar con especialidades.
- * Ya que las especialidades no cumplen una función en si mismas sino que son utilizadas como parte
- * de la lógica de las Citas las operaciones disponibles en este servicio son las correspondientes a CRUD.
+ * Ya que las especialidades no cumplen una función en si mismas sino que son
+ * utilizadas como parte de la lógica de las Citas las operaciones disponibles
+ * en este servicio son las correspondientes a CRUD.
  */
 final class Especialidades
 {
@@ -35,7 +36,8 @@ final class Especialidades
     /**
      * Crea una nueva especialidad a partir de un nombre.
      *
-     * @throws \Exception excepción lanzada al intentar crear una nueva especialidad a partir de un nombre repetido.
+     * @throws \Exception excepción lanzada al intentar crear una nueva
+     * especialidad a partir de un nombre repetido.
      */
     public function crear(string $nombre): Especialidad
     {
@@ -61,8 +63,10 @@ final class Especialidades
     /**
      * Edita el nombre de una especialidad.
      *
-     * @throws \Exception excepción lanzada al intentar editar una especialidad con un nombre repetido.
-     * @throws \UnexpectedValueException excepción lanzada al intentar editar una especialidad inexistente.
+     * @throws \Exception excepción lanzada al intentar editar una especialidad
+     * con un nombre repetido.
+     * @throws \UnexpectedValueException excepción lanzada al intentar editar
+     * una especialidad inexistente.
      */
     public function editar(EspecialidadId $id, string $nombre): Especialidad
     {
@@ -87,7 +91,8 @@ final class Especialidades
     /**
      * Elimina una especialidad
      *
-     * @throws \UnexpectedValueException excepción lanzada al intentar eliminar una especialidad inexistente.
+     * @throws \UnexpectedValueException excepción lanzada al intentar eliminar
+     * una especialidad inexistente.
      */
     public function eliminar(EspecialidadId $id): void
     {
@@ -111,7 +116,9 @@ final class Especialidades
 
         foreach ($especialidades as $especialidadMismoNombre) {
             if ($especialidad !== $especialidadMismoNombre) {
-                throw new \Exception('Ya existe una especialidad con el nombre: ' . $especialidad->nombre());
+                throw new \Exception(
+                    'Ya existe una especialidad con el nombre: ' . $especialidad->nombre()
+                );
             }
         }
     }

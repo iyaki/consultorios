@@ -118,7 +118,8 @@ final class RoutesConfigurator
     }
 
     /**
-     * Este método permite que los controladores sean instanciados solo cuando son necesarios
+     * Este método permite que los controladores sean instanciados
+     * solo cuando son necesarios
      *
      * @param callable(): RequestHandlerInterface $requestHandlerFactory
      * @return callable(ServerRequestInterface): ResponseInterface
@@ -129,7 +130,8 @@ final class RoutesConfigurator
     }
 
     /**
-     * Este método permite que los middlewares sean instanciados solo cuando son necesarios
+     * Este método permite que los middlewares sean instanciados
+     * solo cuando son necesarios
      *
      * @param callable(): MiddlewareInterface $middlewareFactory
      * @return callable(ServerRequestInterface, RequestHandlerInterface): ResponseInterface

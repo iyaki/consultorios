@@ -12,7 +12,8 @@ use Doctrine\ORM\EntityRepository;
 use Ramsey\Uuid\Uuid;
 
 /**
- * Implementación del repositorio de especialidades utilizando la libreria Doctrine ORM como base.
+ * Implementación del repositorio de especialidades utilizando la libreria
+ * Doctrine ORM como base.
  */
 final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInterface
 {
@@ -34,7 +35,9 @@ final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInte
         $especialidad = $this->repository->find((string) $id);
 
         if ($especialidad === null) {
-            throw new \UnexpectedValueException('El id ' . $id . ' no corresponde a ninguna especialidad');
+            throw new \UnexpectedValueException(
+                'El id ' . $id . ' no corresponde a ninguna especialidad'
+            );
         }
 
         return $especialidad;
@@ -47,10 +50,7 @@ final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInte
      */
     public function findBy(array $criteria): array
     {
-        /** @var Especialidad[] $especialidades */
-        $especialidades = $this->repository->findBy($criteria);
-        // Verifico que el $especialidades este compuesto por elementos de tipo Especialidad
-        return (fn (Especialidad ...$especialidades): array => $especialidades)(...$especialidades);
+        return $this->repository->findBy($criteria);
     }
 
     public function add(Especialidad $especialidad): void

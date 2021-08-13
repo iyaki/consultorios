@@ -11,7 +11,7 @@ use Consultorio\Core\Presentacion\RoutesConfigurator;
 use Consultorio\Core\Presentacion\WebApp\ExceptionMiddleware;
 use Psr\Http\Message\ResponseFactoryInterface;
 
-return function (RoutesConfigurator $routes): void {
+return static function (RoutesConfigurator $routes): void {
     $container = $routes->container();
 
     $responseFactory = fn (): WebAppResponseFactoryAgendasFractal => new WebAppResponseFactoryAgendasFractal(
@@ -27,20 +27,32 @@ return function (RoutesConfigurator $routes): void {
     $routes->pipe(fn () => new ExceptionMiddleware($responseFactory()));
 
     $especialidadesPath = 'especialidades';
-    $routes->delete($especialidadesPath . '/{id}', fn () => new EspecialidadesDeleteHandler(
-        $responseFactory(),
-        $agendasContainer()->getCasosDeUsoEspecialidades()
-    ));
-    $routes->get($especialidadesPath, fn () => new EspecialidadesGetHandler(
-        $responseFactory(),
-        $agendasContainer()->getCasosDeUsoEspecialidades()
-    ));
-    $routes->patch($especialidadesPath . '/{id}', fn () => new EspecialidadesPatchHandler(
-        $responseFactory(),
-        $agendasContainer()->getCasosDeUsoEspecialidades()
-    ));
-    $routes->post($especialidadesPath, fn () => new EspecialidadesPostHandler(
-        $responseFactory(),
-        $agendasContainer()->getCasosDeUsoEspecialidades()
-    ));
+    $routes->delete(
+        $especialidadesPath . '/{id}',
+        fn () => new EspecialidadesDeleteHandler(
+            $responseFactory(),
+            $agendasContainer()->getCasosDeUsoEspecialidades()
+        )
+    );
+    $routes->get(
+        $especialidadesPath,
+        fn () => new EspecialidadesGetHandler(
+            $responseFactory(),
+            $agendasContainer()->getCasosDeUsoEspecialidades()
+        )
+    );
+    $routes->patch(
+        $especialidadesPath . '/{id}',
+        fn () => new EspecialidadesPatchHandler(
+            $responseFactory(),
+            $agendasContainer()->getCasosDeUsoEspecialidades()
+        )
+    );
+    $routes->post(
+        $especialidadesPath,
+        fn () => new EspecialidadesPostHandler(
+            $responseFactory(),
+            $agendasContainer()->getCasosDeUsoEspecialidades()
+        )
+    );
 };

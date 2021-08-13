@@ -14,7 +14,8 @@ trait UriPathSegmentsHelper
     /**
      * Obtiene el id del path de una url o lanza una excepción.
      *
-     * @throws \Exception excepción lanzada cuando la URI no cuenta con el segmento del path del Id.
+     * @throws \Exception excepción lanzada cuando la URI no cuenta con el
+     * segmento del path del Id.
      */
     private function getId(ServerRequestInterface $request): string
     {

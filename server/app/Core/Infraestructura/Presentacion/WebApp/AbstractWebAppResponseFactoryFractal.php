@@ -93,7 +93,9 @@ abstract class AbstractWebAppResponseFactoryFractal implements WebAppResponseFac
         $resource = reset($resources);
 
         if ($resource instanceof \Throwable) {
-            throw new \Exception('El envío de multiples errores no esta permitido');
+            throw new \Exception(
+                'El envío de multiples errores no esta permitido'
+            );
         }
 
         foreach ($this->transformers as $resourceFrom => $transformer) {
@@ -101,6 +103,9 @@ abstract class AbstractWebAppResponseFactoryFractal implements WebAppResponseFac
                 return new Collection($resources, new $transformer());
             }
         }
-        throw new \UnexpectedValueException('No hay transformer configurado para: ' . $resource::class);
+
+        throw new \UnexpectedValueException(
+            'No hay transformer configurado para: ' . $resource::class
+        );
     }
 }
