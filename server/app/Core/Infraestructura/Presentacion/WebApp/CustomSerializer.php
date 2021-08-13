@@ -11,7 +11,7 @@ use League\Fractal\Serializer\DataArraySerializer;
  * PHP League - Fractal para convertir objetos (entidades o excepciones)
  * en respuestas JSON.
  */
-final class WebAppSerializer extends DataArraySerializer
+final class CustomSerializer extends DataArraySerializer
 {
     /**
      * Serialize null resource.

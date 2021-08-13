@@ -6,8 +6,8 @@ namespace Consultorio\Agendas\Presentacion\WebApp;
 
 use Consultorio\Agendas\CasosDeUso\Especialidades;
 use Consultorio\Agendas\Dominio\EspecialidadId;
+use Consultorio\Core\Presentacion\WebApp\ResponseFactoryInterface;
 use Consultorio\Core\Presentacion\WebApp\UriPathSegmentsHelper;
-use Consultorio\Core\Presentacion\WebApp\WebAppResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -17,7 +17,7 @@ final class EspecialidadesDeleteHandler implements RequestHandlerInterface
     use UriPathSegmentsHelper;
 
     public function __construct(
-        private WebAppResponseFactoryInterface $responseFactory,
+        private ResponseFactoryInterface $responseFactory,
         private Especialidades $especialidades,
     ) {
     }

@@ -8,7 +8,7 @@ use Laminas\Diactoros\Response\TextResponse;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 
-final class AbstractWebAppResponseFactoryFractalTest extends TestCase
+final class AbstractpResponseFactoryFractalTest extends TestCase
 {
     /**
      * @var string
@@ -97,14 +97,14 @@ final class AbstractWebAppResponseFactoryFractalTest extends TestCase
         $webAppResponseFactory->createResponseFromCollection([new \Exception()]);
     }
 
-    private function getWebAppResponseFactory(): AbstractWebAppResponseFactoryFractal
+    private function getWebAppResponseFactory(): AbstractResponseFactoryFractal
     {
         $psrResponseFactory = $this->createStub(ResponseFactoryInterface::class);
         $psrResponseFactory->method('createResponse')
             ->willReturnCallback(fn (int $code = 200) => new TextResponse('', $code))
         ;
 
-        return new class($psrResponseFactory) extends AbstractWebAppResponseFactoryFractal {
+        return new class($psrResponseFactory) extends AbstractResponseFactoryFractal {
             protected array $transformers = [
                 DummyDTO::class => DummyTransformer::class,
             ];

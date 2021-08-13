@@ -6,7 +6,7 @@ namespace Consultorio\Core\Presentacion\WebApp;
 
 use Psr\Http\Message\ResponseInterface;
 
-interface WebAppResponseFactoryInterface
+interface ResponseFactoryInterface
 {
     public function createResponseFromItem(
         ?object $resource,

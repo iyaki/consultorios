@@ -6,7 +6,7 @@ namespace Consultorio\Agendas\Presentacion\WebApp;
 
 use Consultorio\Agendas\CasosDeUso\Especialidades;
 use Consultorio\Core\Presentacion\WebApp\RequestBodyHelper;
-use Consultorio\Core\Presentacion\WebApp\WebAppResponseFactoryInterface;
+use Consultorio\Core\Presentacion\WebApp\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -16,7 +16,7 @@ final class EspecialidadesPostHandler implements RequestHandlerInterface
     use RequestBodyHelper;
 
     public function __construct(
-        private WebAppResponseFactoryInterface $responseFactory,
+        private ResponseFactoryInterface $responseFactory,
         private Especialidades $especialidades,
     ) {
     }

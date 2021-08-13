@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Consultorio\Core\Infraestructura\Presentacion\WebApp;
 
-use Consultorio\Core\Presentacion\WebApp\WebAppResponseFactoryInterface;
+use Consultorio\Core\Presentacion\WebApp\ResponseFactoryInterface as WebAppResponseFactoryInterface;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Clase base utilizada para convertir entidades en respuestas JSON utilizadas por las APIs REST de la aplicación.
  */
-abstract class AbstractWebAppResponseFactoryFractal implements WebAppResponseFactoryInterface
+abstract class AbstractResponseFactoryFractal implements WebAppResponseFactoryInterface
 {
     /**
      * @var array<string, class-string>
@@ -75,7 +75,7 @@ abstract class AbstractWebAppResponseFactoryFractal implements WebAppResponseFac
     private function transformResourceToJson(ResourceAbstract $resource): string
     {
         return (new Manager())
-            ->setSerializer(new WebAppSerializer())
+            ->setSerializer(new CustomSerializer())
             ->createData($resource)
             ->toJson()
         ;

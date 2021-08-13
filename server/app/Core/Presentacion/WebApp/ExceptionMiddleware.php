@@ -12,7 +12,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 final class ExceptionMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private WebAppResponseFactoryInterface $responseFactory
+        private ResponseFactoryInterface $responseFactory
     ) {
     }
 

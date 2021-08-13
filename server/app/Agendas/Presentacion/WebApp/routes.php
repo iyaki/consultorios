@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Consultorio\Agendas\Presentacion\WebApp;
 
 use Consultorio\Agendas\AgendasContainer;
-use Consultorio\Agendas\Infraestructura\Presentacion\WebApp\WebAppResponseFactoryAgendasFractal;
+use Consultorio\Agendas\Infraestructura\Presentacion\WebApp\ResponseFactoryAgendasFractal;
 use Consultorio\Core\CoreContainer;
 use Consultorio\Core\Presentacion\RoutesConfigurator;
 use Consultorio\Core\Presentacion\WebApp\ExceptionMiddleware;
@@ -14,7 +14,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 return static function (RoutesConfigurator $routes): void {
     $container = $routes->container();
 
-    $responseFactory = fn (): WebAppResponseFactoryAgendasFractal => new WebAppResponseFactoryAgendasFractal(
+    $responseFactory = fn (): ResponseFactoryAgendasFractal => new ResponseFactoryAgendasFractal(
         $container->get(ResponseFactoryInterface::class)
     );
 
