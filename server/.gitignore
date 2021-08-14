@@ -4,6 +4,7 @@
 .rector_cache
 composer.lock
 phpunit.xml
+public/docs
 tools/*
 !tools/composer-scripts/
 vendor
