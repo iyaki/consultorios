@@ -16,6 +16,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 final class EspecialidadesPatchHandler implements RequestHandlerInterface
 {
     use RequestBodyHelper;
+
     use UriPathSegmentsHelper;
 
     public function __construct(

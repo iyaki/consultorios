@@ -112,7 +112,7 @@ final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
         $repository = $this->createStub(\Consultorio\Agendas\Dominio\EspecialidadRepositoryInterface::class);
 
         $repository->method('findBy')
-            ->willReturnCallback(fn (array $criteria) => array_filter(
+            ->willReturnCallback(fn (array $criteria): array => array_filter(
                 $this->repositoryStorage,
                 function (Especialidad $e) use ($criteria): bool {
                     foreach ($criteria as $key => $value) {
@@ -126,14 +126,14 @@ final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
         ;
 
         $repository->method('get')
-            ->willReturnCallback(fn (EspecialidadId $id) => array_values(array_filter(
+            ->willReturnCallback(fn (EspecialidadId $id): \Consultorio\Agendas\Dominio\Especialidad => array_values(array_filter(
                 $this->repositoryStorage,
-                fn (Especialidad $e) => (string) $e->id() === (string) $id
+                fn (Especialidad $e): bool => (string) $e->id() === (string) $id
             ))[0] ?? throw new \UnexpectedValueException())
         ;
 
         $repository->method('crearId')
-            ->willReturnCallback(fn () => new EspecialidadId(uniqid()))
+            ->willReturnCallback(fn (): \Consultorio\Agendas\Dominio\EspecialidadId => new EspecialidadId(uniqid()))
         ;
 
         $repository->method('add')

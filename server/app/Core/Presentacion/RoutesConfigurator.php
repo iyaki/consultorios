@@ -126,7 +126,7 @@ final class RoutesConfigurator
      */
     private function lazyRequestHandler(callable $requestHandlerFactory): callable
     {
-        return fn (ServerRequestInterface $request) => $requestHandlerFactory()->handle($request);
+        return fn (ServerRequestInterface $request): \Psr\Http\Message\ResponseInterface => $requestHandlerFactory()->handle($request);
     }
 
     /**
@@ -138,6 +138,6 @@ final class RoutesConfigurator
      */
     private function lazyMiddleware(callable $middlewareFactory): callable
     {
-        return fn (ServerRequestInterface $request, RequestHandlerInterface $handler) => $middlewareFactory()->process($request, $handler);
+        return fn (ServerRequestInterface $request, RequestHandlerInterface $handler): \Psr\Http\Message\ResponseInterface => $middlewareFactory()->process($request, $handler);
     }
 }

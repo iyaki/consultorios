@@ -24,33 +24,33 @@ return static function (RoutesConfigurator $routes): void {
 
     $routes = $routes->withBasePath('/agendas/webapp/');
 
-    $routes->pipe(fn () => new ExceptionMiddleware($responseFactory()));
+    $routes->pipe(fn (): \Consultorio\Core\Presentacion\WebApp\ExceptionMiddleware => new ExceptionMiddleware($responseFactory()));
 
     $especialidadesPath = 'especialidades';
     $routes->delete(
         $especialidadesPath . '/{id}',
-        fn () => new EspecialidadesDeleteHandler(
+        fn (): \Consultorio\Agendas\Presentacion\WebApp\EspecialidadesDeleteHandler => new EspecialidadesDeleteHandler(
             $responseFactory(),
             $agendasContainer()->getCasosDeUsoEspecialidades()
         )
     );
     $routes->get(
         $especialidadesPath,
-        fn () => new EspecialidadesGetHandler(
+        fn (): \Consultorio\Agendas\Presentacion\WebApp\EspecialidadesGetHandler => new EspecialidadesGetHandler(
             $responseFactory(),
             $agendasContainer()->getCasosDeUsoEspecialidades()
         )
     );
     $routes->patch(
         $especialidadesPath . '/{id}',
-        fn () => new EspecialidadesPatchHandler(
+        fn (): \Consultorio\Agendas\Presentacion\WebApp\EspecialidadesPatchHandler => new EspecialidadesPatchHandler(
             $responseFactory(),
             $agendasContainer()->getCasosDeUsoEspecialidades()
         )
     );
     $routes->post(
         $especialidadesPath,
-        fn () => new EspecialidadesPostHandler(
+        fn (): \Consultorio\Agendas\Presentacion\WebApp\EspecialidadesPostHandler => new EspecialidadesPostHandler(
             $responseFactory(),
             $agendasContainer()->getCasosDeUsoEspecialidades()
         )

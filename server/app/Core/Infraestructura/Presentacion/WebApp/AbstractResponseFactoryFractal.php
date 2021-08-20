@@ -87,7 +87,7 @@ abstract class AbstractResponseFactoryFractal implements WebAppResponseFactoryIn
     private function getCollection(array $resources): Collection
     {
         if ($resources === []) {
-            return new Collection([], fn () => []);
+            return new Collection([], fn (): array => []);
         }
 
         $resource = reset($resources);

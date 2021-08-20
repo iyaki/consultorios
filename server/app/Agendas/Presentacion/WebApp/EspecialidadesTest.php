@@ -4,31 +4,32 @@ declare(strict_types=1);
 
 namespace Consultorio\Agendas\Presentacion\WebApp;
 
-use Consultorio\Agendas\CasosDeUso\Especialidades;
-use Consultorio\Agendas\Dominio\EspecialidadRepositoryInterface;
-use Consultorio\Agendas\Infraestructura\Presentacion\WebApp\ResponseFactoryAgendasFractal;
-use Consultorio\Core\Aplicacion\UnitOfWorkInterface;
 use GuzzleHttp\Client;
-use Laminas\Diactoros\Request;
-use Laminas\Diactoros\ResponseFactory;
-use Laminas\Diactoros\ServerRequest;
-use Laminas\Diactoros\Stream;
 use PHPUnit\Framework\TestCase;
 
 final class EspecialidadesTest extends TestCase
 {
+    /**
+     * @var string
+     */
     private const URI_PATH = 'agendas/webapp/especialidades';
 
+    /**
+     * @var string
+     */
     private const NOMBRE_ORIGINAL = 'Especialidad de prueba API';
 
+    /**
+     * @var string
+     */
     private const NOMBRE_MODIFICADO = 'Especialidad de prueba API modificado';
 
     private Client $client;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->client = new Client([
-            'base_uri' => 'http://webserver/'
+            'base_uri' => 'http://webserver/',
         ]);
     }
 
@@ -43,7 +44,7 @@ final class EspecialidadesTest extends TestCase
             ])
         );
 
-        $parsedResponse = json_decode((string) $response->getBody());
+        $parsedResponse = json_decode((string) $response->getBody(), null, 512, JSON_THROW_ON_ERROR);
 
         $this->assertSame(201, $response->getStatusCode());
         $this->assertIsString($parsedResponse->data->id);
@@ -59,7 +60,7 @@ final class EspecialidadesTest extends TestCase
     {
         $response = $this->client->get(self::URI_PATH);
 
-        $parsedResponse = json_decode((string) $response->getBody(), true);
+        $parsedResponse = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
 
         $this->assertSame(200, $response->getStatusCode());
         $this->assertIsArray($parsedResponse['data']);
@@ -84,7 +85,7 @@ final class EspecialidadesTest extends TestCase
             $this->requestOptions([
                 'data' => [
                     'nombre' => self::NOMBRE_MODIFICADO,
-                ]
+                ],
             ])
         );
 
@@ -95,7 +96,7 @@ final class EspecialidadesTest extends TestCase
                     'id' => $id,
                     'nombre' => self::NOMBRE_MODIFICADO,
                 ],
-            ]),
+            ], JSON_THROW_ON_ERROR),
             (string) $response->getBody()
         );
 
@@ -103,7 +104,9 @@ final class EspecialidadesTest extends TestCase
             (string) $this->client
                 ->get(self::URI_PATH)
                 ->getBody(),
-            true
+            true,
+            512,
+            JSON_THROW_ON_ERROR
         );
         $this->assertNotContains(
             [
@@ -130,7 +133,7 @@ final class EspecialidadesTest extends TestCase
     {
         $response = $this->client->delete(self::URI_PATH . '/' . $id);
 
-        $parsedResponse = json_decode((string) $response->getBody());
+        $parsedResponse = json_decode((string) $response->getBody(), null, 512, JSON_THROW_ON_ERROR);
 
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame(null, $parsedResponse->data);
@@ -139,7 +142,9 @@ final class EspecialidadesTest extends TestCase
             (string) $this->client
                 ->get(self::URI_PATH)
                 ->getBody(),
-            true
+            true,
+            512,
+            JSON_THROW_ON_ERROR
         );
         $this->assertNotContains(
             [
@@ -157,16 +162,21 @@ final class EspecialidadesTest extends TestCase
         );
     }
 
+    /**
+     * @return (string|string[])[]
+     *
+     * @psalm-return array{headers: array{Content-Type: 'application/json'}, body?: string}
+     */
     private function requestOptions(?array $body): array
     {
         $options = [
             'headers' => [
-                'Content-Type' => 'application/json'
+                'Content-Type' => 'application/json',
             ],
         ];
 
         if ($body !== null) {
-            $options['body'] = json_encode($body);
+            $options['body'] = json_encode($body, JSON_THROW_ON_ERROR);
         }
         return $options;
     }
