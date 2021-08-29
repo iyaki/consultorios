@@ -18,12 +18,12 @@ trait RequestBodyHelper
      */
     private function getData(ServerRequestInterface $request): object
     {
-        $body = (object) json_decode((string) $request->getBody());
-        if (
-            json_last_error() !== JSON_ERROR_NONE
-        ) {
-            throw new \Exception('Error Processing Body Request');
-        }
+        $body = (object) json_decode(
+            (string) $request->getBody(),
+            false,
+            512,
+            JSON_THROW_ON_ERROR
+        );
 
         if ($body->data === null) {
             throw new \Exception('Invalid body data');
