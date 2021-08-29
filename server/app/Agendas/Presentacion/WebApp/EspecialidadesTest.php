@@ -57,7 +57,7 @@ final class EspecialidadesTest extends TestCase
     /**
      * @depends testPostOk
      */
-    public function testPostRepetido($id): string
+    public function testPostRepetido(string $id): string
     {
         $response = $this->client->post(
             self::URI_PATH,
@@ -173,6 +173,7 @@ final class EspecialidadesTest extends TestCase
 
     /**
      * @depends testPatchOk
+     * @return string[]
      */
     public function testPatchRepetido(string $id): array
     {
@@ -216,6 +217,7 @@ final class EspecialidadesTest extends TestCase
 
     /**
      * @depends testPatchRepetido
+     * @param string[] $ids
      */
     public function testDeleteOk(array $ids): void
     {
@@ -268,7 +270,7 @@ final class EspecialidadesTest extends TestCase
     }
 
     /**
-     * @return (string|string[])[]
+     * @return array<string, mixed[]>
      *
      * @psalm-return array{headers: array{Content-Type: 'application/json'}, body?: string}
      */
