@@ -30,6 +30,7 @@ final class EspecialidadesTest extends TestCase
     {
         $this->client = new Client([
             'base_uri' => 'http://webserver/',
+            'http_errors' => false,
         ]);
     }
 
@@ -56,7 +57,29 @@ final class EspecialidadesTest extends TestCase
     /**
      * @depends testPostOk
      */
-    public function testGetOk(string $id): string
+    public function testPostRepetido($id): string
+    {
+        $response = $this->client->post(
+            self::URI_PATH,
+            $this->requestOptions([
+                'data' => [
+                    'nombre' => self::NOMBRE_ORIGINAL,
+                ],
+            ])
+        );
+
+        $parsedResponse = json_decode((string) $response->getBody(), false, 512, JSON_THROW_ON_ERROR);
+
+        $this->assertSame(500, $response->getStatusCode());
+        $this->assertIsString($parsedResponse->data->message);
+
+        return $id;
+    }
+
+    /**
+     * @depends testPostRepetido
+     */
+    public function testGet(string $id): string
     {
         $response = $this->client->get(self::URI_PATH);
 
@@ -76,7 +99,7 @@ final class EspecialidadesTest extends TestCase
     }
 
     /**
-     * @depends testGetOk
+     * @depends testGet
      */
     public function testPatchOk(string $id): string
     {
@@ -126,40 +149,122 @@ final class EspecialidadesTest extends TestCase
         return $id;
     }
 
-    /**
-     * @depends testPatchOk
-     */
-    public function testDeleteOk(string $id): void
+    public function testPatchInexistente(): void
     {
-        $response = $this->client->delete(self::URI_PATH . '/' . $id);
+        $response = $this->client->patch(
+            self::URI_PATH . '/asd',
+            $this->requestOptions([
+                'data' => [
+                    'nombre' => self::NOMBRE_ORIGINAL,
+                ],
+            ])
+        );
 
-        $parsedResponse = json_decode((string) $response->getBody(), null, 512, JSON_THROW_ON_ERROR);
-
-        $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame(null, $parsedResponse->data);
-
-        $parsedResponseGet = json_decode(
-            (string) $this->client
-                ->get(self::URI_PATH)
-                ->getBody(),
-            true,
+        $parsedResponse = json_decode(
+            (string) $response->getBody(),
+            false,
             512,
             JSON_THROW_ON_ERROR
         );
-        $this->assertNotContains(
-            [
-                'id' => $id,
-                'nombre' => self::NOMBRE_ORIGINAL,
-            ],
-            $parsedResponseGet['data']
+
+        $this->assertSame(500, $response->getStatusCode());
+        $this->assertIsString($parsedResponse->data->message);
+    }
+
+    /**
+     * @depends testPatchOk
+     */
+    public function testPatchRepetido(string $id): array
+    {
+        $r = $this->client->post(
+            self::URI_PATH,
+            $this->requestOptions([
+                'data' => [
+                    'nombre' => self::NOMBRE_ORIGINAL,
+                ],
+            ])
         );
-        $this->assertNotContains(
-            [
-                'id' => $id,
-                'nombre' => self::NOMBRE_MODIFICADO,
-            ],
-            $parsedResponseGet['data']
+
+        $nuevoId = json_decode(
+            (string) $r->getBody(),
+            false,
+            512,
+            JSON_THROW_ON_ERROR
+        )->data->id;
+
+        $response = $this->client->patch(
+            self::URI_PATH . '/' . $id,
+            $this->requestOptions([
+                'data' => [
+                    'nombre' => self::NOMBRE_ORIGINAL,
+                ],
+            ])
         );
+
+        $parsedResponse = json_decode(
+            (string) $response->getBody(),
+            false,
+            512,
+            JSON_THROW_ON_ERROR
+        );
+
+        $this->assertSame(500, $response->getStatusCode());
+        $this->assertIsString($parsedResponse->data->message);
+
+        return [$id, $nuevoId];
+    }
+
+    /**
+     * @depends testPatchRepetido
+     */
+    public function testDeleteOk(array $ids): void
+    {
+        foreach ($ids as $id) {
+            $response = $this->client->delete(self::URI_PATH . '/' . $id);
+
+            $parsedResponse = json_decode((string) $response->getBody(), false, 512, JSON_THROW_ON_ERROR);
+
+            $this->assertSame(200, $response->getStatusCode());
+            $this->assertSame(null, $parsedResponse->data);
+
+            $parsedResponseGet = json_decode(
+                (string) $this->client
+                    ->get(self::URI_PATH)
+                    ->getBody(),
+                true,
+                512,
+                JSON_THROW_ON_ERROR
+            );
+            $this->assertNotContains(
+                [
+                    'id' => $id,
+                    'nombre' => self::NOMBRE_ORIGINAL,
+                ],
+                $parsedResponseGet['data']
+            );
+            $this->assertNotContains(
+                [
+                    'id' => $id,
+                    'nombre' => self::NOMBRE_MODIFICADO,
+                ],
+                $parsedResponseGet['data']
+            );
+        }
+    }
+
+    public function testDeleteInexistente(): void
+    {
+        $response = $this->client->delete(self::URI_PATH . '/asd');
+
+        $parsedResponse = json_decode(
+            (string) $response->getBody(),
+            false,
+            512,
+            JSON_THROW_ON_ERROR
+        );
+
+        $this->assertSame(500, $response->getStatusCode());
+        $this->assertIsString($parsedResponse->data->message);
     }
 
     /**
