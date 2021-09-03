@@ -70,7 +70,7 @@ final class EspecialidadesTest extends TestCase
 
         $parsedResponse = json_decode((string) $response->getBody(), false, 512, JSON_THROW_ON_ERROR);
 
-        $this->assertSame(500, $response->getStatusCode());
+        $this->assertSame(400, $response->getStatusCode());
         $this->assertIsString($parsedResponse->data->message);
 
         return $id;
@@ -167,7 +167,7 @@ final class EspecialidadesTest extends TestCase
             JSON_THROW_ON_ERROR
         );
 
-        $this->assertSame(500, $response->getStatusCode());
+        $this->assertSame(400, $response->getStatusCode());
         $this->assertIsString($parsedResponse->data->message);
     }
 
@@ -209,7 +209,7 @@ final class EspecialidadesTest extends TestCase
             JSON_THROW_ON_ERROR
         );
 
-        $this->assertSame(500, $response->getStatusCode());
+        $this->assertSame(400, $response->getStatusCode());
         $this->assertIsString($parsedResponse->data->message);
 
         return [$id, $nuevoId];
@@ -265,7 +265,7 @@ final class EspecialidadesTest extends TestCase
             JSON_THROW_ON_ERROR
         );
 
-        $this->assertSame(500, $response->getStatusCode());
+        $this->assertSame(400, $response->getStatusCode());
         $this->assertIsString($parsedResponse->data->message);
     }
 

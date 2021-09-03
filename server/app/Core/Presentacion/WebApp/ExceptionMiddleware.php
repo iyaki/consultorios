@@ -23,7 +23,7 @@ final class ExceptionMiddleware implements MiddlewareInterface
         try {
             return $handler->handle($request);
         } catch (\Throwable $throwable) {
-            return $this->responseFactory->createResponseFromItem($throwable, 500);
+            return $this->responseFactory->createResponseFromItem($throwable, 400);
         }
     }
 }
