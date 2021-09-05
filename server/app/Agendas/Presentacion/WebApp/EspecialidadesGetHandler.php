@@ -18,6 +18,53 @@ final class EspecialidadesGetHandler implements RequestHandlerInterface
     ) {
     }
 
+    /**
+     *  @OA\Get(
+     *      path="/agendas/webapp/especialidades",
+     *      operationId="listarEspecialidades",
+     *      summary="Lista las especialidades registradas",
+     *      description="Expone una lista de todas las especialidades registradas actualmente.",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Lista de especialidades.",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  nullable=false,
+     *                  @OA\Property(
+     *                      property="data",
+     *                      type="array",
+     *                      nullable=false,
+     *                      uniqueItems=false,
+     *                      @OA\Items(
+     *                          ref="#/components/schemas/Especialidad",
+     *                      )
+     *                  ),
+     *                  required={"data"},
+     *              ),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Error inesperado.",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  nullable=false,
+     *                  @OA\Property(
+     *                      property="data",
+     *                      type="object",
+     *                      nullable=false,
+     *                      ref="#/components/schemas/Error",
+     *                  ),
+     *                  required={"data"},
+     *              ),
+     *          ),
+     *      ),
+     *  ),
+     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return $this->responseFactory->createResponseFromCollection(

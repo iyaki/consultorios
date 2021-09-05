@@ -25,6 +25,81 @@ final class EspecialidadesPatchHandler implements RequestHandlerInterface
     ) {
     }
 
+    /**
+     *  @OA\Patch(
+     *      path="/agendas/webapp/especialidades/{id}",
+     *      operationId="editarEspecialidad",
+     *      summary="Edita el registro de una especialidad",
+     *      description="Edita los datos de una especialidad ya registrada.",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          description="ID de la especialidad",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string",
+     *              format="uuid",
+     *          ),
+     *      ),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  nullable=false,
+     *                  @OA\Property(
+     *                      property="data",
+     *                      type="object",
+     *                      nullable=false,
+     *                      @OA\Property(
+     *                          property="nombre",
+     *                          type="string",
+     *                      ),
+     *                      required={"nombre"},
+     *                  ),
+     *                  required={"data"},
+     *              ),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Especialidad editada.",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  nullable=false,
+     *                  @OA\Property(
+     *                      property="data",
+     *                      type="object",
+     *                      nullable=false,
+     *                      ref="#/components/schemas/Especialidad",
+     *                  ),
+     *                  required={"data"},
+     *              ),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Error inesperado.",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  nullable=false,
+     *                  @OA\Property(
+     *                      property="data",
+     *                      type="object",
+     *                      nullable=false,
+     *                      ref="#/components/schemas/Error",
+     *                  ),
+     *                  required={"data"},
+     *              ),
+     *          ),
+     *      ),
+     *  ),
+     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $id = $this->getId($request);

@@ -22,6 +22,46 @@ final class EspecialidadesDeleteHandler implements RequestHandlerInterface
     ) {
     }
 
+    /**
+     *  @OA\Delete(
+     *      path="/agendas/webapp/especialidades/{id}",
+     *      operationId="eliminarEspecialidad",
+     *      summary="Elimina el registro de una especialidad",
+     *      description="Elimina una especialidad registrada previamente.",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          description="ID de la especialidad",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string",
+     *              format="uuid",
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Especialidad eliminada.",
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Error inesperado",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  nullable=false,
+     *                  @OA\Property(
+     *                      property="data",
+     *                      type="object",
+     *                      nullable=false,
+     *                      ref="#/components/schemas/Error",
+     *                  ),
+     *                  required={"data"},
+     *              ),
+     *          ),
+     *      ),
+     *  ),
+     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $id = $this->getId($request);
