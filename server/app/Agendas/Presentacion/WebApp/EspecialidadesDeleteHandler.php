@@ -45,19 +45,16 @@ final class EspecialidadesDeleteHandler implements RequestHandlerInterface
      *      @OA\Response(
      *          response=400,
      *          description="Error inesperado",
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(
+     *          @OA\JsonContent(
+     *              type="object",
+     *              nullable=false,
+     *              @OA\Property(
+     *                  property="data",
      *                  type="object",
      *                  nullable=false,
-     *                  @OA\Property(
-     *                      property="data",
-     *                      type="object",
-     *                      nullable=false,
-     *                      ref="#/components/schemas/Error",
-     *                  ),
-     *                  required={"data"},
+     *                  ref="#/components/schemas/Error",
      *              ),
+     *              required={"data"},
      *          ),
      *      ),
      *  ),

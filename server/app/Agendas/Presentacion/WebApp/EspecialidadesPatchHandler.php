@@ -43,59 +43,50 @@ final class EspecialidadesPatchHandler implements RequestHandlerInterface
      *      ),
      *      @OA\RequestBody(
      *          required=true,
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(
+     *          @OA\JsonContent(
+     *              type="object",
+     *              nullable=false,
+     *              @OA\Property(
+     *                  property="data",
      *                  type="object",
      *                  nullable=false,
      *                  @OA\Property(
-     *                      property="data",
-     *                      type="object",
-     *                      nullable=false,
-     *                      @OA\Property(
-     *                          property="nombre",
-     *                          type="string",
-     *                      ),
-     *                      required={"nombre"},
+     *                      property="nombre",
+     *                      type="string",
      *                  ),
-     *                  required={"data"},
+     *                  required={"nombre"},
      *              ),
+     *              required={"data"},
      *          ),
      *      ),
      *      @OA\Response(
      *          response=200,
      *          description="Especialidad editada.",
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(
+     *          @OA\JsonContent(
+     *              type="object",
+     *              nullable=false,
+     *              @OA\Property(
+     *                  property="data",
      *                  type="object",
      *                  nullable=false,
-     *                  @OA\Property(
-     *                      property="data",
-     *                      type="object",
-     *                      nullable=false,
-     *                      ref="#/components/schemas/Especialidad",
-     *                  ),
-     *                  required={"data"},
+     *                  ref="#/components/schemas/Especialidad",
      *              ),
+     *              required={"data"},
      *          ),
      *      ),
      *      @OA\Response(
      *          response=400,
      *          description="Error inesperado.",
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(
+     *          @OA\JsonContent(
+     *              type="object",
+     *              nullable=false,
+     *              @OA\Property(
+     *                  property="data",
      *                  type="object",
      *                  nullable=false,
-     *                  @OA\Property(
-     *                      property="data",
-     *                      type="object",
-     *                      nullable=false,
-     *                      ref="#/components/schemas/Error",
-     *                  ),
-     *                  required={"data"},
+     *                  ref="#/components/schemas/Error",
      *              ),
+     *              required={"data"},
      *          ),
      *      ),
      *  ),
