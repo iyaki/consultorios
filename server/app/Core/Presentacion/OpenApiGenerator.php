@@ -11,12 +11,13 @@ final class OpenApiGenerator
 {
     private OpenApi $openApi;
 
-    public function __construct(string $path) {
+    public function __construct(string $path)
+    {
         $schema = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off' ? 'http' : 'https';
         $host = $_SERVER['HTTP_HOST'] ?? 'webserver';
 
-        if (!defined('SERVER_HOST')) {
-            define('SERVER_HOST', "${schema}://${host}");
+        if (! defined('SERVER_HOST')) {
+            define('SERVER_HOST', sprintf('%s://%s', $schema, $host));
         }
 
         $this->openApi = Generator::scan([$path]);

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 use Consultorio\Core\Infraestructura\Presentacion\ConfigDiscover;
 use Consultorio\Core\Presentacion\OpenApiGenerator;
-use Consultorio\Core\Infraestructura\Presentacion\WebApp\AbstractResponseFactoryFractal;
 use Consultorio\Core\Presentacion\RoutesConfigurator;
-use Consultorio\Core\Presentacion\WebApp\ExceptionMiddleware;
 use Laminas\Diactoros\Response\TextResponse;
 use Laminas\ServiceManager\ServiceManager;
 use Mezzio\Application;
@@ -14,11 +12,9 @@ use Mezzio\Cors\Middleware\CorsMiddleware;
 use Mezzio\Handler\NotFoundHandler;
 use Mezzio\Helper\ServerUrlMiddleware;
 use Mezzio\Router\Middleware\DispatchMiddleware;
-use Mezzio\Router\Middleware\ImplicitHeadMiddleware;
 use Mezzio\Router\Middleware\ImplicitOptionsMiddleware;
 use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -34,13 +30,15 @@ return static function (ServiceManager $container): void {
 
     $app->get(
         '/documentation/{modulo}',
-        function(ServerRequestInterface $request): ResponseInterface {
+        function (ServerRequestInterface $request): ResponseInterface {
             $modulo = ucfirst(explode('/', $request->getUri()->getPath())[2] ?? throw new \Exception('Error Processing Request'));
 
             return new TextResponse(
                 (new OpenApiGenerator(__DIR__ . "/../app/${modulo}"))->toYaml(),
                 200,
-                ['Content-Type' => 'application/x-yaml']
+                [
+                    'Content-Type' => 'application/x-yaml',
+                ]
             );
         }
     );

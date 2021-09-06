@@ -24,9 +24,9 @@ return static function (RoutesConfigurator $routes): void {
         new CoreContainer($routes->container())
     );
 
-    $devMode = (bool) $container->get('config')['dev_mode'] ?? false;
+    $devMode = (bool) ($container->get('config')['dev_mode'] ?? false);
     if ($devMode) {
-        $routes->pipe(fn (): MiddlewareInterface => (new \League\OpenAPIValidation\PSR15\ValidationMiddlewareBuilder)->fromYaml((new OpenApiGenerator(__DIR__ . '/../../'))->toYaml())->getValidationMiddleware());
+        $routes->pipe(fn (): MiddlewareInterface => (new \League\OpenAPIValidation\PSR15\ValidationMiddlewareBuilder())->fromYaml((new OpenApiGenerator(__DIR__ . '/../../'))->toYaml())->getValidationMiddleware());
     }
 
     $routes = $routes->withBasePath('/agendas/webapp/');
