@@ -45,7 +45,7 @@ abstract class AbstractResponseFactoryFractal implements WebAppResponseFactoryIn
 
         $response->getBody()->write($this->transformResourceToJson($item));
 
-        return $response;
+        return $response->withAddedHeader('Content-Type', 'application/json');
     }
 
     /**
@@ -59,7 +59,7 @@ abstract class AbstractResponseFactoryFractal implements WebAppResponseFactoryIn
 
         $response->getBody()->write($this->transformResourceToJson($collection));
 
-        return $response;
+        return $response->withAddedHeader('Content-Type', 'application/json');
     }
 
     private function getItem(object $resource): Item

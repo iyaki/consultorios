@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Consultorio\Core\Infraestructura\Presentacion\ConfigDiscover;
+use Consultorio\Core\Presentacion\OpenApiGenerator;
 use Consultorio\Core\Infraestructura\Presentacion\WebApp\AbstractResponseFactoryFractal;
 use Consultorio\Core\Presentacion\RoutesConfigurator;
 use Consultorio\Core\Presentacion\WebApp\ExceptionMiddleware;
@@ -31,20 +32,16 @@ return static function (ServiceManager $container): void {
 
     $app->pipe(RouteMiddleware::class);
 
-    $app->pipe(ImplicitHeadMiddleware::class);
-    $app->pipe(ImplicitOptionsMiddleware::class);
-    $app->pipe(MethodNotAllowedMiddleware::class);
-
     $app->get(
         '/documentation/{modulo}',
         function(ServerRequestInterface $request): ResponseInterface {
-            $schema = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off' ? 'http' : 'https';
-            $host = $_SERVER['HTTP_HOST'] ?? 'webserver';
-            define('SERVER_HOST', "${schema}://${host}");
-
             $modulo = ucfirst(explode('/', $request->getUri()->getPath())[2] ?? throw new \Exception('Error Processing Request'));
-            $openapi = \OpenApi\Generator::scan([__DIR__ . "/../app/${modulo}"]);
-            return new TextResponse($openapi->toYaml(), 200, ['Content-Type' => 'application/x-yaml']);
+
+            return new TextResponse(
+                (new OpenApiGenerator(__DIR__ . "/../app/${modulo}"))->toYaml(),
+                200,
+                ['Content-Type' => 'application/x-yaml']
+            );
         }
     );
 
@@ -54,6 +51,9 @@ return static function (ServiceManager $container): void {
     foreach ($configDiscover->find('routes') as $routes) {
         (require $routes)($routesConfigurator);
     }
+
+    $app->pipe(ImplicitOptionsMiddleware::class);
+    $app->pipe(MethodNotAllowedMiddleware::class);
 
     $app->pipe(DispatchMiddleware::class);
 
