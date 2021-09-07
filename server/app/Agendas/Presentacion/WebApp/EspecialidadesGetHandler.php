@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Consultorio\Agendas\Presentacion\WebApp;
 
 use Consultorio\Agendas\CasosDeUso\Especialidades;
+use Consultorio\Agendas\Dominio\Especialidad;
 use Consultorio\Core\Presentacion\WebApp\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -23,7 +24,7 @@ final class EspecialidadesGetHandler implements RequestHandlerInterface
      *      path="/agendas/webapp/especialidades",
      *      operationId="listarEspecialidades",
      *      summary="Lista las especialidades registradas",
-     *      description="Expone una lista de todas las especialidades registradas actualmente.",
+     *      description="Expone una lista de todas las especialidades registradas ordenadas alfabeticamente.",
      *      tags={"Especialidades"},
      *      @OA\Response(
      *          response=200,
@@ -64,8 +65,11 @@ final class EspecialidadesGetHandler implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->responseFactory->createResponseFromCollection(
-            $this->especialidades->getAll()
+        $especialidades = $this->especialidades->getAll();
+        usort(
+            $especialidades,
+            fn (Especialidad $e1, Especialidad $e2): int => $e1->nombre() <=> $e2->nombre()
         );
+        return $this->responseFactory->createResponseFromCollection($especialidades);
     }
 }
