@@ -152,7 +152,7 @@ final class EspecialidadesTest extends TestCase
     public function testPatchInexistente(): void
     {
         $response = $this->client->patch(
-            self::URI_PATH . '/asd',
+            self::URI_PATH . '/00000000-0000-0000-0000-000000000000',
             $this->requestOptions([
                 'data' => [
                     'nombre' => self::NOMBRE_ORIGINAL,
@@ -256,7 +256,7 @@ final class EspecialidadesTest extends TestCase
 
     public function testDeleteInexistente(): void
     {
-        $response = $this->client->delete(self::URI_PATH . '/asd');
+        $response = $this->client->delete(self::URI_PATH . '/00000000-0000-0000-0000-000000000000');
 
         $parsedResponse = json_decode(
             (string) $response->getBody(),

@@ -28,6 +28,7 @@ final class EspecialidadesDeleteHandler implements RequestHandlerInterface
      *      operationId="eliminarEspecialidad",
      *      summary="Elimina el registro de una especialidad",
      *      description="Elimina una especialidad registrada previamente.",
+     *      tags={"Especialidades"},
      *      @OA\Parameter(
      *          in="path",
      *          name="id",
@@ -55,6 +56,7 @@ final class EspecialidadesDeleteHandler implements RequestHandlerInterface
      *                  ref="#/components/schemas/Error",
      *              ),
      *              required={"data"},
+     *              additionalProperties=false,
      *          ),
      *      ),
      *  ),

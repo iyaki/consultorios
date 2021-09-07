@@ -12,6 +12,7 @@ use League\Fractal\TransformerAbstract;
  *      schema="Especialidad",
  *      description="Especialidad médica.",
  *      required={"id", "nombre"},
+ *      additionalProperties=false,
  *  )
  *
  * Clase utilizada para formatear las respuestas JSON que incluyen "entidades"
@@ -27,6 +28,7 @@ final class EspecialidadTransformerFractal extends TransformerAbstract
      *      type="string",
      *      format="uuid",
      *      nullable=false,
+     *      readOnly=true,
      *  ),
      *  @OA\Property(
      *      property="nombre",

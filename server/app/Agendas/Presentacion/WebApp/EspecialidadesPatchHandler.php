@@ -31,6 +31,7 @@ final class EspecialidadesPatchHandler implements RequestHandlerInterface
      *      operationId="editarEspecialidad",
      *      summary="Edita el registro de una especialidad",
      *      description="Edita los datos de una especialidad ya registrada.",
+     *      tags={"Especialidades"},
      *      @OA\Parameter(
      *          in="path",
      *          name="id",
@@ -50,13 +51,10 @@ final class EspecialidadesPatchHandler implements RequestHandlerInterface
      *                  property="data",
      *                  type="object",
      *                  nullable=false,
-     *                  @OA\Property(
-     *                      property="nombre",
-     *                      type="string",
-     *                  ),
-     *                  required={"nombre"},
+     *                  ref="#/components/schemas/Especialidad"
      *              ),
      *              required={"data"},
+     *              additionalProperties=false,
      *          ),
      *      ),
      *      @OA\Response(
@@ -72,6 +70,7 @@ final class EspecialidadesPatchHandler implements RequestHandlerInterface
      *                  ref="#/components/schemas/Especialidad",
      *              ),
      *              required={"data"},
+     *              additionalProperties=false,
      *          ),
      *      ),
      *      @OA\Response(
@@ -87,6 +86,7 @@ final class EspecialidadesPatchHandler implements RequestHandlerInterface
      *                  ref="#/components/schemas/Error",
      *              ),
      *              required={"data"},
+     *              additionalProperties=false,
      *          ),
      *      ),
      *  ),

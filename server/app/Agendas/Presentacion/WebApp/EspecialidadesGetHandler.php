@@ -24,6 +24,7 @@ final class EspecialidadesGetHandler implements RequestHandlerInterface
      *      operationId="listarEspecialidades",
      *      summary="Lista las especialidades registradas",
      *      description="Expone una lista de todas las especialidades registradas actualmente.",
+     *      tags={"Especialidades"},
      *      @OA\Response(
      *          response=200,
      *          description="Lista de especialidades.",
@@ -40,6 +41,7 @@ final class EspecialidadesGetHandler implements RequestHandlerInterface
      *                  ),
      *              ),
      *              required={"data"},
+     *              additionalProperties=false,
      *          ),
      *      ),
      *      @OA\Response(
@@ -55,6 +57,7 @@ final class EspecialidadesGetHandler implements RequestHandlerInterface
      *                  ref="#/components/schemas/Error",
      *              ),
      *              required={"data"},
+     *              additionalProperties=false,
      *          ),
      *      ),
      *  ),

@@ -12,6 +12,21 @@ namespace Consultorio\Agendas\Presentacion\WebApp;
  *  @OA\Server(
  *      url=SERVER_HOST
  *  ),
+ *  |
+ * @OA\Get(
+ *      path="/documentation/agendas",
+ *      description="Esta documentación",
+ *      @OA\Response(
+ *          response=200,
+ *          description="OpenAPI YAML documentation",
+ *          @OA\MediaType(
+ *              mediaType="application/x-yaml",
+ *              @OA\Schema(
+ *                  type="string",
+ *              ),
+ *          ),
+ *      ),
+ *  ),
  *  @OA\Schema(
  *      schema="Error",
  *      description="Error procesando la petición.",
@@ -50,5 +65,6 @@ namespace Consultorio\Agendas\Presentacion\WebApp;
  *          type="string",
  *      ),
  *      required={"message", "code", "file", "line", "trace"},
+ *      additionalProperties=false,
  *  ),
  */

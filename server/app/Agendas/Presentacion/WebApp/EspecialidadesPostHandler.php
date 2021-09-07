@@ -27,6 +27,7 @@ final class EspecialidadesPostHandler implements RequestHandlerInterface
      *      operationId="registrarEspecialidad",
      *      summary="Registra una especialidad",
      *      description="Registra una nueva especialidad a partir de su nombre. No se permiten nombres duplicados.",
+     *      tags={"Especialidades"},
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(
@@ -36,13 +37,10 @@ final class EspecialidadesPostHandler implements RequestHandlerInterface
      *                  property="data",
      *                  type="object",
      *                  nullable=false,
-     *                  @OA\Property(
-     *                      property="nombre",
-     *                      type="string",
-     *                  ),
-     *                  required={"nombre"},
+     *                  ref="#/components/schemas/Especialidad"
      *              ),
      *              required={"data"},
+     *              additionalProperties=false,
      *          ),
      *      ),
      *      @OA\Response(
@@ -58,6 +56,7 @@ final class EspecialidadesPostHandler implements RequestHandlerInterface
      *                  ref="#/components/schemas/Especialidad",
      *              ),
      *              required={"data"},
+     *              additionalProperties=false,
      *          ),
      *      ),
      *      @OA\Response(
@@ -71,8 +70,9 @@ final class EspecialidadesPostHandler implements RequestHandlerInterface
      *                  type="object",
      *                  nullable=false,
      *                  ref="#/components/schemas/Error",
-     *                  required={"data"},
      *              ),
+     *              required={"data"},
+     *              additionalProperties=false,
      *          ),
      *      ),
      *  ),
