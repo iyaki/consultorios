@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
-import Principal from './Principal'
+import App from '.'
 
 test('renders main layout', () => {
-  render(<Principal />)
+  render(<App />)
   const agendasButton = screen.getByText(/Agendas/)
   const facturacionButton = screen.getByText(/Facturación/)
   expect(agendasButton).toBeInTheDocument()

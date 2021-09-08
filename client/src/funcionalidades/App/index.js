@@ -6,7 +6,7 @@ import { Suspense, lazy, useState, useRef } from 'react'
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom'
 import Loading from './Loading'
 import NotFound from './NotFound'
-import './Principal.css'
+import './index.css'
 
 const Agendas = lazy(() => import('../Agendas/Principal'))
 
