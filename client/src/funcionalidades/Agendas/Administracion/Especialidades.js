@@ -10,120 +10,6 @@ import axios from 'axios'
 import { useSnackbar } from 'notistack'
 import { getErrorMessage } from '../../../utils/http/webApp'
 
-function EspecialiadesList ({ loading, especialidades, editCallback, deleteCallback }) {
-  if (loading) {
-    return (
-      <Loading />
-    )
-  }
-
-  return (
-    <>
-      {
-        especialidades.map(e => (
-          <EspecialidadCard
-            key={e.id}
-            especialidadNombre={e.nombre}
-            especialidadId={e.id}
-            saveCallback={editCallback}
-            deleteCallback={deleteCallback}
-          />
-        ))
-      }
-    </>
-  )
-}
-
-function EspecialidadCard ({ saveCallback, especialidadId, especialidadNombre = '', hideDelete = false, deleteCallback }) {
-  const especialidadRef = useRef()
-  const [saving, setSaving] = useState(false)
-  const [deleting, setDeleting] = useState(false)
-
-  function save () {
-    if (saving) {
-      return
-    }
-
-    setSaving(true)
-
-    saveCallback(especialidadRef.current.value, especialidadId)
-      .finally(() => {
-        setSaving(false)
-        if (!especialidadId) {
-          especialidadRef.current.value = ''
-        }
-      })
-  }
-
-  function remove () {
-    if (deleting) {
-      return
-    }
-
-    setDeleting(true)
-
-    deleteCallback(especialidadId)
-      .finally(() => {
-        setDeleting(false)
-      })
-  }
-
-  return (
-    <Card style={{ marginTop: '1%' }}>
-      <CardContent>
-        <Grid container spacing={1}>
-          <Grid item xs={9}>
-            <TextField label='Nombre' defaultValue={especialidadNombre} style={{ width: '100%' }} inputRef={especialidadRef} />
-          </Grid>
-          <Grid item xs={3} style={{ textAlign: 'center' }}>
-            <IconButton onClick={save}>
-              {
-                saving
-                  ? (<CircularProgress />)
-                  : (<SaveIcon />)
-              }
-            </IconButton>
-            {
-              hideDelete || (
-                deleting
-                  ? (<CircularProgress />)
-                  : (
-                    <IconButton onClick={remove}>
-                      <DeleteIcon />
-                    </IconButton>
-                    )
-              )
-            }
-          </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
-  )
-}
-
-function Filters ({ filterValue, filterCallback }) {
-  const inputRef = useRef()
-
-  function clear () {
-    inputRef.current.value = ''
-    filterCallback('')
-  }
-
-  return (
-    <Card style={{ height: '96%', margin: '2%' }}>
-      <CardContent>
-        <TextField label='Nombre' style={{ width: '65%' }} inputRef={inputRef} />
-        <IconButton defaultValue={filterValue} onClick={() => { filterCallback(inputRef.current.value) }}>
-          <SearchIcon />
-        </IconButton>
-        <IconButton onClick={clear}>
-          <ClearIcon />
-        </IconButton>
-      </CardContent>
-    </Card>
-  )
-}
-
 export default function Especialidades () {
   const [especialidades, setEspecialidades] = useState([])
   const [loadingEspecialidades, setLoadingEspecialidades] = useState(true)
@@ -230,5 +116,125 @@ export default function Especialidades () {
         </>
       }
     />
+  )
+}
+
+function EspecialiadesList ({ loading, especialidades, editCallback, deleteCallback }) {
+  if (loading) {
+    return (
+      <Loading />
+    )
+  }
+
+  return (
+    <>
+      {
+        especialidades.map(e => (
+          <EspecialidadCard
+            key={e.id}
+            especialidadNombre={e.nombre}
+            especialidadId={e.id}
+            saveCallback={editCallback}
+            deleteCallback={deleteCallback}
+          />
+        ))
+      }
+    </>
+  )
+}
+
+function EspecialidadCard ({
+  saveCallback,
+  especialidadId,
+  especialidadNombre = '',
+  hideDelete = false,
+  deleteCallback
+}) {
+  const especialidadRef = useRef()
+  const [saving, setSaving] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+
+  function save () {
+    if (saving) {
+      return
+    }
+
+    setSaving(true)
+
+    saveCallback(especialidadRef.current.value, especialidadId)
+      .finally(() => {
+        setSaving(false)
+        if (!especialidadId) {
+          especialidadRef.current.value = ''
+        }
+      })
+  }
+
+  function remove () {
+    if (deleting) {
+      return
+    }
+
+    setDeleting(true)
+
+    deleteCallback(especialidadId)
+      .finally(() => {
+        setDeleting(false)
+      })
+  }
+
+  return (
+    <Card style={{ marginTop: '1%' }}>
+      <CardContent>
+        <Grid container spacing={1}>
+          <Grid item xs={9}>
+            <TextField label='Nombre' defaultValue={especialidadNombre} style={{ width: '100%' }} inputRef={especialidadRef} />
+          </Grid>
+          <Grid item xs={3} style={{ textAlign: 'center' }}>
+            <IconButton onClick={save}>
+              {
+                saving
+                  ? (<CircularProgress />)
+                  : (<SaveIcon />)
+              }
+            </IconButton>
+            {
+              hideDelete || (
+                deleting
+                  ? (<CircularProgress />)
+                  : (
+                    <IconButton onClick={remove}>
+                      <DeleteIcon />
+                    </IconButton>
+                    )
+              )
+            }
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
+  )
+}
+
+function Filters ({ filterValue, filterCallback }) {
+  const inputRef = useRef()
+
+  function clear () {
+    inputRef.current.value = ''
+    filterCallback('')
+  }
+
+  return (
+    <Card style={{ height: '96%', margin: '2%' }}>
+      <CardContent>
+        <TextField label='Nombre' style={{ width: '65%' }} inputRef={inputRef} />
+        <IconButton defaultValue={filterValue} onClick={() => { filterCallback(inputRef.current.value) }}>
+          <SearchIcon />
+        </IconButton>
+        <IconButton onClick={clear}>
+          <ClearIcon />
+        </IconButton>
+      </CardContent>
+    </Card>
   )
 }
