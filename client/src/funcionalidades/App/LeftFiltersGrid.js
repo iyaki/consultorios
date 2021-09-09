@@ -1,4 +1,4 @@
-import { Card, CardContent, CircularProgress, Container, Grid, Typography } from '@material-ui/core'
+import { Card, CardContent, Container, Grid, Typography } from '@material-ui/core'
 import { useRef } from 'react'
 import { useFillHeight } from '../../utils/hooks'
 
