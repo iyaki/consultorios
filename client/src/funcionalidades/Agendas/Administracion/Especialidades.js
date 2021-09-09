@@ -103,6 +103,7 @@ export default function Especialidades () {
 
   return (
     <LeftFiltersGrid
+      hint='Agendas > Configurar Especialidades'
       renderFiltros={<Filters filterCallback={setEspecialidadFilter} filterValue={especialidadFilter} />}
       renderData={
         <>
@@ -225,16 +226,14 @@ function Filters ({ filterValue, filterCallback }) {
   }
 
   return (
-    <Card style={{ height: '96%', margin: '2%' }}>
-      <CardContent>
-        <TextField label='Nombre' style={{ width: '65%' }} inputRef={inputRef} />
-        <IconButton defaultValue={filterValue} onClick={() => { filterCallback(inputRef.current.value) }}>
-          <SearchIcon />
-        </IconButton>
-        <IconButton onClick={clear}>
-          <ClearIcon />
-        </IconButton>
-      </CardContent>
-    </Card>
+    <>
+      <TextField label='Nombre' style={{ width: '65%' }} inputRef={inputRef} />
+      <IconButton defaultValue={filterValue} onClick={() => { filterCallback(inputRef.current.value) }}>
+        <SearchIcon />
+      </IconButton>
+      <IconButton onClick={clear}>
+        <ClearIcon />
+      </IconButton>
+    </>
   )
 }
