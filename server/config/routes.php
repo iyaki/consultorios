@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Consultorio\Core\CoreContainer;
+use Consultorio\Core\Infraestructura\Aplicacion\ClockworkMiddleware;
 use Consultorio\Core\Infraestructura\Presentacion\ConfigDiscover;
 use Consultorio\Core\Presentacion\OpenApiGenerator;
 use Consultorio\Core\Presentacion\RoutesConfigurator;
@@ -21,6 +23,11 @@ use Psr\Http\Message\ServerRequestInterface;
 return static function (ServiceManager $container): void {
     /** @var Application $app */
     $app = $container->get(\Mezzio\Application::class);
+
+    $devMode = (bool) ($container->get('config')['dev_mode'] ?? false);
+    if ($devMode) {
+        $app->pipe(new ClockworkMiddleware(new CoreContainer($container)));
+    }
 
     $app->pipe(ServerUrlMiddleware::class);
 

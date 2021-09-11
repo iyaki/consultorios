@@ -12,7 +12,6 @@ namespace Consultorio\Agendas\Presentacion\WebApp;
  *  @OA\Server(
  *      url=SERVER_HOST
  *  ),
- *  |
  * @OA\Get(
  *      path="/documentation/agendas",
  *      description="Esta documentación",

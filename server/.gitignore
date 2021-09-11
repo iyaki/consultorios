@@ -2,6 +2,7 @@
 .phpunit.result.cache
 .psalm_cache
 .rector_cache
+clockwork
 phpunit.xml
 public/docs
 tools/*
