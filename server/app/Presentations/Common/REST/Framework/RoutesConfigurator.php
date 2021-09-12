@@ -26,11 +26,6 @@ final class RoutesConfigurator
         $this->app = $this->container->get(\Mezzio\Application::class);
     }
 
-    // public function container(): ContainerInterface
-    // {
-    //     return $this->container;
-    // }
-
     public function withBasePath(string $path): self
     {
         return new self($this->container, $path);
