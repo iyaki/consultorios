@@ -6,9 +6,8 @@ namespace Consultorios\Core\Agendas;
 
 use Consultorios\Core\Agendas\Infrastructure\EspecialidadRepositoryDoctrine;
 use Consultorios\Core\Agendas\UseCases\Especialidades;
-use Consultorios\Core\Common\Infrastructure\DoctrineSettings;
 use Consultorios\Core\Common\CommonContainer;
-use Consultorios\Core\Common\Infrastructure\DatabaseConnectionSettings;
+use Consultorios\Core\Common\Infrastructure\DoctrineSettings;
 
 final class AgendasContainer
 {

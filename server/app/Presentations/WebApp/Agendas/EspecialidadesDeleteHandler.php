@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Consultorios\Presentations\WebApp\Agendas;
 
-use Consultorio\Core\Presentacion\WebApp\ResponseFactoryInterface;
 use Consultorios\Core\Agendas\Domain\EspecialidadId;
 use Consultorios\Core\Agendas\UseCases\Especialidades;
 use Consultorios\Presentations\Common\REST\Framework\ResponseFactory;

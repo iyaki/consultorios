@@ -20,11 +20,11 @@ final class OpenApiGenerator
             define('SERVER_HOST', sprintf('%s://%s', $schema, $host));
         }
 
-        if (!defined('URI_OPENAPI_PATH_YAML')) {
+        if (! defined('URI_OPENAPI_PATH_YAML')) {
             define('URI_OPENAPI_PATH_YAML', $uriBasePath . 'openapi.yaml');
         }
 
-        if (!defined('URI_OPENAPI_PATH_JSON')) {
+        if (! defined('URI_OPENAPI_PATH_JSON')) {
             define('URI_OPENAPI_PATH_JSON', $uriBasePath . 'openapi.json');
         }
 

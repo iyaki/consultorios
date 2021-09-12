@@ -11,8 +11,6 @@ use Consultorios\Presentations\WebApp\Agendas\EspecialidadesGetHandler;
 use Consultorios\Presentations\WebApp\Agendas\EspecialidadesPatchHandler;
 use Consultorios\Presentations\WebApp\Agendas\EspecialidadesPostHandler;
 use Consultorios\Presentations\WebApp\Agendas\EspecialidadTransformer;
-use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Server\MiddlewareInterface;
 
 return static function (RoutesConfigurator $routes): void {
     $webAppUriPath = $routes->basePath();

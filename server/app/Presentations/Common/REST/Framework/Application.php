@@ -17,9 +17,7 @@ use Mezzio\Router\Middleware\DispatchMiddleware;
 use Mezzio\Router\Middleware\ImplicitOptionsMiddleware;
 use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Envoltura para \Mezzio\Application
@@ -30,7 +28,8 @@ final class Application
 
     private \Mezzio\Application $app;
 
-    public function __construct(array $config) {
+    public function __construct(array $config)
+    {
         $this->container = (require __DIR__ . '/config/container.php')($config);
 
         $this->app = $this->container->get(\Mezzio\Application::class);

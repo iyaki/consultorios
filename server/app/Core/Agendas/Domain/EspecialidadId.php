@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Consultorios\Core\Agendas\Domain;
 
-use Consultorios\Core\Common\Domain\IdTrait as DomainIdTrait;
+use Consultorios\Core\Common\Domain\IdTrait;
 
 final class EspecialidadId implements \Stringable
 {
-    use DomainIdTrait;
+    use IdTrait;
 }

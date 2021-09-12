@@ -6,7 +6,6 @@ namespace Consultorios\Presentations\Common\REST\Framework\Clockwork;
 
 use Clockwork\DataSource\PsrMessageDataSource;
 use Clockwork\Helpers\ServerTiming;
-use Consultorio\Core\CoreContainer;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
