@@ -17,7 +17,7 @@ final class AgendasContainer
         $dbal = CommonContainer::dbal(new DoctrineSettings(
             $dbSettings,
             [__DIR__ . '/config/mappings'],
-            true
+            CommonContainer::devMode()
         ));
 
         return new Especialidades(

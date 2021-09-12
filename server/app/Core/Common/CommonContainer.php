@@ -13,4 +13,9 @@ final class CommonContainer
     {
         return new DBAL($settings);
     }
+
+    public static function devMode(): bool
+    {
+        return (bool) getenv('DEV_MODE');
+    }
 }

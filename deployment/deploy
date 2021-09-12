@@ -29,7 +29,7 @@ case "${1}" in
     # delete duplicate options
     OPTIONS=($(echo "${OPTIONS[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
 
-    docker-compose --file dev/docker-compose.yml --project-name $PROJECT_NAME up ${OPTIONS[@]}
+    docker-compose --file dev/docker-compose.yml --env-file dev/.env --project-name $PROJECT_NAME up ${OPTIONS[@]}
   ;;
 
   "prod")
