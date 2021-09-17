@@ -1,5 +1,5 @@
 FROM alpine:3.14.2
-WORKDIR "/application"
+WORKDIR "/"
 
 # Install dependencies, tools and configure environment
 RUN apk add --update --no-cache --purge \
