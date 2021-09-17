@@ -48,8 +48,6 @@ RUN apk add --update --no-cache --purge \
 # More utilities
   && composer global require \
     psy/psysh:@stable \
-    nunomaduro/phpinsights \
-    bmitch/churn-php \
     phpmetrics/phpmetrics \
     povils/phpmnd \
     jakub-onderka/php-parallel-lint \
@@ -76,7 +74,6 @@ RUN apk add --update --no-cache --purge \
     --trust-gpg-keys 4AA394086372C20A,76835C9464877BDD,0F9684B8B16B7AB0,69132CC8829FAB5F,F4D32E2C9343B2AE \
     phploc \
     phpcpd \
-    dephpend \
     phpmd \
     churn \
     composer-unused

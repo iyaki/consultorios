@@ -19,7 +19,7 @@ services:
         - ../..:/application
         - ./php/conf.d/99-ini-overrides.ini:/etc/php8/conf.d/99-ini-overrides.ini
         - ./php/php-fpm.d/www.ini:/etc/php8/php-fpm.d/www.ini
-        - ./nginx/http.d/default.conf:/etc/nginx/http.d/default.conf
+        - ./nginx/http.d/:/etc/nginx/http.d/
         - ./supervisord.conf:/etc/supervisor/supervisord.conf
         - ./root/.bashrc:/root/.bashrc
         - ./root/.bash_aliases:/root/.bash_aliases
@@ -34,5 +34,4 @@ services:
         - DB_PASSWORD=${DB_PASSWORD}
         - DB_DATABASE=${DB_DATABASE}
       ports:
-        - "8080:80"
-        - 3001:3000
+        - 8080:80
