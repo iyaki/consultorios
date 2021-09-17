@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Usage: deploy dev|prod [options]
+# Options: docker-compose up optios, for exambple:
+#     -d            Detached mode.
+#     --build       Build images before starting containers.
+
+PROJECT_NAME='Consultorios'
+
+CACHE_DIR='.cache'
+
+OPTIONS=( $@ )
+
+cd `dirname $0`
+
+mkdir -p ${CACHE_DIR}
+
+if [ ! -f "${CACHE_DIR}/Dockerfile.sum" ] || [ "$(sha256sum dev/Dockerfile)" != "$(cat ${CACHE_DIR}/Dockerfile.sum)" ]
+then
+  OPTIONS+=("--build")
+  sha256sum dev/Dockerfile > ${CACHE_DIR}/Dockerfile.sum
+fi
+
+# delete duplicate options
+OPTIONS=($(echo "${OPTIONS[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+
+docker-compose --file dev/docker-compose.yml --env-file dev/.env --project-name $PROJECT_NAME up ${OPTIONS[@]}

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+. /usr/share/bash-completion/completions/git
+
+complete -W "$(__git_heads)" gcr
