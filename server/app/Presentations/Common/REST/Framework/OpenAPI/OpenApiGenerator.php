@@ -14,7 +14,7 @@ final class OpenApiGenerator
     public function __construct(string $documentationPath, string $uriBasePath)
     {
         $schema = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off' ? 'http' : 'https';
-        $host = $_SERVER['HTTP_HOST'] ?? 'webserver';
+        $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
 
         if (! defined('SERVER_HOST')) {
             define('SERVER_HOST', sprintf('%s://%s', $schema, $host));

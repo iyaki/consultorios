@@ -24,6 +24,7 @@ RUN apk add --update --no-cache --purge \
     php8-mbstring \
     php8-openssl \
     php8-pdo \
+    php8-pdo_mysql \
     php8-phar \
     php8-simplexml \
     php8-tokenizer \

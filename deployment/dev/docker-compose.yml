@@ -18,7 +18,7 @@ services:
       volumes:
         - ../..:/application
         - ./php/conf.d/99-ini-overrides.ini:/etc/php8/conf.d/99-ini-overrides.ini
-        - ./php/php-fpm.d/www.ini:/etc/php8/php-fpm.d/www.ini
+        - ./php/php-fpm.d:/etc/php8/php-fpm.d
         - ./nginx/http.d/:/etc/nginx/http.d/
         - ./supervisord.conf:/etc/supervisor/supervisord.conf
         - ./root/.bashrc:/root/.bashrc
