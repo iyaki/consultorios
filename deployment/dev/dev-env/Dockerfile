@@ -1,39 +1,30 @@
-FROM alpine:3.14.2
-WORKDIR "/"
+FROM alpine
 
-# Install dependencies, tools and configure environment
 RUN apk add --update --no-cache --purge \
+    alpine-sdk \
     bash \
     bash-completion \
     curl \
     git \
     gnupg \
-    htop \
+    libc6-compat \
+    libstdc++ \
     mariadb-client \
-    nginx \
     nodejs \
     npm \
     openssh \
     php8 \
-    php8-ctype \
-    php8-curl \
-    php8-dom \
-    php8-fpm \
     php8-iconv \
-    php8-intl \
     php8-mbstring \
     php8-openssl \
-    php8-pdo \
-    php8-pdo_mysql \
     php8-phar \
-    php8-simplexml \
     php8-tokenizer \
-    php8-xdebug \
-    php8-xml \
-    php8-xmlwriter \
-    supervisor \
+    php8-dom \
+    php8-curl \
+    python3 \
     the_silver_searcher \
     vim \
+    yarn \
 # Alias PHP
   && ln -s /usr/bin/php8 /usr/bin/php \
 # Set bash as default shell
@@ -77,8 +68,18 @@ RUN apk add --update --no-cache --purge \
     phpcpd \
     phpmd \
     churn \
-    composer-unused
+    composer-unused \
+# Install code-server
+  && npm config set python python3 \
+  && yarn --production --verbose --frozen-lockfile global add code-server \
+# Remove build dependencies
+  && apk del --purge \
+    alpine-sdk \
+    libc6-compat \
+    libstdc++
 
-ENV PATH /application/server/vendor/bin:/application/server/tools:/application/client/node_modules/.bin:/root/.composer/vendor/bin:$PATH
+ENV PATH /root/.composer/vendor/bin:$PATH
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+EXPOSE 8443
+
+CMD ["code-server", "--disable-telemetry", "--bind-addr", "0.0.0.0:8443"]

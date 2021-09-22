@@ -11,27 +11,70 @@ services:
       ports:
         - "8083:3306"
 
-    app:
+    webserver:
+      image: nginx:alpine
+      working_dir: /application/server
+      volumes:
+          - ./nginx/conf.d:/etc/nginx/conf.d
+      ports:
+        - "8080:80"
+
+    php-fpm:
       build:
         context: ../../
-        dockerfile: ./deployment/dev/Dockerfile
+        dockerfile: ./deployment/dev/php/Dockerfile
+      depends_on:
+        - mariadb
+        - webserver
       volumes:
         - ../..:/application
-        - ./php/conf.d/99-ini-overrides.ini:/etc/php8/conf.d/99-ini-overrides.ini
-        - ./php/php-fpm.d:/etc/php8/php-fpm.d
-        - ./nginx/http.d/:/etc/nginx/http.d/
-        - ./supervisord.conf:/etc/supervisor/supervisord.conf
-        - ./root/.bashrc:/root/.bashrc
-        - ./root/.bash_aliases:/root/.bash_aliases
-        - ./root/.bash_completion:/root/.bash_completion
-        - ./root/.bash_functions:/root/.bash_functions
-        - ./root/.bash_profile:/root/.bash_profile
-        - ./root/.vimrc:/root/.vimrc
+        - ./php/conf.d/99-ini-overrides.ini:/usr/local/etc/php/conf.d/99-ini-overrides.ini
       environment:
         - DEV_MODE=${DEV_MODE}
         - DB_HOST=${DB_HOST}
         - DB_USER=${DB_USER}
         - DB_PASSWORD=${DB_PASSWORD}
         - DB_DATABASE=${DB_DATABASE}
+
+    node:
+      build:
+        context: ../../
+        dockerfile: ./deployment/dev/node/Dockerfile
+      depends_on:
+        - php-fpm
+      volumes:
+        - ../..:/application
       ports:
-        - 8080:80
+        - 3001:3000
+      environment:
+        - CHOKIDAR_USEPOLLING=true
+
+    dev-env:
+      build:
+        context: ../../
+        dockerfile: ./deployment/dev/dev-env/Dockerfile
+      command: |
+        code-server
+          --bind-addr 0.0.0.0:8443
+          --disable-telemetry
+      volumes:
+        - ../..:/application
+        - ./root/.bashrc:/root/.bashrc
+        - ./root/.bash_aliases:/root/.bash_aliases
+        - ./root/.bash_completion:/root/.bash_completion
+        - ./root/.bash_functions:/root/.bash_functions
+        - ./root/.bash_profile:/root/.bash_profile
+        - ./root/.vimrc:/root/.vimrc
+        # - ~/.vscode:/root/.local/share/code-server
+        - ~/.gitconfig:/root/.gitconfig
+        - ${SSH_AUTH_SOCK}:${SSH_AUTH_SOCK}
+      environment:
+        - DEV_MODE=${DEV_MODE}
+        - DB_HOST=${DB_HOST}
+        - DB_USER=${DB_USER}
+        - DB_PASSWORD=${DB_PASSWORD}
+        - DB_DATABASE=${DB_DATABASE}
+        - PASSWORD=asd
+        - SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
+      ports:
+        - 8443:8443

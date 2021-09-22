@@ -15,13 +15,27 @@ cd `dirname $0`
 
 mkdir -p ${CACHE_DIR}
 
-if [ ! -f "${CACHE_DIR}/Dockerfile.sum" ] || [ "$(sha256sum dev/Dockerfile)" != "$(cat ${CACHE_DIR}/Dockerfile.sum)" ]
-then
-  OPTIONS+=("--build")
-  sha256sum dev/Dockerfile > ${CACHE_DIR}/Dockerfile.sum
-fi
+declare -a DOCKERFILE_FOLDERS=(
+  "dev/php"
+  "dev/node"
+  "dev/dev-env"
+)
+
+for FOLDER in "${DOCKERFILE_FOLDERS[@]}"
+do
+  mkdir -p "${CACHE_DIR}/${FOLDER}"
+
+  DOCKERFILE="${FOLDER}/Dockerfile"
+  DOCKERFILE_SUM="${CACHE_DIR}/${FOLDER}/Dockerfile.sum"
+
+  if [ ! -f "${DOCKERFILE_SUM}" ] || [ "$(sha256sum ${DOCKERFILE})" != "$(cat ${DOCKERFILE_SUM})" ]
+  then
+    OPTIONS+=("--build")
+    sha256sum ${DOCKERFILE} > ${DOCKERFILE_SUM}
+  fi
+done
 
 # delete duplicate options
 OPTIONS=($(echo "${OPTIONS[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
 
-docker-compose --file dev/docker-compose.yml --env-file dev/.env --project-name $PROJECT_NAME up ${OPTIONS[@]}
+docker-compose --file dev/docker-compose.yml --env-file dev/.env --project-name ${PROJECT_NAME} up ${OPTIONS[@]}
