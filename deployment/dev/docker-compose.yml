@@ -57,17 +57,22 @@ services:
         code-server
           --bind-addr 0.0.0.0:8443
           --disable-telemetry
+          --user-data-dir /config/data
+          --extensions-dir /config/extensions
       volumes:
         - ../..:/application
-        - ./root/.bashrc:/root/.bashrc
-        - ./root/.bash_aliases:/root/.bash_aliases
-        - ./root/.bash_completion:/root/.bash_completion
-        - ./root/.bash_functions:/root/.bash_functions
-        - ./root/.bash_profile:/root/.bash_profile
-        - ./root/.vimrc:/root/.vimrc
+        - ./dev-env/home/.bashrc:/root/.bashrc
+        - ./dev-env/home/.bash_aliases:/root/.bash_aliases
+        - ./dev-env/home/.bash_completion:/root/.bash_completion
+        - ./dev-env/home/.bash_functions:/root/.bash_functions
+        - ./dev-env/home/.bash_profile:/root/.bash_profile
+        - ./dev-env/home/.vimrc:/root/.vimrc
+        - ./dev-env/home/.ssh/known_hosts:/root/.ssh/known_hosts
         # - ~/.vscode:/root/.local/share/code-server
         - ~/.gitconfig:/root/.gitconfig
         - ${SSH_AUTH_SOCK}:${SSH_AUTH_SOCK}
+        - ./dev-env/config/data:/config/data
+        - ./dev-env/config/extensions:/config/extensions
       environment:
         - DEV_MODE=${DEV_MODE}
         - DB_HOST=${DB_HOST}

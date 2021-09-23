@@ -14,13 +14,20 @@ RUN apk add --update --no-cache --purge \
     npm \
     openssh \
     php8 \
+    php8-ctype \
+    php8-curl \
+    php8-dom \
     php8-iconv \
+    php8-intl \
     php8-mbstring \
     php8-openssl \
+    php8-pdo \
+    php8-pdo_mysql \
     php8-phar \
+    php8-simplexml \
     php8-tokenizer \
-    php8-dom \
-    php8-curl \
+    php8-xml \
+    php8-xmlwriter \
     python3 \
     the_silver_searcher \
     vim \
