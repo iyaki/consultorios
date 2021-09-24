@@ -11,6 +11,7 @@ import { useSnackbar } from 'notistack'
 import { getErrorMessage } from '../../../utils/http/webApp'
 
 export default function Especialidades () {
+  const especialidadesEndpoint = 'http://localhost:8080/webapp/agendas/especialidades'
   const [especialidades, setEspecialidades] = useState([])
   const [loadingEspecialidades, setLoadingEspecialidades] = useState(true)
   const { enqueueSnackbar } = useSnackbar()
@@ -21,7 +22,7 @@ export default function Especialidades () {
   function fetchEspecialidades () {
     setLoadingEspecialidades(true)
     axios
-      .get('http://localhost:8080/agendas/webapp/especialidades')
+      .get(especialidadesEndpoint)
       .then(r => {
         if (r.status === 200) {
           setEspecialidades(r.data.data)
@@ -40,7 +41,7 @@ export default function Especialidades () {
     return new Promise((resolve, reject) => {
       axios
         .post(
-          'http://localhost:8080/agendas/webapp/especialidades',
+          especialidadesEndpoint,
           {
             data: {
               nombre
@@ -63,7 +64,7 @@ export default function Especialidades () {
     return new Promise((resolve, reject) => {
       axios
         .patch(
-          `http://localhost:8080/agendas/webapp/especialidades/${id}`,
+          `${especialidadesEndpoint}/${id}`,
           {
             data: {
               nombre
@@ -85,7 +86,7 @@ export default function Especialidades () {
   function deleteEspecialidad (id) {
     return new Promise((resolve, reject) => {
       axios
-        .delete(`http://localhost:8080/agendas/webapp/especialidades/${id}`)
+        .delete(`${especialidadesEndpoint}/${id}`)
         .then(r => {
           fetchEspecialidades()
           resolve(r)
