@@ -1,3 +1,0 @@
-echo "Refactorizando archivos commiteados"
-
-composer refactor-postcommit
