@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Consultorios\Core\Agendas\AgendasContainer;
 use Consultorios\Core\Agendas\Domain\Especialidad;
-use Consultorios\Presentations\Common\REST\Framework\ExceptionMiddleware;
-use Consultorios\Presentations\Common\REST\Framework\RoutesConfigurator;
+use Consultorios\RESTFramework\ExceptionMiddleware;
+use Consultorios\RESTFramework\RoutesConfigurator;
 use Consultorios\Presentations\WebApp\Agendas\EspecialidadesDeleteHandler;
 use Consultorios\Presentations\WebApp\Agendas\EspecialidadesGetHandler;
 use Consultorios\Presentations\WebApp\Agendas\EspecialidadesPatchHandler;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Consultorios\Presentations\Common\REST\Framework\OpenAPI;
+namespace Consultorios\RESTFramework\OpenAPI;
 
 /**
  *  @OA\Server(

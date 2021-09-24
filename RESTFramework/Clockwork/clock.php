@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Consultorios\Presentations\Common\REST\Framework\Clockwork\Clockwork;
+use Consultorios\RESTFramework\Clockwork\Clockwork;
 
 if (! \function_exists('clock')) {
     // Log a message to Clockwork, returns Clockwork instance when called with no arguments, first argument otherwise

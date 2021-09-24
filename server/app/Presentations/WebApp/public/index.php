@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Consultorios\Presentations\Common\REST\Framework\Application;
+use Consultorios\RESTFramework\Application;
 
 error_reporting(-1);
 ini_set('display_errors', '1');

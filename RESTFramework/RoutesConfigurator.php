@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Consultorios\Presentations\Common\REST\Framework;
+namespace Consultorios\RESTFramework;
 
 use Mezzio\Application;
 use Psr\Container\ContainerInterface;

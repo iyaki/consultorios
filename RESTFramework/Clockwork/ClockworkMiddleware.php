@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Consultorios\Presentations\Common\REST\Framework\Clockwork;
+namespace Consultorios\RESTFramework\Clockwork;
 
 use Clockwork\DataSource\PsrMessageDataSource;
 use Clockwork\Helpers\ServerTiming;

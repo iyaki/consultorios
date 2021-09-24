@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Consultorios\Presentations\Common\REST\Framework;
+namespace Consultorios\RESTFramework;
 
-use Consultorios\Presentations\Common\REST\Framework\Clockwork\ClockworkMiddleware;
-use Consultorios\Presentations\Common\REST\Framework\OpenAPI\OpenApiGenerator;
+use Consultorios\RESTFramework\Clockwork\ClockworkMiddleware;
+use Consultorios\RESTFramework\OpenAPI\OpenApiGenerator;
 use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\TextResponse;
 use Laminas\ServiceManager\ServiceManager;

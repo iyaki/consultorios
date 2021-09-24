@@ -6,8 +6,8 @@ namespace Consultorios\Presentations\WebApp\Agendas;
 
 use Consultorios\Core\Agendas\Domain\EspecialidadId;
 use Consultorios\Core\Agendas\UseCases\Especialidades;
-use Consultorios\Presentations\Common\REST\Framework\ResponseFactory;
-use Consultorios\Presentations\Common\REST\Framework\UriPathSegmentsHelper;
+use Consultorios\RESTFramework\ResponseFactory;
+use Consultorios\RESTFramework\UriPathSegmentsHelper;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

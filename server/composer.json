@@ -1,4 +1,5 @@
 {
+  "name": "consultorios/consultorios",
   "require": {
     "php": ">=8.0",
     "ext-intl": "*",
@@ -11,11 +12,6 @@
     "laminas/laminas-diactoros": "^2.6",
     "laminas/laminas-servicemanager": "^3.6",
     "league/fractal": "^0.19.2",
-    "mezzio/mezzio": "^3.5",
-    "mezzio/mezzio-cors": "^1.0",
-    "mezzio/mezzio-fastroute": "^3.2",
-    "mezzio/mezzio-helpers": "^5.6",
-    "mezzio/mezzio-router": "^3.7",
     "psr/container": "^1.0",
     "psr/http-factory": "^1.0",
     "psr/http-message": "^1.0",
@@ -23,13 +19,11 @@
     "psr/http-server-middleware": "^1.0",
     "ramsey/uuid": "^4.1",
     "symfony/cache": "^5.3",
-    "zircote/swagger-php": "^3.2"
+    "consultorios/restframework": "*"
   },
   "require-dev": {
     "daux/daux.io": "^0.16.2",
     "guzzlehttp/guzzle": "^7.0",
-    "itsgoingd/clockwork": "^5.1",
-    "league/openapi-psr7-validator": "^0.16.1",
     "phpunit/phpunit": "^9",
     "psalm/plugin-phpunit": "^0.16.1",
     "rector/rector": "^0.11.20",
@@ -60,5 +54,12 @@
     "refactor-dry": "ComposerScripts\\Refactor::dry",
     "refactor-postcommit": "ComposerScripts\\Refactor::postcommit",
     "refactor": "ComposerScripts\\Refactor::run"
-  }
+  },
+  "repositories": [{
+    "type": "path",
+    "url": "/application/*",
+    "options": {
+      "symlink": true
+    }
+}]
 }
