@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="2"
+    resolveFromConfigFile="true"
+    cacheDirectory="/tmp/.psalm_cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="app"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+            <directory name="tools"/>
+            <file name="ecs.php"/>
+            <file name="rector.php"/>
+        </ignoreFiles>
+    </projectFiles>
+<plugins><pluginClass class="Psalm\PhpUnitPlugin\Plugin"/></plugins></psalm>

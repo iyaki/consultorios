@@ -16,6 +16,7 @@ services:
       working_dir: /application/server
       volumes:
           - ./nginx/conf.d:/etc/nginx/conf.d
+          - http-volume:/var/www/html
       ports:
         - "8080:80"
 
@@ -29,6 +30,7 @@ services:
       volumes:
         - ../..:/application
         - ./php/conf.d/99-ini-overrides.ini:/usr/local/etc/php/conf.d/99-ini-overrides.ini
+        - http-volume:/var/www/html
       environment:
         - DEV_MODE=${DEV_MODE}
         - DB_HOST=${DB_HOST}
@@ -73,6 +75,7 @@ services:
         - ${SSH_AUTH_SOCK}:${SSH_AUTH_SOCK}
         - ./dev-env/config/data:/config/data
         - ./dev-env/config/extensions:/config/extensions
+        - http-volume:/var/www/html
       environment:
         - DEV_MODE=${DEV_MODE}
         - DB_HOST=${DB_HOST}
@@ -83,3 +86,6 @@ services:
         - SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
       ports:
         - 8443:8443
+
+volumes:
+  http-volume:
