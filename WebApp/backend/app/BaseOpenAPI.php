@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Consultorios\Presentations\WebApp;
+namespace Consultorios\WebApp;
 
 /**
  *  @OA\Info(

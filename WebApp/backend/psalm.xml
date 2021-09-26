@@ -11,7 +11,6 @@
         <directory name="app"/>
         <ignoreFiles>
             <directory name="vendor"/>
-            <directory name="tools"/>
             <file name="ecs.php"/>
             <file name="rector.php"/>
         </ignoreFiles>

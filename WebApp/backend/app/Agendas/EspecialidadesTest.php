@@ -285,6 +285,7 @@ final class EspecialidadesTest extends TestCase
         if ($body !== null) {
             $options['body'] = json_encode($body, JSON_THROW_ON_ERROR);
         }
+
         return $options;
     }
 }

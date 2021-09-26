@@ -12,7 +12,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         __DIR__ . '/app',
     ]);
     $parameters->set(Option::SKIP, [
-        __DIR__ . '/tools',
         __DIR__ . '/ecs.php',
         __DIR__ . '/rector.php',
     ]);

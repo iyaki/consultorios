@@ -46,12 +46,23 @@ RUN apk add --update --no-cache --purge \
   && mv composer.phar /usr/local/bin/composer \
 # More utilities
   && composer global require \
-    psy/psysh:@stable \
-    phpmetrics/phpmetrics \
-    povils/phpmnd \
-    jakub-onderka/php-parallel-lint \
-    jakub-onderka/php-console-highlighter \
+    --update-no-dev \
+    --update-with-all-dependencies \
+    --prefer-stable \
+    --sort-packages \
+    --optimize-autoloader \
+    --classmap-authoritative \
     maglnet/composer-require-checker \
+    php-parallel-lint/php-console-highlighter \
+    php-parallel-lint/php-parallel-lint \
+#     povils/phpmnd \
+    phpmetrics/phpmetrics \
+    psalm/plugin-phpunit \
+    psy/psysh:@stable \
+    rector/rector \
+    symfony/var-dumper \
+    symplify/easy-coding-standard \
+    vimeo/psalm \
 # Install phive
   && wget -O phive.phar https://phar.io/releases/phive.phar \
   && wget -O phive.phar.asc https://phar.io/releases/phive.phar.asc \
@@ -71,11 +82,11 @@ RUN apk add --update --no-cache --purge \
   && phive install \
     --global \
     --trust-gpg-keys 4AA394086372C20A,76835C9464877BDD,0F9684B8B16B7AB0,69132CC8829FAB5F,F4D32E2C9343B2AE \
-    phploc \
-    phpcpd \
-    phpmd \
     churn \
     composer-unused \
+    phpcpd \
+    phploc \
+    phpmd \
 # Install code-server
   && npm config set python python3 \
   && yarn --production --verbose --frozen-lockfile global add code-server \

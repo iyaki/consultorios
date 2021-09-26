@@ -2,7 +2,11 @@
   "name": "consultorios/dbal",
   "version": "0.0.0",
   "require": {
-    "php": ">=8.0"
+    "php": ">=8.0",
+    "doctrine/dbal": "^2",
+    "doctrine/orm": "^2.9",
+    "doctrine/persistence": "^2.2",
+    "symfony/cache": "^5.3"
   },
   "autoload": {
     "psr-4": {
