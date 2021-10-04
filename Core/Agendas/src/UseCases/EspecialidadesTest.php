@@ -7,7 +7,7 @@ namespace Consultorios\Core\Agendas\UseCases;
 use Consultorios\Core\Agendas\Domain\Especialidad;
 use Consultorios\Core\Agendas\Domain\EspecialidadId;
 use Consultorios\Core\Agendas\Domain\EspecialidadRepositoryInterface;
-use Consultorios\Core\Common\UseCases\UnitOfWorkInterface;
+use Consultorios\UnitOfWork\UnitOfWorkInterface;
 
 final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
 {

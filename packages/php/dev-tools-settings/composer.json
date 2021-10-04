@@ -1,0 +1,16 @@
+{
+  "name": "consultorios/dev-tools-settings",
+  "version": "0.0.0",
+  "require": {
+    "php": ">=8.0"
+  },
+  "autoload": {
+    "files": [
+      "ecs.php",
+      "rector.php"
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

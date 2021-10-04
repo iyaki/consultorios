@@ -1,5 +1,5 @@
 {
-  "name": "consultorios/consultorios",
+  "name": "consultorios/webapp",
   "require": {
     "php": ">=8.0",
     "ext-json": "*",

@@ -21,9 +21,11 @@ RUN apk add --update --no-cache --purge \
     php8-intl \
     php8-mbstring \
     php8-openssl \
+    php8-pcntl \
     php8-pdo \
     php8-pdo_mysql \
     php8-phar \
+    php8-posix \
     php8-simplexml \
     php8-tokenizer \
     php8-xml \
@@ -53,9 +55,7 @@ RUN apk add --update --no-cache --purge \
     --optimize-autoloader \
     --classmap-authoritative \
     maglnet/composer-require-checker \
-    php-parallel-lint/php-console-highlighter \
-    php-parallel-lint/php-parallel-lint \
-#     povils/phpmnd \
+    povils/phpmnd \
     phpmetrics/phpmetrics \
     psalm/plugin-phpunit \
     psy/psysh:@stable \
