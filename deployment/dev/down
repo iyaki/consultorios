@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+PROJECT_NAME='Consultorios'
+
+OPTIONS=( $@ )
+
+cd `dirname $0`
+
+docker-compose --project-name ${PROJECT_NAME} down ${OPTIONS[@]}
