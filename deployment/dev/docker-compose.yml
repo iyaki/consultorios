@@ -1,91 +1,109 @@
-version: "3.1"
+version: "3.9"
 services:
 
-    mariadb:
-      image: mariadb:10.6
-      environment:
-        - MYSQL_ROOT_PASSWORD=root
-        - MYSQL_DATABASE=${DB_DATABASE}
-        - MYSQL_USER=${DB_USER}
-        - MYSQL_PASSWORD=${DB_PASSWORD}
-      ports:
-        - "8083:3306"
+  dev:
+    depends_on:
+      - mariadb
+    build:
+      context: ../../
+      dockerfile: ./deployment/dev/dev-env/Dockerfile
+    volumes:
+      - ../..:/application
+      - ./dev-env/home/.bashrc:/root/.bashrc
+      - ./dev-env/home/.bash_aliases:/root/.bash_aliases
+      - ./dev-env/home/.bash_completion:/root/.bash_completion
+      - ./dev-env/home/.bash_functions:/root/.bash_functions
+      - ./dev-env/home/.bash_profile:/root/.bash_profile
+      - ./dev-env/home/.vimrc:/root/.vimrc
+      # - ~/.gitconfig:/root/.gitconfig
+      - ./php/conf.d/99-ini-overrides.ini:/root/.asdf/installs/php/8.0.11/conf.d/99-ini-overrides.ini
+    environment:
+      - DEV_MODE=${DEV_MODE}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
 
-    webserver:
-      image: nginx:alpine
-      working_dir: /application/server
-      volumes:
-          - ./nginx/conf.d:/etc/nginx/conf.d
-          - http-volume:/var/www/html
-      ports:
-        - "8080:80"
+  node:
+    depends_on:
+      - php-fpm
+    build:
+      context: ../../
+      dockerfile: ./deployment/dev/node/Dockerfile
+    volumes:
+      - ../..:/application
+    ports:
+      - 3000:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
 
-    php-fpm:
-      build:
-        context: ../../
-        dockerfile: ./deployment/dev/php/Dockerfile
-      depends_on:
-        - mariadb
-        - webserver
-      volumes:
-        - ../..:/application
-        - ./php/conf.d/99-ini-overrides.ini:/usr/local/etc/php/conf.d/99-ini-overrides.ini
-        - http-volume:/var/www/html
-      environment:
-        - DEV_MODE=${DEV_MODE}
-        - DB_HOST=${DB_HOST}
-        - DB_USER=${DB_USER}
-        - DB_PASSWORD=${DB_PASSWORD}
-        - DB_DATABASE=${DB_DATABASE}
+  php-fpm:
+    depends_on:
+      - mariadb
+      - webserver
+    build:
+      context: ../../
+      dockerfile: ./deployment/dev/php/Dockerfile
+    volumes:
+      - ../..:/application
+      - ./php/conf.d/99-ini-overrides.ini:/usr/local/etc/php/conf.d/99-ini-overrides.ini
+    environment:
+      - DEV_MODE=${DEV_MODE}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
 
-    node:
-      build:
-        context: ../../
-        dockerfile: ./deployment/dev/node/Dockerfile
-      depends_on:
-        - php-fpm
-      volumes:
-        - ../..:/application
-      ports:
-        - 3001:3000
-      environment:
-        - CHOKIDAR_USEPOLLING=true
+  webserver:
+    image: nginx:alpine
+    working_dir: /application/server
+    volumes:
+        - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - "8080:80"
 
-    dev-env:
-      build:
-        context: ../../
-        dockerfile: ./deployment/dev/dev-env/Dockerfile
-      command: |
-        code-server
-          --bind-addr 0.0.0.0:8443
-          --disable-telemetry
-          --user-data-dir /config/data
-          --extensions-dir /config/extensions
-      volumes:
-        - ../..:/application
-        - ./dev-env/home/.bashrc:/root/.bashrc
-        - ./dev-env/home/.bash_aliases:/root/.bash_aliases
-        - ./dev-env/home/.bash_completion:/root/.bash_completion
-        - ./dev-env/home/.bash_functions:/root/.bash_functions
-        - ./dev-env/home/.bash_profile:/root/.bash_profile
-        - ./dev-env/home/.vimrc:/root/.vimrc
-        - ./dev-env/home/.ssh/known_hosts:/root/.ssh/known_hosts
-        # - ~/.vscode:/root/.local/share/code-server
-        - ~/.gitconfig:/root/.gitconfig
-        - ${SSH_AUTH_SOCK}:${SSH_AUTH_SOCK}
-        - ./dev-env/config/data:/config/data
-        - ./dev-env/config/extensions:/config/extensions
-        - http-volume:/var/www/html
-      environment:
-        - DEV_MODE=${DEV_MODE}
-        - DB_HOST=${DB_HOST}
-        - DB_USER=${DB_USER}
-        - DB_PASSWORD=${DB_PASSWORD}
-        - DB_DATABASE=${DB_DATABASE}
-        - PASSWORD=asd
-        - SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
-      ports:
-        - 8443:8443
+  mariadb:
+    image: mariadb:10.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "8083:3306"
 
-volumes:
-  http-volume:
+  # dev-env:
+  #   build:
+  #     context: ../../
+  #     dockerfile: ./deployment/dev/dev-env/Dockerfile
+  #   command: |
+  #     code-server
+  #       --bind-addr 0.0.0.0:8443
+  #       --disable-telemetry
+  #       --user-data-dir /config/data
+  #       --extensions-dir /config/extensions
+  #   volumes:
+  #     - ../..:/application
+  #     - ./dev-env/home/.bashrc:/root/.bashrc
+  #     - ./dev-env/home/.bash_aliases:/root/.bash_aliases
+  #     - ./dev-env/home/.bash_completion:/root/.bash_completion
+  #     - ./dev-env/home/.bash_functions:/root/.bash_functions
+  #     - ./dev-env/home/.bash_profile:/root/.bash_profile
+  #     - ./dev-env/home/.vimrc:/root/.vimrc
+  #     - ./dev-env/home/.ssh/known_hosts:/root/.ssh/known_hosts
+  #     # - ~/.vscode:/root/.local/share/code-server
+  #     - ~/.gitconfig:/root/.gitconfig
+  #     - ${SSH_AUTH_SOCK}:${SSH_AUTH_SOCK}
+  #     - ./dev-env/config/data:/config/data
+  #     - ./dev-env/config/extensions:/config/extensions
+  #     - http-volume:/var/www/html
+  #   environment:
+  #     - DEV_MODE=${DEV_MODE}
+  #     - DB_HOST=${DB_HOST}
+  #     - DB_USER=${DB_USER}
+  #     - DB_PASSWORD=${DB_PASSWORD}
+  #     - DB_DATABASE=${DB_DATABASE}
+  #     - PASSWORD=asd
+  #     - SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
+  #   ports:
+  #     - 8443:8443

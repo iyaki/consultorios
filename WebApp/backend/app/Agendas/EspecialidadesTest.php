@@ -29,7 +29,7 @@ final class EspecialidadesTest extends TestCase
     protected function setUp(): void
     {
         $this->client = new Client([
-            'base_uri' => 'http://webserver/',
+            'base_uri' => 'http://localhost:8080/',
             'http_errors' => false,
         ]);
     }

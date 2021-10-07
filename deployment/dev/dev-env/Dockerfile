@@ -1,51 +1,52 @@
-FROM alpine
+FROM ubuntu:latest
 
-RUN apk add --update --no-cache --purge \
-    alpine-sdk \
-    bash \
+SHELL ["/bin/bash", "-c"]
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+ENV TZ=America/Argentina/Buenos_Aires
+
+RUN apt update \
+  && apt install -y \
     bash-completion \
     curl \
     git \
     gnupg \
-    libc6-compat \
-    libstdc++ \
     mariadb-client \
-    nodejs \
-    npm \
-    openssh \
-    php8 \
-    php8-ctype \
-    php8-curl \
-    php8-dom \
-    php8-iconv \
-    php8-intl \
-    php8-mbstring \
-    php8-openssl \
-    php8-pcntl \
-    php8-pdo \
-    php8-pdo_mysql \
-    php8-phar \
-    php8-posix \
-    php8-simplexml \
-    php8-tokenizer \
-    php8-xml \
-    php8-xmlwriter \
-    python3 \
-    the_silver_searcher \
+    openssh-client \
     vim \
-    yarn \
-# Alias PHP
-  && ln -s /usr/bin/php8 /usr/bin/php \
-# Set bash as default shell
-  && sed -i 's#root:x:0:0:root:/root:/bin/ash#root:x:0:0:root:/root:/bin/bash#g' /etc/passwd \
-# Install composer
-  && EXPECTED_CHECKSUM="$(php -r 'copy("https://composer.github.io/installer.sig", "php://stdout");')" \
-  && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-  && ACTUAL_CHECKSUM="$(php -r "echo hash_file('sha384', 'composer-setup.php');")" \
-  && if [ "$EXPECTED_CHECKSUM" != "$ACTUAL_CHECKSUM" ]; then >&2 echo 'ERROR: Invalid installer checksum' && exit; fi \
-  && php composer-setup.php \
-  && rm composer-setup.php \
-  && mv composer.phar /usr/local/bin/composer \
+    wget \
+# Install asdf version manager
+  && git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1 \
+  && source ~/.asdf/asdf.sh \
+# Install php
+  && apt install -y \
+    autoconf \
+    bison \
+    g++ \
+    gcc \
+    libcurl4-openssl-dev \
+    libgd-dev \
+    libicu-dev \
+    libonig-dev \
+    libpng-dev \
+    libpq-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    libxml2-dev \
+    libzip-dev \
+    make \
+    re2c \
+    zlib1g-dev \
+  && asdf plugin add php \
+  && asdf install php 8.0.11 \
+  && asdf global php 8.0.11 \
+# Install nodejs
+  && asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git \
+  && bash -c '${ASDF_DATA_DIR:=$HOME/.asdf}/plugins/nodejs/bin/import-release-team-keyring' \
+  && asdf install nodejs lts \
+  && asdf global nodejs lts \
 # More utilities
   && composer global require \
     --update-no-dev \
@@ -63,6 +64,7 @@ RUN apk add --update --no-cache --purge \
     symfony/var-dumper \
     symplify/easy-coding-standard \
     vimeo/psalm \
+  && asdf reshim \
 # Install phive
   && wget -O phive.phar https://phar.io/releases/phive.phar \
   && wget -O phive.phar.asc https://phar.io/releases/phive.phar.asc \
@@ -87,17 +89,14 @@ RUN apk add --update --no-cache --purge \
     phpcpd \
     phploc \
     phpmd \
-# Install code-server
-  && npm config set python python3 \
-  && yarn --production --verbose --frozen-lockfile global add code-server \
-# Remove build dependencies
-  && apk del --purge \
-    alpine-sdk \
-    libc6-compat \
-    libstdc++
+# Cleanup
+  && apt remove -y \
+    autoconf \
+    bison \
+    g++ \
+    gcc \
+    make \
+    re2c \
+  && rm -rf /var/lib/apt/lists/*
 
-ENV PATH /root/.composer/vendor/bin:$PATH
-
-EXPOSE 8443
-
-CMD ["code-server", "--disable-telemetry", "--bind-addr", "0.0.0.0:8443"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [ "$1" = "" ];
+    then
+    PORT="8080"
+else
+    PORT="$1"
+fi
+
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+php -S localhost:$PORT -t "$SCRIPT_DIR/../public" "$SCRIPT_DIR/../public/dev-server.php"
