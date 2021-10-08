@@ -4,6 +4,9 @@
   "require": {
     "php": ">=8.0"
   },
+  "require-dev": {
+    "consultorios/dev-tools-settings": "*"
+  },
   "autoload": {
     "psr-4": {
       "Consultorios\\UnitOfWork\\": "src"
@@ -11,5 +14,15 @@
   },
   "config": {
     "sort-packages": true
-  }
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../*",
+      "only": ["consultorios/*"],
+      "options": {
+        "symlink": true
+      }
+    }
+  ]
 }

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+if [ -z "$KEEP_RUNNING_ON_ERROR" ]
+then
+  set -e
+  set -o pipefail
+fi
+
+SCRIPT_DIR=`dirname $0`
+
+source $SCRIPT_DIR/../../../packages/bash/utils.sh
+
+cd $SCRIPT_DIR/../
+
+npm install --save-exact
+
+check_exit_status $?
+print_separator
+
+node_modules/.bin/standard
+
+check_exit_status $?
+print_separator
+
+CI=true npm test
+
+check_exit_status $?
+
+if [ $EXIT_STATUS != 0 ]
+then
+  exit 1
+fi

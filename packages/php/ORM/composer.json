@@ -11,6 +11,9 @@
     "doctrine/persistence": "^2.2",
     "symfony/cache": "^5.3"
   },
+  "require-dev": {
+    "consultorios/dev-tools-settings": "*"
+  },
   "autoload": {
     "psr-4": {
       "Consultorios\\ORM\\": "src"
@@ -22,5 +25,15 @@
   },
   "config": {
     "sort-packages": true
-  }
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../*",
+      "only": ["consultorios/*"],
+      "options": {
+        "symlink": true
+      }
+    }
+  ]
 }

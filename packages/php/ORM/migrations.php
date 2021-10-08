@@ -6,7 +6,8 @@ namespace Consultorios\ORM;
 
 if (! \function_exists('\Consultorios\DevToolsSettings\getMigrationsConfigs')) {
 
-    function getMigrationsConfigs(string $baseDir): array{
+    function getMigrationsConfigs(string $baseDir): array
+    {
         return [
             'table_storage' => [
                 'table_name' => 'doctrine_migration_versions',

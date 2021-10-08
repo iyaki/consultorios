@@ -10,7 +10,8 @@ use Symfony\Component\Console\Helper\HelperSet;
 
 if (! \function_exists('\Consultorios\DevToolsSettings\getDoctrineCliConfig')) {
 
-    function getDoctrineCliConfig(string $baseDir): HelperSet{
+    function getDoctrineCliConfig(string $baseDir)
+    {
         $em = (new ORM(
             require $baseDir . '/config/database.php',
             [$baseDir . '/config/mappings'],

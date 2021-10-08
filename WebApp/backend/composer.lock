@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "da35c25e61e3b2cb7f1bd90308b9ed18",
+    "content-hash": "adac81f8f88ddb792756a2814f7f6d05",
     "packages": [
         {
             "name": "brick/math",
@@ -211,15 +211,13 @@
             "dist": {
                 "type": "path",
                 "url": "../../Core/Agendas",
-                "reference": "6f2514eb45b5e3856019d32b0fcb29bc20404395"
+                "reference": "93ee69558179148d25007ffd39c4f301c9846291"
             },
             "require": {
                 "consultorios/core-common": "*",
-                "consultorios/dbal": "*",
+                "consultorios/orm": "*",
                 "consultorios/unit-of-work": "*",
-                "doctrine/migrations": "^3.2",
                 "doctrine/orm": "^2.9",
-                "ext-pdo_mysql": "*",
                 "php": ">=8.0",
                 "ramsey/uuid": "^4.1"
             },
@@ -261,25 +259,32 @@
             }
         },
         {
-            "name": "consultorios/dbal",
+            "name": "consultorios/orm",
             "version": "0.0.0",
             "dist": {
                 "type": "path",
-                "url": "../../packages/php/DBAL",
-                "reference": "ccb1d04e1533b9d8e489e2005ff396bef89cc794"
+                "url": "../../packages/php/ORM",
+                "reference": "6f9c724db31c4939f62b7e78bb8753df6d482a75"
             },
             "require": {
+                "consultorios/unit-of-work": "*",
                 "doctrine/dbal": "^2",
+                "doctrine/migrations": "^3.2",
                 "doctrine/orm": "^2.9",
                 "doctrine/persistence": "^2.2",
+                "ext-pdo_mysql": "*",
                 "php": ">=8.0",
                 "symfony/cache": "^5.3"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Consultorios\\DBAL\\": "src"
-                }
+                    "Consultorios\\ORM\\": "src"
+                },
+                "files": [
+                    "cli-config.php",
+                    "migrations.php"
+                ]
             },
             "transport-options": {
                 "symlink": true,

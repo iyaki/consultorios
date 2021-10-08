@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-if [ "$1" = "" ];
+if [ -z "$1" ];
     then
     PORT="8080"
 else
     PORT="$1"
 fi
 
-SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+SCRIPT_DIR=`dirname $0`
 
 cd "$SCRIPT_DIR/../"
 

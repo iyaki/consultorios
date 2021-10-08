@@ -37,7 +37,7 @@ final class Clockwork
             return $dir;
         }
 
-        if (!mkdir($dir, 0777, true)) {
+        if (! mkdir($dir, 0777, true)) {
             throw new \Exception('No ha sido posible crear la carpeta de clockwork');
         }
 

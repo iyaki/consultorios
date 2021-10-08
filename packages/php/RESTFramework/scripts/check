@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+if [ -z "$KEEP_RUNNING_ON_ERROR" ]
+then
+  set -e
+  set -o pipefail
+fi
+
+CODE_DIRECOTRY='src/'
+
+SCRIPT_DIR=`dirname $0`
+
+source $SCRIPT_DIR/../../../bash/utils.sh
+
+cd $SCRIPT_DIR/../
+
+composer install
+
+check_exit_status $?
+print_separator
+
+ecs --clear-cache
+
+check_exit_status $?
+print_separator
+
+composer-unused --no-cache
+
+check_exit_status $?
+print_separator
+
+composer-require-checker
+
+check_exit_status $?
+print_separator
+
+phpmnd \
+  --non-zero-exit-on-violation \
+  --include-numeric-string \
+  -- $CODE_DIRECOTRY
+
+check_exit_status $?
+print_separator
+
+phpcpd $CODE_DIRECOTRY
+
+check_exit_status $?
+print_separator
+
+psalm \
+  --threads=4 \
+  --no-cache
+
+check_exit_status $?
+print_separator
+
+if [ $EXIT_STATUS != 0 ]
+then
+  exit 1
+fi

@@ -80,16 +80,14 @@ RUN apt update \
 # composer-require-checker: 033E5F8D801A2F8D
 # composer-unused: F4D32E2C9343B2AE
 # phploc, phpcpd: 4AA394086372C20A
-# phpmd: 0F9684B8B16B7AB0
   && phive install \
     --global \
-    --trust-gpg-keys 69132CC8829FAB5F,033E5F8D801A2F8D,F4D32E2C9343B2AE,4AA394086372C20A,0F9684B8B16B7AB0 \
+    --trust-gpg-keys 69132CC8829FAB5F,033E5F8D801A2F8D,F4D32E2C9343B2AE,4AA394086372C20A \
     churn \
     composer-require-checker \
     composer-unused \
     phpcpd \
     phploc \
-    phpmd \
 # Cleanup
   && apt remove -y \
     autoconf \

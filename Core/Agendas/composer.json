@@ -16,7 +16,8 @@
   "autoload": {
     "psr-4": {
       "Consultorios\\Core\\Agendas\\": "src"
-    }
+    },
+    "exclude-from-classmap": ["*Test.php"]
   },
   "config": {
     "sort-packages": true
@@ -33,7 +34,7 @@
     {
       "type": "path",
       "url": "../Common",
-      "only": ["consultorios/*"],
+      "only": ["consultorios/core-common"],
       "options": {
         "symlink": true
       }
