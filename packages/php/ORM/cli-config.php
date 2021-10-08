@@ -6,7 +6,6 @@ namespace Consultorios\ORM;
 
 use Consultorios\ORM\ORM;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use Symfony\Component\Console\Helper\HelperSet;
 
 if (! \function_exists('\Consultorios\DevToolsSettings\getDoctrineCliConfig')) {
 

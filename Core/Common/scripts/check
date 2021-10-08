@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -z "$KEEP_RUNNING_ON_ERROR" ]
+if [ -z "$CI" ]
 then
   set -e
   set -o pipefail

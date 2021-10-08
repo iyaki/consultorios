@@ -44,15 +44,7 @@ final class ORM
         );
 
         $this->em = EntityManager::create(
-            [
-                'driver' => 'pdo_mysql',
-                'host' => $this->dbSettings->host,
-                'port' => 3306,
-                'dbname' => $this->dbSettings->database,
-                'user' => $this->dbSettings->user,
-                'password' => $this->dbSettings->password,
-                'charset' => 'utf8',
-            ],
+            $this->connection(),
             $doctrineConfig
         );
 
@@ -66,5 +58,31 @@ final class ORM
         }
 
         return $this->uow;
+    }
+
+    private function connection(): array
+    {
+        return getenv('CI') ? $this->connectionInMemorySQLite() : $this->connectionMySQL();
+    }
+
+    private function connectionMySQL(): array
+    {
+        return [
+            'driver' => 'pdo_mysql',
+            'host' => $this->dbSettings->host,
+            'port' => 3306,
+            'dbname' => $this->dbSettings->database,
+            'user' => $this->dbSettings->user,
+            'password' => $this->dbSettings->password,
+            'charset' => 'utf8',
+        ];
+    }
+
+    private function connectionInMemorySQLite(): array
+    {
+        return [
+            'driver' => 'pdo_sqlite',
+            'memory' => true
+        ];
     }
 }

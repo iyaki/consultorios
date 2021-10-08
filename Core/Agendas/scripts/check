@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -z "$KEEP_RUNNING_ON_ERROR" ]
+if [ -z "$CI" ]
 then
   set -e
   set -o pipefail
@@ -51,6 +51,16 @@ print_separator
 psalm \
   --threads=4 \
   --no-cache
+
+check_exit_status $?
+print_separator
+
+if [ -z "$CI" ]
+then
+  vendor/bin/doctrine orm:validate-schema
+else
+  vendor/bin/doctrine orm:validate-schema --skip-sync
+fi
 
 check_exit_status $?
 print_separator
