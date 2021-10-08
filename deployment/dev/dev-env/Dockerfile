@@ -14,6 +14,7 @@ RUN apt update \
     gnupg \
     mariadb-client \
     openssh-client \
+    unzip \
     vim \
     wget \
 # Install asdf version manager
@@ -55,7 +56,6 @@ RUN apt update \
     --sort-packages \
     --optimize-autoloader \
     --classmap-authoritative \
-    maglnet/composer-require-checker \
     povils/phpmnd \
     phpmetrics/phpmetrics \
     psalm/plugin-phpunit \
@@ -76,15 +76,16 @@ RUN apt update \
 # Even more utilities
 #
 # Gpg keys:
-# phploc, phpcpd: 4AA394086372C20A
-# dephpend: 76835C9464877BDD
-# phpmd: 0F9684B8B16B7AB0
 # churn-php: 69132CC8829FAB5F
+# composer-require-checker: 033E5F8D801A2F8D
 # composer-unused: F4D32E2C9343B2AE
+# phploc, phpcpd: 4AA394086372C20A
+# phpmd: 0F9684B8B16B7AB0
   && phive install \
     --global \
-    --trust-gpg-keys 4AA394086372C20A,76835C9464877BDD,0F9684B8B16B7AB0,69132CC8829FAB5F,F4D32E2C9343B2AE \
+    --trust-gpg-keys 69132CC8829FAB5F,033E5F8D801A2F8D,F4D32E2C9343B2AE,4AA394086372C20A,0F9684B8B16B7AB0 \
     churn \
+    composer-require-checker \
     composer-unused \
     phpcpd \
     phploc \
