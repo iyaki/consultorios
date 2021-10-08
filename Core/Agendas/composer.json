@@ -3,11 +3,9 @@
   "version": "0.0.0",
   "require": {
     "php": ">=8.0",
-    "ext-pdo_mysql": "*",
     "consultorios/core-common": "*",
-    "consultorios/dbal": "*",
+    "consultorios/orm": "*",
     "consultorios/unit-of-work": "*",
-    "doctrine/migrations": "^3.2",
     "doctrine/orm": "^2.9",
     "ramsey/uuid": "^4.1"
   },

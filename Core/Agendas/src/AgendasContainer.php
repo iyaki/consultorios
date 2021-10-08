@@ -7,23 +7,23 @@ namespace Consultorios\Core\Agendas;
 use Consultorios\Core\Agendas\Infrastructure\EspecialidadRepositoryDoctrine;
 use Consultorios\Core\Agendas\UseCases\Especialidades;
 use Consultorios\Core\Common\CommonContainer;
-use Consultorios\DBAL\DBAL;
+use Consultorios\ORM\ORM;
 
 final class AgendasContainer
 {
     public static function getCasosDeUsoEspecialidades(): Especialidades
     {
         $dbSettings = require __DIR__ . '/../config/database.php';
-        $dbal = new DBAL(
+        $orm = new ORM(
             $dbSettings,
             [__DIR__ . '/../config/mappings'],
             CommonContainer::devMode()
         );
 
         return new Especialidades(
-            $dbal->unitOfWork(),
+            $orm->unitOfWork(),
             new EspecialidadRepositoryDoctrine(
-                $dbal->entityManager()
+                $orm->entityManager()
             )
         );
     }

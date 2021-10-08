@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Consultorios\DBAL;
+namespace Consultorios\ORM;
 
 final class DatabaseConnectionSettings
 {

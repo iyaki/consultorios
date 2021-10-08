@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Consultorios\DBAL\DatabaseConnectionSettings;
+use Consultorios\ORM\DatabaseConnectionSettings;
 
 return new DatabaseConnectionSettings(
     (string) getenv('DB_HOST'),

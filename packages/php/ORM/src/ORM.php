@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Consultorios\DBAL;
+namespace Consultorios\ORM;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
@@ -11,7 +11,7 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\ChainAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
-final class DBAL
+final class ORM
 {
     private ?EntityManager $em = null;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Consultorios\DBAL;
+namespace Consultorios\ORM;
 
 use Consultorios\UnitOfWork\UnitOfWorkInterface;
 use Doctrine\ORM\EntityManager;
