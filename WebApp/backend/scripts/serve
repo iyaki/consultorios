@@ -9,4 +9,8 @@ fi
 
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
+cd "$SCRIPT_DIR/../"
+
+composer install
+
 php -S localhost:$PORT -t "$SCRIPT_DIR/../public" "$SCRIPT_DIR/../public/dev-server.php"
