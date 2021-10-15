@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+
+  dev:
+    depends_on:
+      - mariadb
+    build:
+      context: ../../
+      dockerfile: ./deploy/dev/Dockerfile
+    volumes:
+      - ../..:/application
+      - ./home/.bashrc:/root/.bashrc
+      - ./home/.bash_aliases:/root/.bash_aliases
+      - ./home/.bash_completion:/root/.bash_completion
+      - ./home/.bash_functions:/root/.bash_functions
+      - ./home/.bash_profile:/root/.bash_profile
+      - ./home/.vimrc:/root/.vimrc
+      - ./php/conf.d/99-ini-overrides.ini:/root/.asdf/installs/php/8.0.11/conf.d/99-ini-overrides.ini
+    environment:
+      - DEV_MODE=${DEV_MODE}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+
+  mariadb:
+    image: mariadb:10.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "8083:3306"
