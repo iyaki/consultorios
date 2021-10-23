@@ -2,16 +2,16 @@
 
 PROJECT_NAME='Consultorios'
 
-CACHE_DIR='.cache'
+CACHE_DIR='.cache/dev'
 
-OPTIONS=( $@ )
+OPTIONS=( "$@" )
 
-cd `dirname $0`
+cd "$(dirname $0)" || exit
 
 mkdir -p ${CACHE_DIR}
 
 declare -a DOCKERFILE_FOLDERS=(
-  "."
+  ".."
 )
 
 for FOLDER in "${DOCKERFILE_FOLDERS[@]}"
@@ -29,6 +29,6 @@ do
 done
 
 # delete duplicate options
-OPTIONS=($(echo "${OPTIONS[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+OPTIONS=("$(echo "${OPTIONS[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')")
 
 docker-compose --project-name ${PROJECT_NAME} up --detach ${OPTIONS[@]} dev

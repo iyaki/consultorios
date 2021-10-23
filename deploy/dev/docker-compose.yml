@@ -6,7 +6,7 @@ services:
       - mariadb
     build:
       context: ../../
-      dockerfile: ./deploy/dev/Dockerfile
+      dockerfile: ./deploy/Dockerfile
     volumes:
       - ../..:/application
       - ./home/.bashrc:/root/.bashrc
