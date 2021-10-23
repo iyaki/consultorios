@@ -81,7 +81,7 @@ FROM php-dependecies as php-runtime
 
 COPY --from=php-build /root/php /root/php
 
-ENV PATH="/root/php/bin:/root/php/.composer/vendor/bin:${PATH}"
+ENV PATH="/root/php/bin:/root/.config/composer/vendor/bin:${PATH}"
 
 FROM alpine:latest as php-phive
 
