@@ -6,4 +6,7 @@ use function Consultorios\DevToolsSettings\getECSConfigurator;
 
 require __DIR__ . '/vendor/autoload.php';
 
-return getECSConfigurator([__DIR__ . '/src/']);
+return getECSConfigurator([
+    __DIR__ . '/src/',
+    __DIR__ . '/config/'
+]);
