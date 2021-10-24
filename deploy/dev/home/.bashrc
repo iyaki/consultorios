@@ -113,6 +113,3 @@ fi
 if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
-
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash

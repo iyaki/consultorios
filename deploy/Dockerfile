@@ -98,6 +98,8 @@ RUN apk add --no-cache \
 
 FROM php-runtime as php-ci
 
+LABEL org.opencontainers.image.source="https://github.com/iyaki/consultorios"
+
 COPY --from=php-phive /root/phive.phar /root/php/bin/phive
 
 RUN apt update \
@@ -179,8 +181,6 @@ RUN apt update \
   && rm -r ~/nodejs/LICENSE \
   && rm -r ~/nodejs/README.md
 
-# dev-environment
-
 FROM php-ci as dev-env
 
 LABEL org.opencontainers.image.source="https://github.com/iyaki/consultorios"
@@ -221,21 +221,17 @@ RUN apt update \
     churn \
     phploc \
 # Cleanup
-  && apt purge -y --allow-remove-essential \
+  && apt purge -y \
     alsa-topology-conf \
     alsa-ucm-conf \
-    dash \
     fontconfig-config \
     fonts-dejavu-core \
-    git-man \
     gpg \
     gpg-agent \
-    gpgv \
-    libasound2 \
-    libasound2-data \
     manpages \
     manpages-dev \
-  # && apt autoremove -y \
+  && apt update \
+  && apt autoremove -y \
   && rm -rf /tmp/* \
   && rm -rf /usr/local/bin/phive \
   && rm -rf /root/.phive \
