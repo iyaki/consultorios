@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Consultorios\ORM\DatabaseConnectionSettings;
 
 return new DatabaseConnectionSettings(
-      (string) getenv('DB_HOST'),
+     (string) getenv('DB_HOST'),
     (string) getenv('DB_DATABASE'),
     (string) getenv('DB_USER'),
     (string) getenv('DB_PASSWORD'),
