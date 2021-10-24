@@ -28,10 +28,10 @@ composer-unused \
   --excludePackage=php \
   --no-cache
 
-check_exit_status $?
-print_separator
+# check_exit_status $?
+# print_separator
 
-composer-require-checker
+# composer-require-checker
 
 check_exit_status $?
 print_separator
