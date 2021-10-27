@@ -48,7 +48,7 @@ final class Application
         string $uriBasePath,
         string $documentationPath
     ): void {
-        $devMode = (bool) ($this->container->get('config')['dev_mode'] ?? false);
+        $devMode = (bool) ($this->container->get('config')['dev_mode'] ?? false)
 
         if ($devMode) {
             $this->app->pipe(new ClockworkMiddleware());
