@@ -10,5 +10,5 @@ interface UnitOfWorkInterface
 
     public function commit(): void;
 
-    public function rollback(): void;
+    public function rollback(): void
 }
