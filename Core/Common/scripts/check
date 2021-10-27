@@ -14,7 +14,7 @@ source $SCRIPT_DIR/../../../packages/bash/utils.sh
 
 cd $SCRIPT_DIR/../
 
-composer install
+composer update
 
 check_exit_status $?
 print_separator
