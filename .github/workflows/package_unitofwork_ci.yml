@@ -1,0 +1,19 @@
+on:
+  push:
+    paths:
+      - 'packages/php/UnitOfWork/**'
+
+jobs:
+  continuous_integration:
+    runs-on: ubuntu-latest
+    name: Integración continua para UnitOfWork
+    container:
+      image: ghcr.io/iyaki/consultorios-ci-php:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Validaciones
+        run: packages/php/UnitOfWork/scripts/check
