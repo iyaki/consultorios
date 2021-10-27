@@ -16,4 +16,4 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Validaciones
-        run: pwd && Core/Agendas/scripts/check
+        run: Core/Agendas/scripts/check
