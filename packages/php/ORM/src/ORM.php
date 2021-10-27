@@ -27,7 +27,7 @@ final class ORM
     public function entityManager(): EntityManager
     {
         if ($this->em !== null) {
-            return $this->em
+            return $this->em;
         }
 
         $doctrineConfig = Setup::createConfiguration($this->devMode);
@@ -82,7 +82,7 @@ final class ORM
     {
         return [
             'driver' => 'pdo_sqlite',
-            'memory' => true
+            'memory' => true,
         ];
     }
 }
