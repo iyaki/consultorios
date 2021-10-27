@@ -8,6 +8,7 @@ final class CommonContainer
 {
     public static function devMode(): bool
     {
-        return (bool) getenv('DEV_MODE');
+        return (bool) getenv('DEV_MODE')
+
     }
 }
