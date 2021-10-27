@@ -1,0 +1,19 @@
+on:
+  push:
+    paths:
+      - 'packages/php/RESTFramework/**'
+
+jobs:
+  continuous_integration:
+    runs-on: ubuntu-latest
+    name: Integración continua para RESTFramework
+    container:
+      image: ghcr.io/iyaki/consultorios-ci-php:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Validaciones
+        run: packages/php/RESTFramework/scripts/check
