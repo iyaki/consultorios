@@ -19,6 +19,7 @@ if (! \function_exists('\Consultorios\DevToolsSettings\getECSConfigurator')) {
             $parameters = $containerConfigurator->parameters();
             $parameters->set(Option::PATHS, $includePaths);
             $parameters->set(Option::SKIP, $excludePaths);
+            $parameters->set(Option::PARALLEL, true);
             $parameters->set(Option::CACHE_DIRECTORY, \sys_get_temp_dir() . '/.ecs_cache');
             $parameters->set(Option::LINE_ENDING, "\n");
             $parameters->set(Option::SKIP, [
