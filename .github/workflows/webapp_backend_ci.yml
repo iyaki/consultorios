@@ -16,4 +16,4 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Validaciones
-        run: pwd && ls -lah WebApp/backend && WebApp/backend/scripts/check
+        run: WebApp/backend/scripts/check
