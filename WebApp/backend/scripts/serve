@@ -7,10 +7,9 @@ else
     PORT="$1"
 fi
 
-SCRIPT_DIR=`dirname $0`
 
-cd "$SCRIPT_DIR/../"
+cd "$(dirname $0)/../" || exit
 
 composer install
 
-php -S localhost:$PORT -t "$SCRIPT_DIR/../public" "$SCRIPT_DIR/../public/dev-server.php"
+php -S localhost:$PORT -t public

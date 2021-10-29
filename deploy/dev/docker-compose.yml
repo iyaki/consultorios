@@ -16,7 +16,7 @@ services:
       - ./home/.bash_functions:/root/.bash_functions
       - ./home/.bash_profile:/root/.bash_profile
       - ./home/.vimrc:/root/.vimrc
-      - ./php/conf.d/99-ini-overrides.ini:/root/.asdf/installs/php/8.0.11/conf.d/99-ini-overrides.ini
+      - ./php/conf.d/php.ini:/root/php/conf.d/php.ini
     environment:
       - DEV_MODE=${DEV_MODE}
       - DB_HOST=${DB_HOST}
