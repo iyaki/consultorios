@@ -63,7 +63,7 @@ final class EspecialidadesDeleteHandler implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $id = $this->getId($request)
+        $id = $this->getId($request);
         $this->especialidades->eliminar(new EspecialidadId($id));
 
         return $this->responseFactory->createResponseFromItem(null, 200);
