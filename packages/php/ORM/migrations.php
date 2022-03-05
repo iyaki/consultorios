@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Consultorios\ORM;
 
-if (! \function_exists('\Consultorios\DevToolsSettings\getMigrationsConfigs')) {
+if (! \function_exists('\Consultorios\ORM\getMigrationsConfigs')) {
 
     function getMigrationsConfigs(string $baseDir): array
     {

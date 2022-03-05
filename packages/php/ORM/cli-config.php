@@ -7,7 +7,7 @@ namespace Consultorios\ORM;
 use Consultorios\ORM\ORM;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 
-if (! \function_exists('\Consultorios\DevToolsSettings\getDoctrineCliConfig')) {
+if (! \function_exists('\Consultorios\ORM\getDoctrineCliConfig')) {
 
     function getDoctrineCliConfig(string $baseDir)
     {
