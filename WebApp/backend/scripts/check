@@ -55,14 +55,9 @@ psalm \
 check_exit_status $?
 print_separator
 
-php -S localhost:8080 -t public public/index.php &
-PID_SERVER=$!
-sleep 3
 vendor/bin/phpunit $CODE_DIRECOTRY
 
-check_exit_status $?
-
-kill -9 $PID_SERVER &> /dev/null
+check_exit_status $UNIT_TESTS_STATUS
 
 if [ $EXIT_STATUS != 0 ]
 then
