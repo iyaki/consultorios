@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework;
 
+use League\Fractal\TransformerAbstract;
+
 /**
  * Clase utilizada en las pruebas unitarias de AbstractWebAppResponseFactoryFractal.
  *
  * @internal For tests purposes only
  */
-class DummyTransformer extends \League\Fractal\TransformerAbstract
+class DummyTransformer extends TransformerAbstract
 {
     /**
      * @return array<string, string>

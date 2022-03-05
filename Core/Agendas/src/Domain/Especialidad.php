@@ -16,6 +16,7 @@ class Especialidad
         if (trim($nombre) === '') {
             throw new \DomainException('El nombre de las especialidades no puede ser vacío');
         }
+
         $this->nombre = $nombre;
     }
 

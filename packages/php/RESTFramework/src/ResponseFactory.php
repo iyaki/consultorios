@@ -31,7 +31,7 @@ final class ResponseFactory
         private ResponseFactoryInterface $responseFactory,
         array $transformers
     ) {
-        $this->transformers = $this->transformers + $transformers;
+        $this->transformers += $transformers;
     }
 
     public function createResponseFromItem(?object $resource, int $code = 200, string $reasonPhrase = ''): ResponseInterface
@@ -70,6 +70,7 @@ final class ResponseFactory
                 return new Item($resource, new $transformer());
             }
         }
+
         throw new \UnexpectedValueException('There is no transformer configured for ' . $resource::class);
     }
 

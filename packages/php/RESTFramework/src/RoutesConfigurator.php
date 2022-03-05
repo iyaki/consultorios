@@ -23,7 +23,7 @@ final class RoutesConfigurator
         private ContainerInterface $container,
         private string $basePath = ''
     ) {
-        $this->app = $this->container->get(\Mezzio\Application::class);
+        $this->app = $this->container->get(Application::class);
     }
 
     public function withBasePath(string $path): self
@@ -138,7 +138,7 @@ final class RoutesConfigurator
      */
     private function lazyRequestHandler(callable $requestHandlerFactory): callable
     {
-        return fn (ServerRequestInterface $request): \Psr\Http\Message\ResponseInterface => $requestHandlerFactory()->handle($request);
+        return fn (ServerRequestInterface $request): ResponseInterface => $requestHandlerFactory()->handle($request);
     }
 
     /**
@@ -150,6 +150,6 @@ final class RoutesConfigurator
      */
     private function lazyMiddleware(callable $middlewareFactory): callable
     {
-        return fn (ServerRequestInterface $request, RequestHandlerInterface $handler): \Psr\Http\Message\ResponseInterface => $middlewareFactory()->process($request, $handler);
+        return fn (ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface => $middlewareFactory()->process($request, $handler);
     }
 }

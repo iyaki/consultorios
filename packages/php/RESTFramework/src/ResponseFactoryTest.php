@@ -101,7 +101,7 @@ final class ResponseFactoryTest extends TestCase
     {
         $psrResponseFactory = $this->createStub(ResponseFactoryInterface::class);
         $psrResponseFactory->method('createResponse')
-            ->willReturnCallback(fn (int $code = 200): \Laminas\Diactoros\Response\TextResponse => new TextResponse('', $code))
+            ->willReturnCallback(fn (int $code = 200): TextResponse => new TextResponse('', $code))
         ;
 
         return new ResponseFactory(

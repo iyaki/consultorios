@@ -60,11 +60,28 @@ final class ORM
         return $this->uow;
     }
 
+    /**
+     * @return mixed[]
+     */
     private function connection(): array
     {
         return getenv('CI') ? $this->connectionInMemorySQLite() : $this->connectionMySQL();
     }
 
+    /**
+     * @return string[]|bool[]
+     */
+    private function connectionInMemorySQLite(): array
+    {
+        return [
+            'driver' => 'pdo_sqlite',
+            'memory' => true,
+        ];
+    }
+
+    /**
+     * @return array<string, int>|array<string, string>
+     */
     private function connectionMySQL(): array
     {
         return [
@@ -75,14 +92,6 @@ final class ORM
             'user' => $this->dbSettings->user,
             'password' => $this->dbSettings->password,
             'charset' => 'utf8',
-        ];
-    }
-
-    private function connectionInMemorySQLite(): array
-    {
-        return [
-            'driver' => 'pdo_sqlite',
-            'memory' => true,
         ];
     }
 }

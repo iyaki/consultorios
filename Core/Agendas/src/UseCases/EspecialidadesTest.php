@@ -8,8 +8,9 @@ use Consultorios\Core\Agendas\Domain\Especialidad;
 use Consultorios\Core\Agendas\Domain\EspecialidadId;
 use Consultorios\Core\Agendas\Domain\EspecialidadRepositoryInterface;
 use Consultorios\UnitOfWork\UnitOfWorkInterface;
+use PHPUnit\Framework\TestCase;
 
-final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
+final class EspecialidadesTest extends TestCase
 {
     /**
      * @var string
@@ -122,6 +123,7 @@ final class EspecialidadesTest extends \PHPUnit\Framework\TestCase
                             return false;
                         }
                     }
+
                     return true;
                 }
             ))

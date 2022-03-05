@@ -39,6 +39,7 @@ final class ClockworkMiddleware implements MiddlewareInterface
         if (preg_match(self::AUTH_URI, $request->getUri()->getPath(), $matches)) {
             return $this->authenticate($request);
         }
+
         if (preg_match(self::CLOCKWORK_DATA_URI, $request->getUri()->getPath(), $matches)) {
             $matches = array_merge([
                 'id' => null,
@@ -55,7 +56,7 @@ final class ClockworkMiddleware implements MiddlewareInterface
         return $this->logRequest($request, $response);
     }
 
-    private function authenticate(ServerRequestInterface $request): \Laminas\Diactoros\Response\JsonResponse
+    private function authenticate(ServerRequestInterface $request): JsonResponse
     {
         $token = $this->clockwork->authenticator()->attempt($request->getParsedBody());
 
@@ -64,7 +65,7 @@ final class ClockworkMiddleware implements MiddlewareInterface
         ], $token ? 200 : 403);
     }
 
-    private function retrieveRequest(ServerRequestInterface $request, ?string $id, ?string $direction, ?string $count): \Laminas\Diactoros\Response\JsonResponse
+    private function retrieveRequest(ServerRequestInterface $request, ?string $id, ?string $direction, ?string $count): JsonResponse
     {
         $authenticator = $this->clockwork->authenticator();
         $storage = $this->clockwork->storage();
@@ -108,7 +109,7 @@ final class ClockworkMiddleware implements MiddlewareInterface
         return $response->withHeader('Server-Timing', ServerTiming::fromRequest($clockworkRequest)->value());
     }
 
-    private function jsonResponse(mixed $data, int $status = 200): \Laminas\Diactoros\Response\JsonResponse
+    private function jsonResponse(mixed $data, int $status = 200): JsonResponse
     {
         return new JsonResponse($data, $status);
     }
