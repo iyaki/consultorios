@@ -8,11 +8,11 @@ fi
 
 CODE_DIRECOTRY='src/'
 
-SCRIPT_DIR=`dirname $0`
+SCRIPT_DIR="$(dirname "$0")"
 
-source $SCRIPT_DIR/../../../bash/utils.sh
+source "$SCRIPT_DIR/../../../bash/utils.sh"
 
-cd $SCRIPT_DIR/../
+cd "$SCRIPT_DIR/../"
 
 composer update
 
@@ -24,7 +24,7 @@ ecs --clear-cache
 check_exit_status $?
 print_separator
 
-composer-unused --no-cache
+composer-unused
 
 # check_exit_status $?
 # print_separator
@@ -35,7 +35,6 @@ check_exit_status $?
 print_separator
 
 phpmnd \
-  --non-zero-exit-on-violation \
   --include-numeric-string \
   -- $CODE_DIRECOTRY
 
@@ -54,7 +53,7 @@ psalm \
 check_exit_status $?
 print_separator
 
-if [ $EXIT_STATUS != 0 ]
+if [ "$EXIT_STATUS" != "0" ]
 then
   exit 1
 fi
