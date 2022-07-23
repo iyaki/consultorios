@@ -3,25 +3,26 @@ FROM alpine:latest as asdf-vm-base
 
 RUN apk add --no-cache git \
   && git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2 \
-  && rm -f ~/.asdf/.editorconfig \
-  && rm -rf ~/.asdf/.git \
-  && rm -f ~/.asdf/.gitattributes \
-  && rm -rf ~/.asdf/.github \
-  && rm -f ~/.asdf/.gitignore \
-  && rm -f ~/.asdf/ballad-of-asdf.md \
-  && rm -f ~/.asdf/CHANGELOG.md \
-  && rm -f ~/.asdf/CONTRIBUTING \
-  && rm -rf ~/.asdf/docs \
-  && rm -f ~/.asdf/LICENSE \
-  && rm -f ~/.asdf/lint.sh \
-  && rm -f ~/.asdf/README.md \
-  && rm -rf ~/.asdf/release \
-  && rm -rf ~/.asdf/repository \
-  && rm -f ~/.asdf/SECURITY.md \
-  && rm -rf ~/.asdf/test \
-  && rm -rf ~/.asdf/tmp/* \
-  && rm -f ~/.asdf/Vagrantfile \
-  && rm -f ~/.asdf/VERSION
+  && rm -rf \
+    ~/.asdf/.editorconfig \
+    ~/.asdf/.git \
+    ~/.asdf/.gitattributes \
+    ~/.asdf/.github \
+    ~/.asdf/.gitignore \
+    ~/.asdf/ballad-of-asdf.md \
+    ~/.asdf/CHANGELOG.md \
+    ~/.asdf/CONTRIBUTING \
+    ~/.asdf/docs \
+    ~/.asdf/LICENSE \
+    ~/.asdf/lint.sh \
+    ~/.asdf/README.md \
+    ~/.asdf/release \
+    ~/.asdf/repository \
+    ~/.asdf/SECURITY.md \
+    ~/.asdf/test \
+    ~/.asdf/tmp/* \
+    ~/.asdf/Vagrantfile \
+    ~/.asdf/VERSION
 
 FROM ubuntu:latest as php-dependecies
 
@@ -56,9 +57,10 @@ RUN apt update \
     re2c \
     unzip \
     zlib1g-dev \
-  && rm -rf /var/lib/apt/lists/* \
-  && rm -rf /var/lib/dpkg/info/* \
-  && rm -rf /var/lib/dpkg/status-old
+  && rm -rf \
+    /var/lib/apt/lists/* \
+    /var/lib/dpkg/info/* \
+    /var/lib/dpkg/status-old
 
 FROM php-dependecies as php-build
 
@@ -81,12 +83,13 @@ RUN apt update \
   && asdf plugin add php https://github.com/asdf-community/asdf-php.git \
   && asdf install php ${PHP_VERSION} \
   && cp -r ~/.asdf/installs/php/${PHP_VERSION} ~/php \
-  && rm -rf ~/.asdf \
-  && rm -rf ~/php/bin/peardev \
-  && rm -rf ~/php/bin/php-cgi \
-  && rm -rf ~/php/bin/phpdbg \
-  && rm -rf ~/php/lib/* \
-  && rm -rf ~/php/php/*
+  && rm -rf \
+    ~/.asdf \
+    ~/php/bin/peardev \
+    ~/php/bin/php-cgi \
+    ~/php/bin/phpdbg \
+    ~/php/lib/* \
+    ~/php/php/*
 
 FROM php-dependecies as php-runtime
 
@@ -141,13 +144,14 @@ RUN apt update \
   && apt purge -y \
     gnupg \
   && apt autoremove -y \
-  && rm -rf /tmp/* \
-  && rm -rf /root/php/bin/phive \
-  && rm -rf /var/lib/apt/lists/* \
-  && rm -rf /var/lib/dpkg/info/* \
-  && rm -rf /var/lib/dpkg/status-old \
-  && rm -rf ~/php/php-fpm.d/* \
-  && rm -rf ~/php/sbin/php-fpm
+  && rm -rf \
+    /tmp/* \
+    /root/php/bin/phive \
+    /var/lib/apt/lists/* \
+    /var/lib/dpkg/info/* \
+    /var/lib/dpkg/status-old \
+    ~/php/php-fpm.d/* \
+    ~/php/sbin/php-fpm
 
 FROM ubuntu:latest as node-build
 
@@ -168,28 +172,28 @@ RUN apt update \
   && asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git \
   && asdf install nodejs ${NODE_VERSION} \
   && cp -r ~/.asdf/installs/nodejs/${NODE_VERSION} ~/nodejs \
-  && rm -rf ~/.asdf \
-  && rm -r ~/nodejs/lib/node_modules/npm/.licensee.json \
-  && rm -rf ~/nodejs/lib/node_modules/npm/.mailmap \
-  && rm -rf ~/nodejs/lib/node_modules/npm/.npmignore \
-  && rm -rf ~/nodejs/lib/node_modules/npm/.npmrc \
-  && rm -r ~/nodejs/lib/node_modules/npm/.travis.yml \
-  && rm -rf ~/nodejs/lib/node_modules/npm/AUTHORS \
-  && rm -r ~/nodejs/lib/node_modules/npm/CHANGELOG.md \
-  && rm -rf ~/nodejs/lib/node_modules/npm/changelogs/* \
-  && rm -rf ~/nodejs/lib/node_modules/npm/configure \
-  && rm -r ~/nodejs/lib/node_modules/npm/CONTRIBUTING.md \
-  && rm -rf ~/nodejs/lib/node_modules/npm/docs/* \
-  && rm -r ~/nodejs/lib/node_modules/npm/LICENSE \
-  && rm -rf ~/nodejs/lib/node_modules/npm/make.bat \
-  && rm -r ~/nodejs/lib/node_modules/npm/Makefile \
-  && rm -rf ~/nodejs/lib/node_modules/npm/man/* \
-  && rm -r ~/nodejs/lib/node_modules/npm/package.json \
-  && rm -r ~/nodejs/lib/node_modules/npm/README.md \
-  && rm -rf ~/nodejs/lib/node_modules/npm/scripts/* \
-  && rm -rf ~/nodejs/lib/node_modules/npm/tap-snapshots/* \
-  && rm -r ~/nodejs/LICENSE \
-  && rm -r ~/nodejs/README.md
+  && rm -rf \
+    ~/.asdf \
+    ~/nodejs/lib/node_modules/npm/.licensee.json \
+    ~/nodejs/lib/node_modules/npm/.mailmap \
+    ~/nodejs/lib/node_modules/npm/.npmignore \
+    ~/nodejs/lib/node_modules/npm/.npmrc \
+    ~/nodejs/lib/node_modules/npm/.travis.yml \
+    ~/nodejs/lib/node_modules/npm/AUTHORS \
+    ~/nodejs/lib/node_modules/npm/CHANGELOG.md \
+    ~/nodejs/lib/node_modules/npm/changelogs/* \
+    ~/nodejs/lib/node_modules/npm/configure \
+    ~/nodejs/lib/node_modules/npm/CONTRIBUTING.md \
+    ~/nodejs/lib/node_modules/npm/docs/* \
+    ~/nodejs/lib/node_modules/npm/LICENSE \
+    ~/nodejs/lib/node_modules/npm/make.bat \
+    ~/nodejs/lib/node_modules/npm/Makefile \
+    ~/nodejs/lib/node_modules/npm/man/* \
+    ~/nodejs/lib/node_modules/npm/README.md \
+    ~/nodejs/lib/node_modules/npm/scripts/* \
+    ~/nodejs/lib/node_modules/npm/tap-snapshots/* \
+    ~/nodejs/LICENSE \
+    ~/nodejs/README.md
 
 FROM php-ci as dev-env
 
@@ -242,21 +246,22 @@ RUN apt update \
     manpages-dev \
   && apt update \
   && apt autoremove -y \
-  && rm -rf /tmp/* \
-  && rm -rf /usr/local/bin/phive \
-  && rm -rf /root/.phive \
-  && rm -rf /usr/share/vim/vim81/doc/* \
-  && rm -rf /var/cache/debconf/config.dat-old \
-  && rm -rf /var/cache/debconf/templates.dat-old \
-  && rm -rf /var/lib/apt/lists/* \
-  && rm -rf /var/lib/dpkg/info/* \
-  && rm -rf /usr/lib/python3.8 \
-  && rm -rf /usr/share/doc/* \
-  && rm -rf /usr/share/fonts/* \
-  && rm -rf /usr/share/X11 \
-  && rm -rf /usr/share/alsa \
-  && rm -rf /usr/share/sounds \
-  && rm -rf /var/lib/dpkg/status-old
+  && rm -rf \
+    /tmp/* \
+    /usr/local/bin/phive \
+    /root/.phive \
+    /usr/share/vim/vim81/doc/* \
+    /var/cache/debconf/config.dat-old \
+    /var/cache/debconf/templates.dat-old \
+    /var/lib/apt/lists/* \
+    /var/lib/dpkg/info/* \
+    /usr/lib/python3.8 \
+    /usr/share/doc/* \
+    /usr/share/fonts/* \
+    /usr/share/X11 \
+    /usr/share/alsa \
+    /usr/share/sounds \
+    /var/lib/dpkg/status-old
 
   COPY --from=node-build /root/nodejs /root/nodejs
 
