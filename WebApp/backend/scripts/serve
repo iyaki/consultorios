@@ -2,8 +2,8 @@
 
 PORT=${1:-8080}
 
-cd "$(dirname $0)/../" || exit
+cd "$(dirname "$0")/../" || exit
 
 composer install
 
-php -S localhost:$PORT -t public
+php -S "localhost:$PORT" -t public

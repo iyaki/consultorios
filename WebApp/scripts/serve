@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR=`dirname $0`
+SCRIPT_DIR="$(dirname "$0")"
 
-$SCRIPT_DIR/../backend/scripts/serve &
+"$SCRIPT_DIR/../backend/scripts/serve" &
 
-$SCRIPT_DIR/../frontend/scripts/serve
+"$SCRIPT_DIR/../frontend/scripts/serve"
