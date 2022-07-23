@@ -17,6 +17,9 @@ use Ramsey\Uuid\Uuid;
  */
 final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInterface
 {
+    /**
+     * @var EntityRepository<Especialidad>
+     */
     private EntityRepository $repository;
 
     public function __construct(
