@@ -2,7 +2,7 @@
   "name": "consultorios/unit-of-work",
   "version": "0.0.0",
   "require": {
-    "php": ">=8.0"
+    "php": ">=8.1"
   },
   "require-dev": {
     "consultorios/dev-tools-settings": "*"

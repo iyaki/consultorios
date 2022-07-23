@@ -2,7 +2,7 @@
   "name": "consultorios/core-agendas",
   "version": "0.0.0",
   "require": {
-    "php": ">=8.0",
+    "php": ">=8.1",
     "consultorios/core-common": "*",
     "consultorios/orm": "*",
     "consultorios/unit-of-work": "*",

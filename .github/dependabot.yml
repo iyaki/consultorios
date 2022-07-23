@@ -1,0 +1,62 @@
+version: 2
+updates:
+
+  # Github Actions
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: daily
+
+  # Docker
+  - package-ecosystem: docker
+    directory: "/deploy/"
+    schedule:
+      interval: daily
+
+  # Core/Agendas
+  - package-ecosystem: composer
+    directory: "/Core/Agendas/"
+    schedule:
+      interval: daily
+
+  # Core/Common
+  - package-ecosystem: composer
+    directory: "/Core/Common/"
+    schedule:
+      interval: daily
+
+  # packages/php/ORM
+  - package-ecosystem: composer
+    directory: "/packages/php/ORM/"
+    schedule:
+      interval: daily
+
+  # packages/php/RESTFramework
+  - package-ecosystem: composer
+    directory: "/packages/php/RESTFramework/"
+    schedule:
+      interval: daily
+
+  # packages/php/UnitOfWork
+  - package-ecosystem: composer
+    directory: "/packages/php/UnitOfWork/"
+    schedule:
+      interval: daily
+
+  # packages/php/UnitOfWork
+  - package-ecosystem: composer
+    directory: "/packages/php/UnitOfWork/"
+    schedule:
+      interval: daily
+
+  # WebApp/backend
+  - package-ecosystem: composer
+    directory: "/WebApp/backend/"
+    schedule:
+      interval: daily
+
+  # WebApp/frontend
+  - package-ecosystem: npm
+    directory: "/WebApp/frontend/"
+    schedule:
+      interval: daily

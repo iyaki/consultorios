@@ -2,7 +2,7 @@
   "name": "consultorios/rest-framework",
   "version": "0.0.0",
   "require": {
-    "php": ">=8.0",
+    "php": ">=8.1",
     "ext-json": "*",
     "itsgoingd/clockwork": "^5.1",
     "laminas/laminas-diactoros": "^2.6",
