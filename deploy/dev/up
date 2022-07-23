@@ -31,4 +31,4 @@ done
 # delete duplicate options
 OPTIONS=("$(echo "${OPTIONS[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')")
 
-docker-compose --project-name ${PROJECT_NAME} up --detach ${OPTIONS[@]} dev
+docker compose --project-name ${PROJECT_NAME} up --detach ${OPTIONS[@]} dev

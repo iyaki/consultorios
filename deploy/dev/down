@@ -6,4 +6,4 @@ OPTIONS=( $@ )
 
 cd `dirname $0`
 
-docker-compose --project-name ${PROJECT_NAME} down ${OPTIONS[@]}
+docker compose --project-name ${PROJECT_NAME} down ${OPTIONS[@]}

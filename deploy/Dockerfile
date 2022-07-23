@@ -2,7 +2,7 @@
 FROM alpine:latest as asdf-vm-base
 
 RUN apk add --no-cache git \
-  && git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1 \
+  && git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2 \
   && rm -f ~/.asdf/.editorconfig \
   && rm -rf ~/.asdf/.git \
   && rm -f ~/.asdf/.gitattributes \
@@ -31,10 +31,18 @@ ENV TZ=America/Argentina/Buenos_Aires
 
 RUN apt update \
   && apt install -y \
+    autoconf \
+    bison \
+    build-essential \
     curl \
+    gettext \
+    git \
     libcurl4-openssl-dev \
+    libedit-dev \
     libgd-dev \
     libicu-dev \
+    libjpeg-dev \
+    libmysqlclient-dev \
     libonig-dev \
     libpng-dev \
     libpq-dev \
@@ -43,6 +51,9 @@ RUN apt update \
     libssl-dev \
     libxml2-dev \
     libzip-dev \
+    openssl \
+    pkg-config \
+    re2c \
     unzip \
     zlib1g-dev \
   && rm -rf /var/lib/apt/lists/* \
@@ -51,7 +62,7 @@ RUN apt update \
 
 FROM php-dependecies as php-build
 
-ARG PHP_VERSION=8.0.11
+ARG PHP_VERSION=8.1.8
 
 COPY --from=asdf-vm-base /root/.asdf /root/.asdf
 
@@ -155,7 +166,6 @@ RUN apt update \
     gnupg \
   && source ~/.asdf/asdf.sh \
   && asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git \
-  && bash -c '${ASDF_DATA_DIR:=$HOME/.asdf}/plugins/nodejs/bin/import-release-team-keyring' \
   && asdf install nodejs ${NODE_VERSION} \
   && cp -r ~/.asdf/installs/nodejs/${NODE_VERSION} ~/nodejs \
   && rm -rf ~/.asdf \
@@ -213,11 +223,11 @@ RUN apt update \
 # Even more utilities
 #
 # Gpg keys:
-# churn-php: 69132CC8829FAB5F
+# churn-php: 96141E4421A9B0D5
 # phploc: 4AA394086372C20A
   && phive install \
     --global \
-    --trust-gpg-keys 69132CC8829FAB5F,4AA394086372C20A \
+    --trust-gpg-keys 96141E4421A9B0D5,4AA394086372C20A \
     churn \
     phploc \
 # Cleanup
