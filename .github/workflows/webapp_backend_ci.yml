@@ -2,6 +2,11 @@ on:
   push:
     paths:
       - 'WebApp/backend/**'
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
 
 jobs:
   continuous_integration:
