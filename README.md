@@ -9,12 +9,12 @@ y uso de tecnologías.
 Para iniciar el entorno de desarrollo debe ejecutarse:
 
 ```shell
-deployment/serve
+deployment/dev/up
 ```
 
 Esto iniciará 2 containers correspondientes a:
 
-- app (nginx+php-fpm & node)
+- app (php & node)
 - MariaDB
 
 El container "app" esta diseñado para trabajar directamente dentro del mismo

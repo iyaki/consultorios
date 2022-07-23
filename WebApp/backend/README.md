@@ -3,7 +3,7 @@
 ## Development setup
 
 ```shell
-composer install
+scripts/serve
 ```
 
 ## Versioando de la BD
