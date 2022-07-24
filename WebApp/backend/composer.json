@@ -1,7 +1,7 @@
 {
   "name": "consultorios/webapp",
   "require": {
-    "php": ">=8.1",
+    "php": "~8.1",
     "ext-json": "*",
     "consultorios/core-agendas": "*",
     "consultorios/rest-framework": "*",

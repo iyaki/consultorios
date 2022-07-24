@@ -2,7 +2,7 @@
   "name": "consultorios/orm",
   "version": "0.0.0",
   "require": {
-    "php": ">=8.1",
+    "php": "~8.1",
     "ext-pdo_mysql": "*",
     "consultorios/unit-of-work": "*",
     "doctrine/dbal": "^2",
