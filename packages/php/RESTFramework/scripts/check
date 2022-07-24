@@ -24,12 +24,19 @@ ecs --clear-cache
 check_exit_status $?
 print_separator
 
-composer-unused
+composer-unused \
+  --excludePackage=laminas/laminas-servicemanager \
+  --excludePackage=league/openapi-psr7-validator \
+  --excludePackage=mezzio/mezzio-cors \
+  --excludePackage=mezzio/mezzio-fastroute \
+  --excludePackage=mezzio/mezzio-helpers \
+  --excludePackage=mezzio/mezzio \
+  --excludePackage=zircote/swagger-php
 
-# check_exit_status $?
-# print_separator
+check_exit_status $?
+print_separator
 
-# composer-require-checker
+composer-require-checker
 
 check_exit_status $?
 print_separator

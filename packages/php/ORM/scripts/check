@@ -8,11 +8,11 @@ fi
 
 CODE_DIRECOTRY='src/'
 
-SCRIPT_DIR=`dirname $0`
+SCRIPT_DIR="$(dirname "$0")"
 
-source $SCRIPT_DIR/../../../bash/utils.sh
+source "$SCRIPT_DIR/../../../bash/utils.sh"
 
-cd $SCRIPT_DIR/../
+cd "$SCRIPT_DIR/../"
 
 composer update
 
@@ -25,20 +25,20 @@ check_exit_status $?
 print_separator
 
 composer-unused \
-  --excludePackage=ext-pdo_mysql \
+  --excludePackage=consultorios/unit-of-work \
   --excludePackage=doctrine/migrations \
-  --no-cache
+  --excludePackage=ext-pdo_mysql \
+  --excludePackage=symfony/cache
 
-# check_exit_status $?
-# print_separator
+check_exit_status $?
+print_separator
 
-# composer-require-checker
+composer-require-checker
 
 check_exit_status $?
 print_separator
 
 phpmnd \
-  --non-zero-exit-on-violation \
   --strings \
   --include-numeric-string \
   -- $CODE_DIRECOTRY
