@@ -24,7 +24,7 @@ ecs
 check_exit_status $?
 print_separator
 
-composer-unused
+composer-unused --excludePackage=consultorios/rest-framework
 
 # check_exit_status $?
 # print_separator

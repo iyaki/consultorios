@@ -135,7 +135,7 @@ final class RoutesConfigurator
      * solo cuando son necesarios
      *
      * @param callable(): RequestHandlerInterface $requestHandlerFactory
-     * @return callable(ServerRequestInterface): ResponseInterface
+     * @return Closure(ServerRequestInterface): ResponseInterface
      */
     private function lazyRequestHandler(callable $requestHandlerFactory): Closure
     {
@@ -147,7 +147,7 @@ final class RoutesConfigurator
      * solo cuando son necesarios
      *
      * @param callable(): MiddlewareInterface $middlewareFactory
-     * @return callable(ServerRequestInterface, RequestHandlerInterface): ResponseInterface
+     * @return Closure(ServerRequestInterface, RequestHandlerInterface): ResponseInterface
      */
     private function lazyMiddleware(callable $middlewareFactory): Closure
     {

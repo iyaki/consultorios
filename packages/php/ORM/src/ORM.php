@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Consultorios\ORM;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\ORMSetup;
 use Doctrine\Persistence\Mapping\Driver\PHPDriver;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\ChainAdapter;
@@ -18,9 +18,9 @@ final class ORM
     private ?UnitOfWorkDoctrine $uow = null;
 
     public function __construct(
-        private DatabaseConnectionSettings $dbSettings,
-        private array $mappingsPaths,
-        private bool $devMode
+        private readonly DatabaseConnectionSettings $dbSettings,
+        private readonly array $mappingsPaths,
+        private readonly bool $devMode
     ) {
     }
 
@@ -30,7 +30,7 @@ final class ORM
             return $this->em;
         }
 
-        $doctrineConfig = Setup::createConfiguration($this->devMode);
+        $doctrineConfig = ORMSetup::createConfiguration($this->devMode);
 
         $doctrineConfig->setMetadataDriverImpl(
             new PHPDriver($this->mappingsPaths)
@@ -69,7 +69,7 @@ final class ORM
     }
 
     /**
-     * @return string[]|bool[]
+     * @return array{driver: string, memory: true}
      */
     private function connectionInMemorySQLite(): array
     {
@@ -80,7 +80,7 @@ final class ORM
     }
 
     /**
-     * @return array<string, int>|array<string, string>
+     * @return array{driver: string, host: string, port: int, dbname: string, user: string, password: string, charset: string}
      */
     private function connectionMySQL(): array
     {
