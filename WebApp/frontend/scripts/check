@@ -6,11 +6,11 @@ then
   set -o pipefail
 fi
 
-SCRIPT_DIR=`dirname $0`
+SCRIPT_DIR="$(dirname "$0")"
 
-source $SCRIPT_DIR/../../../packages/bash/utils.sh
+source "$SCRIPT_DIR/../../../packages/bash/utils.sh"
 
-cd $SCRIPT_DIR/../
+cd "$SCRIPT_DIR/../"
 
 npm install --save-exact
 
