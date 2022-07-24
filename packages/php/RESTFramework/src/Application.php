@@ -24,9 +24,9 @@ use Psr\Http\Message\ResponseInterface;
  */
 final class Application
 {
-    private ServiceManager $container;
+    private readonly ServiceManager $container;
 
-    private \Mezzio\Application $app;
+    private readonly \Mezzio\Application $app;
 
     public function __construct(array $config)
     {
@@ -62,7 +62,7 @@ final class Application
 
         $this->app->get(
             $uriBasePath . 'openapi.yaml',
-            fn (): ResponseInterface => new TextResponse(
+            static fn(): ResponseInterface => new TextResponse(
                 (new OpenApiGenerator($documentationPath, $uriBasePath))->toYaml(),
                 200,
                 [
@@ -73,7 +73,7 @@ final class Application
 
         $this->app->get(
             $uriBasePath . 'openapi.json',
-            fn (): ResponseInterface => new JsonResponse(
+            static fn(): ResponseInterface => new JsonResponse(
                 (new OpenApiGenerator($documentationPath, $uriBasePath))->toJson(),
                 200
             )

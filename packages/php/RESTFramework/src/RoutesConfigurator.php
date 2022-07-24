@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework;
 
+use Closure;
 use Mezzio\Application;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -17,11 +18,11 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final class RoutesConfigurator
 {
-    private Application $app;
+    private readonly Application $app;
 
     public function __construct(
-        private ContainerInterface $container,
-        private string $basePath = ''
+        private readonly ContainerInterface $container,
+        private readonly string $basePath = ''
     ) {
         $this->app = $this->container->get(Application::class);
     }
@@ -136,9 +137,9 @@ final class RoutesConfigurator
      * @param callable(): RequestHandlerInterface $requestHandlerFactory
      * @return callable(ServerRequestInterface): ResponseInterface
      */
-    private function lazyRequestHandler(callable $requestHandlerFactory): callable
+    private function lazyRequestHandler(callable $requestHandlerFactory): Closure
     {
-        return fn (ServerRequestInterface $request): ResponseInterface => $requestHandlerFactory()->handle($request);
+        return static fn(ServerRequestInterface $request): ResponseInterface => $requestHandlerFactory()->handle($request);
     }
 
     /**
@@ -148,8 +149,8 @@ final class RoutesConfigurator
      * @param callable(): MiddlewareInterface $middlewareFactory
      * @return callable(ServerRequestInterface, RequestHandlerInterface): ResponseInterface
      */
-    private function lazyMiddleware(callable $middlewareFactory): callable
+    private function lazyMiddleware(callable $middlewareFactory): Closure
     {
-        return fn (ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface => $middlewareFactory()->process($request, $handler);
+        return static fn(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface => $middlewareFactory()->process($request, $handler);
     }
 }

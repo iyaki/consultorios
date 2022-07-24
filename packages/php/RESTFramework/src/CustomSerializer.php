@@ -16,7 +16,7 @@ final class CustomSerializer extends DataArraySerializer
     /**
      * Serialize null resource.
      *
-     * @return array<string, null>
+     * @return array{data: null}
      */
     public function null(): array
     {

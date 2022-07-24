@@ -14,8 +14,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 final class EspecialidadesGetHandler implements RequestHandlerInterface
 {
     public function __construct(
-        private ResponseFactory $responseFactory,
-        private Especialidades $especialidades,
+        private readonly ResponseFactory $responseFactory,
+        private readonly Especialidades $especialidades,
     ) {
     }
 
@@ -68,7 +68,7 @@ final class EspecialidadesGetHandler implements RequestHandlerInterface
         $especialidades = $this->especialidades->getAll();
         usort(
             $especialidades,
-            fn (Especialidad $e1, Especialidad $e2): int => $e1->nombre() <=> $e2->nombre()
+            static fn(Especialidad $e1, Especialidad $e2): int => $e1->nombre() <=> $e2->nombre()
         );
         return $this->responseFactory->createResponseFromCollection($especialidades);
     }

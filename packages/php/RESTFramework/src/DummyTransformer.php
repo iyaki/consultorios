@@ -14,7 +14,7 @@ use League\Fractal\TransformerAbstract;
 class DummyTransformer extends TransformerAbstract
 {
     /**
-     * @return array<string, string>
+     * @return array{property: string}
      */
     public function transform(DummyDTO $dto): array
     {

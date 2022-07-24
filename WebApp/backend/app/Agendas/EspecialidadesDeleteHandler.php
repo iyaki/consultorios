@@ -17,8 +17,8 @@ final class EspecialidadesDeleteHandler implements RequestHandlerInterface
     use UriPathSegmentsHelper;
 
     public function __construct(
-        private ResponseFactory $responseFactory,
-        private Especialidades $especialidades,
+        private readonly ResponseFactory $responseFactory,
+        private readonly Especialidades $especialidades,
     ) {
     }
 

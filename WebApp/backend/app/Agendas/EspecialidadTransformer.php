@@ -37,7 +37,7 @@ final class EspecialidadTransformer extends TransformerAbstract
      *      nullable=false,
      *  ),
      *
-     * @return array<string, string>
+     * @return array{id: string, nombre: string}
      */
     public function transform(Especialidad $especialidad): array
     {

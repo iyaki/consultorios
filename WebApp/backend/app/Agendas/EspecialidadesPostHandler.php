@@ -16,8 +16,8 @@ final class EspecialidadesPostHandler implements RequestHandlerInterface
     use RequestBodyHelper;
 
     public function __construct(
-        private ResponseFactory $responseFactory,
-        private Especialidades $especialidades,
+        private readonly ResponseFactory $responseFactory,
+        private readonly Especialidades $especialidades,
     ) {
     }
 

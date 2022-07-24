@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework;
 
+use Exception;
 use Laminas\Diactoros\Response\TextResponse;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -46,7 +47,7 @@ final class ResponseFactoryTest extends TestCase
         $webAppResponseFactory = $this->getWebAppResponseFactory();
 
         $response = $webAppResponseFactory->createResponseFromItem(
-            new \Exception(self::EXCEPTION_MESSAGE)
+            new Exception(self::EXCEPTION_MESSAGE)
         );
 
         $decodedResponseBody = json_decode(
@@ -92,16 +93,16 @@ final class ResponseFactoryTest extends TestCase
     {
         $webAppResponseFactory = $this->getWebAppResponseFactory();
 
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
 
-        $webAppResponseFactory->createResponseFromCollection([new \Exception()]);
+        $webAppResponseFactory->createResponseFromCollection([new Exception()]);
     }
 
     private function getWebAppResponseFactory(): ResponseFactory
     {
         $psrResponseFactory = $this->createStub(ResponseFactoryInterface::class);
         $psrResponseFactory->method('createResponse')
-            ->willReturnCallback(fn (int $code = 200): TextResponse => new TextResponse('', $code))
+            ->willReturnCallback(static fn(int $code = 200): TextResponse => new TextResponse('', $code))
         ;
 
         return new ResponseFactory(

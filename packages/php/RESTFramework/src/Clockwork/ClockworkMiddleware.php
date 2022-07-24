@@ -24,9 +24,9 @@ final class ClockworkMiddleware implements MiddlewareInterface
      */
     private const CLOCKWORK_DATA_URI = '#/__clockwork(?:/(?<id>[0-9-]+))?(?:/(?<direction>(?:previous|next)))?(?:/(?<count>\d+))?#';
 
-    private \Clockwork\Clockwork $clockwork;
+    private readonly \Clockwork\Clockwork $clockwork;
 
-    private float $startTime;
+    private readonly float $startTime;
 
     public function __construct()
     {

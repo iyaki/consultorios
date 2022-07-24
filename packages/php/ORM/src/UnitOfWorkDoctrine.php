@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManager;
 final class UnitOfWorkDoctrine implements UnitOfWorkInterface
 {
     public function __construct(
-        private EntityManager $em
+        private readonly EntityManager $em
     ) {
     }
 

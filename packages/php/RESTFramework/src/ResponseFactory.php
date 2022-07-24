@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework;
 
+use Throwable;
+use UnexpectedValueException;
+use Exception;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
@@ -21,14 +24,14 @@ final class ResponseFactory
      * @var array<class-string, class-string>
      */
     private array $transformers = [
-        \Throwable::class => ThrowableTransformer::class,
+        Throwable::class => ThrowableTransformer::class,
     ];
 
     /**
      * @param array<class-string, class-string> $transformers
      */
     public function __construct(
-        private ResponseFactoryInterface $responseFactory,
+        private readonly ResponseFactoryInterface $responseFactory,
         array $transformers
     ) {
         $this->transformers += $transformers;
@@ -71,7 +74,7 @@ final class ResponseFactory
             }
         }
 
-        throw new \UnexpectedValueException('There is no transformer configured for ' . $resource::class);
+        throw new UnexpectedValueException('There is no transformer configured for ' . $resource::class);
     }
 
     private function transformResourceToJson(ResourceAbstract $resource): string
@@ -89,13 +92,13 @@ final class ResponseFactory
     private function getCollection(array $resources): Collection
     {
         if ($resources === []) {
-            return new Collection([], fn (): array => []);
+            return new Collection([], static fn(): array => []);
         }
 
         $resource = reset($resources);
 
-        if ($resource instanceof \Throwable) {
-            throw new \Exception(
+        if ($resource instanceof Throwable) {
+            throw new Exception(
                 'El envío de multiples errores no esta permitido'
             );
         }
@@ -106,7 +109,7 @@ final class ResponseFactory
             }
         }
 
-        throw new \UnexpectedValueException(
+        throw new UnexpectedValueException(
             'No hay transformer configurado para: ' . $resource::class
         );
     }

@@ -9,7 +9,7 @@ use OpenApi\Generator;
 
 final class OpenApiGenerator
 {
-    private OpenApi $openApi;
+    private readonly OpenApi $openApi;
 
     public function __construct(string $documentationPath, string $uriBasePath)
     {
