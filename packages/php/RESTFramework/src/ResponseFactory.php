@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework;
 
-use Throwable;
-use UnexpectedValueException;
 use Exception;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
@@ -14,6 +12,8 @@ use League\Fractal\Resource\NullResource;
 use League\Fractal\Resource\ResourceAbstract;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
+use UnexpectedValueException;
 
 /**
  * Clase base utilizada para convertir entidades en respuestas JSON utilizadas por las APIs REST de la aplicación.
@@ -92,7 +92,7 @@ final class ResponseFactory
     private function getCollection(array $resources): Collection
     {
         if ($resources === []) {
-            return new Collection([], static fn(): array => []);
+            return new Collection([], static fn (): array => []);
         }
 
         $resource = reset($resources);

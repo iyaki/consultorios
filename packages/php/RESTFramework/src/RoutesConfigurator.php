@@ -139,7 +139,7 @@ final class RoutesConfigurator
      */
     private function lazyRequestHandler(callable $requestHandlerFactory): Closure
     {
-        return static fn(ServerRequestInterface $request): ResponseInterface => $requestHandlerFactory()->handle($request);
+        return static fn (ServerRequestInterface $request): ResponseInterface => $requestHandlerFactory()->handle($request);
     }
 
     /**
@@ -151,6 +151,6 @@ final class RoutesConfigurator
      */
     private function lazyMiddleware(callable $middlewareFactory): Closure
     {
-        return static fn(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface => $middlewareFactory()->process($request, $handler);
+        return static fn (ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface => $middlewareFactory()->process($request, $handler);
     }
 }

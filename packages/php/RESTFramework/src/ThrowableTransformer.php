@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework;
 
-use Throwable;
 use League\Fractal\TransformerAbstract;
+use Throwable;
 
 /**
  * Clase utilizada para formatear las respuestas JSON que incluyen excepciones

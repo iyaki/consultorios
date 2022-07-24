@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework\Clockwork;
 
-use Exception;
 use Clockwork\Authentication\NullAuthenticator;
 use Clockwork\Storage\FileStorage;
+use Exception;
 
 final class Clockwork
 {

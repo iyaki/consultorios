@@ -62,7 +62,7 @@ final class Application
 
         $this->app->get(
             $uriBasePath . 'openapi.yaml',
-            static fn(): ResponseInterface => new TextResponse(
+            static fn (): ResponseInterface => new TextResponse(
                 (new OpenApiGenerator($documentationPath, $uriBasePath))->toYaml(),
                 200,
                 [
@@ -73,7 +73,7 @@ final class Application
 
         $this->app->get(
             $uriBasePath . 'openapi.json',
-            static fn(): ResponseInterface => new JsonResponse(
+            static fn (): ResponseInterface => new JsonResponse(
                 (new OpenApiGenerator($documentationPath, $uriBasePath))->toJson(),
                 200
             )

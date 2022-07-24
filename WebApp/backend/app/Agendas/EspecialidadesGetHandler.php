@@ -68,7 +68,7 @@ final class EspecialidadesGetHandler implements RequestHandlerInterface
         $especialidades = $this->especialidades->getAll();
         usort(
             $especialidades,
-            static fn(Especialidad $e1, Especialidad $e2): int => $e1->nombre() <=> $e2->nombre()
+            static fn (Especialidad $e1, Especialidad $e2): int => $e1->nombre() <=> $e2->nombre()
         );
         return $this->responseFactory->createResponseFromCollection($especialidades);
     }
