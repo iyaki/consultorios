@@ -5,13 +5,13 @@
     "ext-json": "*",
     "consultorios/core-agendas": "*",
     "consultorios/rest-framework": "*",
-    "league/fractal": "^0.19.2",
-    "psr/http-message": "^1.0",
-    "psr/http-server-handler": "^1.0"
+    "league/fractal": "^0.20",
+    "psr/http-message": "^1.0.1",
+    "psr/http-server-handler": "^1.0.1"
   },
   "require-dev": {
     "consultorios/dev-tools-settings": "*",
-    "guzzlehttp/guzzle": "^7.0",
+    "guzzlehttp/guzzle": "^7.4",
     "phpunit/phpunit": "^9"
   },
   "autoload": {
