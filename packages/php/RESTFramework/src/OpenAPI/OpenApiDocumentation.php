@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework\OpenAPI;
 
+use OpenApi\Annotations as OA;
+
 /**
  *  @OA\Server(
  *      url=SERVER_HOST
  *  ),
- * @OA\Get(
+ *  @OA\Info(
+ *      title="Consultorios WebApp Internal REST API",
+ *      version="0.1"
+ *  ),
+ *  @OA\Get(
  *      path=URI_OPENAPI_PATH_YAML,
  *      description="Esta documentación",
  *      tags={"Documentación"},
@@ -79,3 +85,5 @@ namespace Consultorios\RESTFramework\OpenAPI;
  *      additionalProperties=false,
  *  ),
  */
+final class OpenApiDocumentation
+{}

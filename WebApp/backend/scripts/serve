@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-PORT=${1:-8080}
+PORT="${1:-8080}"
 
 cd "$(dirname "$0")/../" || exit
 
 composer install
 
-php -S "localhost:$PORT" -t public
+php -S "localhost:$PORT" -t public public/index.php
