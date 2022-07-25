@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df04e960e1f5a633767a56cac96f43bf",
+    "content-hash": "b43ab1e08b71b6b23007c92ea793eeef",
     "packages": [
         {
             "name": "brick/math",
@@ -141,7 +141,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../Core/Agendas",
-                "reference": "3f316071a01864f071f78676371dceaa01d3a25f"
+                "reference": "4d90775bf1b9493874d13f5b6e6c0a0aa14e7faf"
             },
             "require": {
                 "consultorios/core-common": "*",
@@ -175,7 +175,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../Core/Common",
-                "reference": "6bb265900244c4e4d4f08442393dcdfedc5af2c1"
+                "reference": "090bcb506b4d2c931722e472265b5e54c8d3fc6a"
             },
             "require": {
                 "php": "~8.1"
@@ -200,7 +200,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../packages/php/ORM",
-                "reference": "7fdd1ebc4cc57bd9b703feec478b7fbc0145853d"
+                "reference": "541e80d15214eb4161bdce9e4676f1467b3c9768"
             },
             "require": {
                 "consultorios/unit-of-work": "*",
@@ -236,7 +236,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../packages/php/RESTFramework",
-                "reference": "e08663aca0648a62db49cae3203e7f651401a552"
+                "reference": "dfc854b28e158a6def2464beb0ac51039fb1d071"
             },
             "require": {
                 "ext-json": "*",
@@ -282,7 +282,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../packages/php/UnitOfWork",
-                "reference": "4897d6572bf4bf07d317c1bbef7a22b9d23c55b0"
+                "reference": "ffd8790085e43f940501f3605d602eb9a9505489"
             },
             "require": {
                 "php": "~8.1"
@@ -5333,7 +5333,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../packages/php/dev-tools-settings",
-                "reference": "373a6a40f694902819c63576faab71614e2e456b"
+                "reference": "08a4cb4632983a64bb507b7eef16dba05e89e188"
             },
             "require": {
                 "php": "~8.1"
@@ -7667,5 +7667,8 @@
         "ext-json": "*"
     },
     "platform-dev": [],
+    "platform-overrides": {
+        "php": "8.1"
+    },
     "plugin-api-version": "2.3.0"
 }
