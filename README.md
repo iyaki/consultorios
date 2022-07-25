@@ -9,7 +9,7 @@ y uso de tecnologías.
 Para iniciar el entorno de desarrollo debe ejecutarse:
 
 ```shell
-deployment/dev/up
+deploy/dev/up
 ```
 
 Esto iniciará 2 containers correspondientes a:
