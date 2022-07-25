@@ -2,11 +2,6 @@ on:
   push:
     paths:
       - 'deploy/Dockerfile'
-  pull_request:
-    types:
-      - opened
-      - edited
-      - reopened
 
 jobs:
   release_ci_image:
