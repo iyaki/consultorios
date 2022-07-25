@@ -17,10 +17,8 @@ updates:
   - package-ecosystem: composer
     directory: "/Core/Agendas/"
     ignore:
-      - dependency-name: "consultorios/dev-tools-settings"
-      - dependency-name: "consultorios/unit-of-work"
-      - dependency-name: "consultorios/orm"
-      - dependency-name: "consultorios/core-common"
+      - dependency-name: "consultorios/*"
+        versions: ["*"]
     schedule:
       interval: daily
 
@@ -28,7 +26,8 @@ updates:
   - package-ecosystem: composer
     directory: "/Core/Common/"
     ignore:
-      - dependency-name: "consultorios/dev-tools-settings"
+      - dependency-name: "consultorios/*"
+        versions: ["*"]
     schedule:
       interval: daily
 
@@ -36,8 +35,8 @@ updates:
   - package-ecosystem: composer
     directory: "/packages/php/ORM/"
     ignore:
-      - dependency-name: "consultorios/dev-tools-settings"
-      - dependency-name: "consultorios/unit-of-work"
+      - dependency-name: "consultorios/*"
+        versions: ["*"]
     schedule:
       interval: daily
 
@@ -45,7 +44,8 @@ updates:
   - package-ecosystem: composer
     directory: "/packages/php/RESTFramework/"
     ignore:
-      - dependency-name: "consultorios/dev-tools-settings"
+      - dependency-name: "consultorios/*"
+        versions: ["*"]
     schedule:
       interval: daily
 
@@ -53,7 +53,8 @@ updates:
   - package-ecosystem: composer
     directory: "/packages/php/UnitOfWork/"
     ignore:
-      - dependency-name: "consultorios/dev-tools-settings"
+      - dependency-name: "consultorios/*"
+        versions: ["*"]
     schedule:
       interval: daily
 
@@ -61,9 +62,8 @@ updates:
   - package-ecosystem: composer
     directory: "/WebApp/backend/"
     ignore:
-      - dependency-name: "consultorios/dev-tools-settings"
-      - dependency-name: "consultorios/rest-framework"
-      - dependency-name: "consultorios/core-agendas"
+      - dependency-name: "consultorios/*"
+        versions: ["*"]
     schedule:
       interval: daily
 
