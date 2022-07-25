@@ -16,36 +16,54 @@ updates:
   # Core/Agendas
   - package-ecosystem: composer
     directory: "/Core/Agendas/"
+    ignore:
+      - dependency-name: "consultorios/dev-tools-settings"
+      - dependency-name: "consultorios/unit-of-work"
+      - dependency-name: "consultorios/orm"
+      - dependency-name: "consultorios/core-common"
     schedule:
       interval: daily
 
   # Core/Common
   - package-ecosystem: composer
     directory: "/Core/Common/"
+    ignore:
+      - dependency-name: "consultorios/dev-tools-settings"
     schedule:
       interval: daily
 
   # packages/php/ORM
   - package-ecosystem: composer
     directory: "/packages/php/ORM/"
+    ignore:
+      - dependency-name: "consultorios/dev-tools-settings"
+      - dependency-name: "consultorios/unit-of-work"
     schedule:
       interval: daily
 
   # packages/php/RESTFramework
   - package-ecosystem: composer
     directory: "/packages/php/RESTFramework/"
+    ignore:
+      - dependency-name: "consultorios/dev-tools-settings"
     schedule:
       interval: daily
 
   # packages/php/UnitOfWork
   - package-ecosystem: composer
     directory: "/packages/php/UnitOfWork/"
+    ignore:
+      - dependency-name: "consultorios/dev-tools-settings"
     schedule:
       interval: daily
 
   # WebApp/backend
   - package-ecosystem: composer
     directory: "/WebApp/backend/"
+    ignore:
+      - dependency-name: "consultorios/dev-tools-settings"
+      - dependency-name: "consultorios/rest-framework"
+      - dependency-name: "consultorios/core-agendas"
     schedule:
       interval: daily
 
