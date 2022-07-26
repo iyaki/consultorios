@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Consultorios\DevToolsSettings;
 
 use Rector\Config\RectorConfig;
-use Rector\Core\Configuration\Option;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 
@@ -18,7 +17,7 @@ if (! \function_exists('\Consultorios\DevToolsSettings\getRectorConfigurator')) 
         return static function (RectorConfig $rectorConfig) use ($includePaths): void {
             $rectorConfig->paths($includePaths);
             $rectorConfig->importNames();
-            $rectorConfig->importShortClasses();
+            $rectorConfig->importShortClasses(false);
             $rectorConfig->parallel();
 
             $rectorConfig->sets([
@@ -32,12 +31,14 @@ if (! \function_exists('\Consultorios\DevToolsSettings\getRectorConfigurator')) 
                 SetList::TYPE_DECLARATION,
             ]);
 
-            $rectorConfig->rule(\Rector\Privatization\Rector\Class_\ChangeGlobalVariablesToPropertiesRector::class);
-            $rectorConfig->rule(\Rector\Privatization\Rector\Property\ChangeReadOnlyPropertyWithDefaultValueToConstantRector::class);
-            $rectorConfig->rule(\Rector\Privatization\Rector\Class_\ChangeReadOnlyVariableWithDefaultValueToConstantRector::class);
-            $rectorConfig->rule(\Rector\Privatization\Rector\MethodCall\PrivatizeLocalGetterToPropertyRector::class);
-            $rectorConfig->rule(\Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector::class);
-            $rectorConfig->rule(\Rector\Privatization\Rector\ClassMethod\PrivatizeFinalClassMethodRector::class);
+            $rectorConfig->rules([
+                \Rector\Privatization\Rector\Class_\ChangeGlobalVariablesToPropertiesRector::class,
+                \Rector\Privatization\Rector\Class_\ChangeReadOnlyVariableWithDefaultValueToConstantRector::class,
+                \Rector\Privatization\Rector\ClassMethod\PrivatizeFinalClassMethodRector::class,
+                \Rector\Privatization\Rector\MethodCall\PrivatizeLocalGetterToPropertyRector::class,
+                \Rector\Privatization\Rector\Property\ChangeReadOnlyPropertyWithDefaultValueToConstantRector::class,
+                \Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector::class,
+            ]);
         };
     }
 }
