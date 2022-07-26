@@ -117,13 +117,12 @@ final class EspecialidadesTest extends TestCase
         $repository->method('findBy')
             ->willReturnCallback(fn (array $criteria): array => array_filter(
                 $this->repositoryStorage,
-                function (Especialidad $e) use ($criteria): bool {
+                static function (Especialidad $e) use ($criteria): bool {
                     foreach ($criteria as $key => $value) {
                         if ($value !== $e->{$key}()) {
                             return false;
                         }
                     }
-
                     return true;
                 }
             ))
@@ -132,12 +131,12 @@ final class EspecialidadesTest extends TestCase
         $repository->method('get')
             ->willReturnCallback(fn (EspecialidadId $id): Especialidad => array_values(array_filter(
                 $this->repositoryStorage,
-                fn (Especialidad $e): bool => (string) $e->id() === (string) $id
+                static fn (Especialidad $e): bool => (string) $e->id() === (string) $id
             ))[0] ?? throw new \UnexpectedValueException())
         ;
 
         $repository->method('crearId')
-            ->willReturnCallback(fn (): EspecialidadId => new EspecialidadId(uniqid()))
+            ->willReturnCallback(static fn (): EspecialidadId => new EspecialidadId(uniqid()))
         ;
 
         $repository->method('add')

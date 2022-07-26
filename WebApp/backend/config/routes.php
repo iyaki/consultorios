@@ -23,33 +23,33 @@ return static function (RoutesConfigurator $routes): void {
 
     $routes = $routes->withBasePath($webAppUriPath . 'agendas/');
 
-    $routes->pipe(fn (): ExceptionMiddleware => new ExceptionMiddleware($responseFactory));
+    $routes->pipe(static fn(): ExceptionMiddleware => new ExceptionMiddleware($responseFactory));
 
     $especialidadesPath = 'especialidades';
     $routes->delete(
         $especialidadesPath . '/{id}',
-        fn (): EspecialidadesDeleteHandler => new EspecialidadesDeleteHandler(
+        static fn(): EspecialidadesDeleteHandler => new EspecialidadesDeleteHandler(
             $responseFactory,
             AgendasContainer::getCasosDeUsoEspecialidades()
         )
     );
     $routes->get(
         $especialidadesPath,
-        fn (): EspecialidadesGetHandler => new EspecialidadesGetHandler(
+        static fn(): EspecialidadesGetHandler => new EspecialidadesGetHandler(
             $responseFactory,
             AgendasContainer::getCasosDeUsoEspecialidades()
         )
     );
     $routes->patch(
         $especialidadesPath . '/{id}',
-        fn (): EspecialidadesPatchHandler => new EspecialidadesPatchHandler(
+        static fn(): EspecialidadesPatchHandler => new EspecialidadesPatchHandler(
             $responseFactory,
             AgendasContainer::getCasosDeUsoEspecialidades()
         )
     );
     $routes->post(
         $especialidadesPath,
-        fn (): EspecialidadesPostHandler => new EspecialidadesPostHandler(
+        static fn(): EspecialidadesPostHandler => new EspecialidadesPostHandler(
             $responseFactory,
             AgendasContainer::getCasosDeUsoEspecialidades()
         )

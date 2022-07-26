@@ -11,3 +11,6 @@ namespace Consultorios\WebApp;
  *      version="0.1"
  *  ),
  */
+final class BaseOpenAPI
+{
+}

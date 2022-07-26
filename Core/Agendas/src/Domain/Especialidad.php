@@ -6,7 +6,7 @@ namespace Consultorios\Core\Agendas\Domain;
 
 class Especialidad
 {
-    private string $id;
+    private readonly string $id;
 
     private string $nombre;
 

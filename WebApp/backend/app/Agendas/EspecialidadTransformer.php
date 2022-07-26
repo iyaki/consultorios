@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Consultorios\WebApp\Agendas;
 
 use Consultorios\Core\Agendas\Domain\Especialidad;
+// TODO: Encapsular esta dependencia dentro del package RESTFramework
 use League\Fractal\TransformerAbstract;
 
 /**

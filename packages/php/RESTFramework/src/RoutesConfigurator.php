@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework;
 
-use Closure;
 use Mezzio\Application;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -135,9 +134,9 @@ final class RoutesConfigurator
      * solo cuando son necesarios
      *
      * @param callable(): RequestHandlerInterface $requestHandlerFactory
-     * @return Closure(ServerRequestInterface): ResponseInterface
+     * @return \Closure(ServerRequestInterface): ResponseInterface
      */
-    private function lazyRequestHandler(callable $requestHandlerFactory): Closure
+    private function lazyRequestHandler(callable $requestHandlerFactory): \Closure
     {
         return static fn (ServerRequestInterface $request): ResponseInterface => $requestHandlerFactory()->handle($request);
     }
@@ -147,9 +146,9 @@ final class RoutesConfigurator
      * solo cuando son necesarios
      *
      * @param callable(): MiddlewareInterface $middlewareFactory
-     * @return Closure(ServerRequestInterface, RequestHandlerInterface): ResponseInterface
+     * @return \Closure(ServerRequestInterface, RequestHandlerInterface): ResponseInterface
      */
-    private function lazyMiddleware(callable $middlewareFactory): Closure
+    private function lazyMiddleware(callable $middlewareFactory): \Closure
     {
         return static fn (ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface => $middlewareFactory()->process($request, $handler);
     }

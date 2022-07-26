@@ -7,6 +7,7 @@ namespace Consultorios\Core\Agendas\Infrastructure;
 use Consultorios\Core\Agendas\Domain\Especialidad;
 use Consultorios\Core\Agendas\Domain\EspecialidadId;
 use Consultorios\Core\Agendas\Domain\EspecialidadRepositoryInterface;
+// TODO: Encapsular estas dependencias con doctrine dentro del package ORM
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Ramsey\Uuid\Uuid;
@@ -20,10 +21,10 @@ final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInte
     /**
      * @var EntityRepository<Especialidad>
      */
-    private EntityRepository $repository;
+    private readonly EntityRepository $repository;
 
     public function __construct(
-        private EntityManager $em
+        private readonly EntityManager $em
     ) {
         $this->repository = $this->em->getRepository(Especialidad::class);
     }
@@ -37,7 +38,7 @@ final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInte
     {
         $especialidad = $this->repository->find((string) $id);
 
-        if ($especialidad === null) {
+        if (! $especialidad instanceof Especialidad) {
             throw new \UnexpectedValueException(
                 'El id ' . $id . ' no corresponde a ninguna especialidad'
             );

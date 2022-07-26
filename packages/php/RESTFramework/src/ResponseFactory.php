@@ -12,8 +12,6 @@ use League\Fractal\Resource\NullResource;
 use League\Fractal\Resource\ResourceAbstract;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
-use Throwable;
-use UnexpectedValueException;
 
 /**
  * Clase base utilizada para convertir entidades en respuestas JSON utilizadas por las APIs REST de la aplicación.
@@ -24,7 +22,7 @@ final class ResponseFactory
      * @var array<class-string, class-string>
      */
     private array $transformers = [
-        Throwable::class => ThrowableTransformer::class,
+        \Throwable::class => \ThrowableTransformer::class,
     ];
 
     /**
@@ -74,7 +72,7 @@ final class ResponseFactory
             }
         }
 
-        throw new UnexpectedValueException('There is no transformer configured for ' . $resource::class);
+        throw new \UnexpectedValueException('There is no transformer configured for ' . $resource::class);
     }
 
     private function transformResourceToJson(ResourceAbstract $resource): string
@@ -97,7 +95,7 @@ final class ResponseFactory
 
         $resource = reset($resources);
 
-        if ($resource instanceof Throwable) {
+        if ($resource instanceof \Throwable) {
             throw new Exception(
                 'El envío de multiples errores no esta permitido'
             );
@@ -109,7 +107,7 @@ final class ResponseFactory
             }
         }
 
-        throw new UnexpectedValueException(
+        throw new \UnexpectedValueException(
             'No hay transformer configurado para: ' . $resource::class
         );
     }

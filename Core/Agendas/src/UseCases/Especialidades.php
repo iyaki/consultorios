@@ -18,8 +18,8 @@ use Consultorios\UnitOfWork\UnitOfWorkInterface;
 final class Especialidades
 {
     public function __construct(
-        private UnitOfWorkInterface $unitOfWork,
-        private EspecialidadRepositoryInterface $especialidadRepository
+        private readonly UnitOfWorkInterface $unitOfWork,
+        private readonly EspecialidadRepositoryInterface $especialidadRepository
     ) {
     }
 

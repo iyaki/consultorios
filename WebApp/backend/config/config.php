@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-return (function () {
+return (static function () {
     $devMode = (bool) getenv('DEV_MODE');
-
     return [
         'debug' => $devMode,
         'dev_mode' => $devMode,

@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Consultorios\RESTFramework;
 
 use League\Fractal\TransformerAbstract;
-use Throwable;
 
 /**
  * Clase utilizada para formatear las respuestas JSON que incluyen excepciones
- * de la clase Throwable.
+ * de la clase \Throwable.
  * Esta clase depende de la libreria PHP League - Fractal.
  */
 final class ThrowableTransformer extends TransformerAbstract
@@ -19,7 +18,7 @@ final class ThrowableTransformer extends TransformerAbstract
      *
      * @psalm-return array{message: string, code: string, file: string, line: int, trace: string}
      */
-    public function transform(Throwable $throwable): array
+    public function transform(\Throwable $throwable): array
     {
         return [
             'message' => $throwable->getMessage(),

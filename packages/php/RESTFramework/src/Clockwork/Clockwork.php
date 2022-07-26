@@ -6,7 +6,6 @@ namespace Consultorios\RESTFramework\Clockwork;
 
 use Clockwork\Authentication\NullAuthenticator;
 use Clockwork\Storage\FileStorage;
-use Exception;
 
 final class Clockwork
 {
@@ -39,7 +38,7 @@ final class Clockwork
         }
 
         if (! mkdir($dir, 0777, true)) {
-            throw new Exception('No ha sido posible crear la carpeta de clockwork');
+            throw new \Exception('No ha sido posible crear la carpeta de clockwork');
         }
 
         return $dir;
