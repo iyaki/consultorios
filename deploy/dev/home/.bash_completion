@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# Import git fuctions for completions
+# shellcheck source=/dev/null
 . /usr/share/bash-completion/completions/git
 
-complete -W "$(__git_heads)" gcr
+function __branch_completion() {
+    COMPREPLY=($(compgen -W "$(__git_heads)" "${COMP_WORDS[1]}"))
+}
+
+# Completion for branches
+complete -F __branch_completion gcr
+
+# Completion for files, directories and branches
+complete -dfF __branch_completion gco
+
+# Completion for branches
+complete -F __branch_completion gpr

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PROJECT_NAME='Consultorios'
+PROJECT_NAME='consultorios'
 
 CACHE_DIR='.cache/dev'
 

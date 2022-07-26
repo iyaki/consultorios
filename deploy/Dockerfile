@@ -204,9 +204,14 @@ ENV LC_ALL C.UTF-8
 
 COPY --from=php-phive /root/phive.phar /root/php/bin/phive
 
+COPY ./deploy/dev/packages/git-delta_0.13.0_amd64.deb ./git-delta.deb
+
 RUN apt update \
+  && apt upgrade -y \
   && apt install -y \
+    ./git-delta.deb \
     bash-completion \
+    bat \
     git \
     gnupg \
     mariadb-client \
@@ -240,8 +245,6 @@ RUN apt update \
     alsa-ucm-conf \
     fontconfig-config \
     fonts-dejavu-core \
-    gpg \
-    gpg-agent \
     manpages \
     manpages-dev \
   && apt update \
@@ -261,9 +264,12 @@ RUN apt update \
     /usr/share/X11 \
     /usr/share/alsa \
     /usr/share/sounds \
-    /var/lib/dpkg/status-old
+    /var/lib/dpkg/status-old \
+    ./git-delta.deb
 
   COPY --from=node-build /root/nodejs /root/nodejs
+
+  COPY ./deploy/dev/bin/jq /usr/local/bin/jq
 
   ENV PATH="/root/nodejs/bin:${PATH}"
 
