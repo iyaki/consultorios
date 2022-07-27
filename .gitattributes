@@ -1,1 +1,4 @@
 *                             eol=lf
+
+deploy/dev/bin/*               binary
+deploy/dev/packages/*          binary
