@@ -22,7 +22,7 @@ final class ResponseFactory
      * @var array<class-string, class-string>
      */
     private array $transformers = [
-        \Throwable::class => \ThrowableTransformer::class,
+        \Throwable::class => ThrowableTransformer::class,
     ];
 
     /**

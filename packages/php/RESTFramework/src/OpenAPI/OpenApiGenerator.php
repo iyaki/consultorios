@@ -28,7 +28,13 @@ final class OpenApiGenerator
             define('URI_OPENAPI_PATH_JSON', $uriBasePath . 'openapi.json');
         }
 
-        $this->openApi = Generator::scan([__DIR__, $documentationPath]);
+        $openApi = Generator::scan([__DIR__, $documentationPath]);
+
+        if ($openApi === null) {
+            throw new \Exception('Error procesando la documentación OpenAPI');
+        }
+
+        $this->openApi = $openApi;
     }
 
     public function toYaml(): string
