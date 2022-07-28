@@ -4,6 +4,9 @@ PORT="${1:-8080}"
 
 cd "$(dirname "$0")/../" || exit
 
-composer install
+composer install \
+  --optimize-autoloader \
+  --no-cache \
+  --no-interaction
 
 php -S "localhost:$PORT" -t public public/index.php

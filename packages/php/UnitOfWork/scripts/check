@@ -14,7 +14,17 @@ source "$SCRIPT_DIR/../../../bash/utils.sh"
 
 cd "$SCRIPT_DIR/../"
 
-composer update
+composer update \
+  --classmap-authoritative \
+  --no-cache \
+  --no-interaction
+
+check_exit_status $?
+print_separator
+
+composer check-platform-reqs \
+  --no-cache \
+  --no-interaction
 
 check_exit_status $?
 print_separator
@@ -53,6 +63,11 @@ psalm \
 
 check_exit_status $?
 print_separator
+
+composer dump-autoload \
+  --optimize \
+  --no-cache \
+  --no-interaction
 
 if [ "$EXIT_STATUS" != "0" ]
 then

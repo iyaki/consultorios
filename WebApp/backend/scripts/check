@@ -14,12 +14,22 @@ source "$SCRIPT_DIR/../../../packages/bash/utils.sh"
 
 cd "$SCRIPT_DIR/../"
 
-composer install
+composer install \
+  --classmap-authoritative \
+  --no-cache \
+  --no-interaction
 
 check_exit_status $?
 print_separator
 
-ecs
+composer check-platform-reqs \
+  --no-cache \
+  --no-interaction
+
+check_exit_status $?
+print_separator
+
+ecs --clear-cache
 
 check_exit_status $?
 print_separator
@@ -57,6 +67,11 @@ print_separator
 # vendor/bin/phpunit $CODE_DIRECOTRY
 
 # check_exit_status "$UNIT_TESTS_STATUS"
+
+composer dump-autoload \
+  --optimize \
+  --no-cache \
+  --no-interaction
 
 if [ "$EXIT_STATUS" != "0" ]
 then
