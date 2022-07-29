@@ -7,6 +7,8 @@ on:
       - opened
       - edited
       - reopened
+    paths:
+      - 'packages/php/ORM/**'
 
 jobs:
   continuous_integration:
