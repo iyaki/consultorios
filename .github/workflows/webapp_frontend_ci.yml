@@ -1,0 +1,26 @@
+on:
+  push:
+    paths:
+      - 'WebApp/frontend/**'
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+    paths:
+      - 'WebApp/frontend/**'
+
+jobs:
+  continuous_integration:
+    runs-on: ubuntu-latest
+    name: Integración continua para WebApp/frontend
+    container:
+      image: ghcr.io/iyaki/consultorios-ci-php:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Validaciones
+        run: WebApp/frontend/scripts/check
