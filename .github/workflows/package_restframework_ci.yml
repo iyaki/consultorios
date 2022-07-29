@@ -7,6 +7,8 @@ on:
       - opened
       - edited
       - reopened
+    paths:
+      - 'packages/php/RESTFramework/**'
 
 jobs:
   continuous_integration:
