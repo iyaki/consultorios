@@ -3,7 +3,7 @@ import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded'
 import { SnackbarProvider } from 'notistack'
 import { Suspense, lazy, useState, useRef } from 'react'
-import { BrowserRouter, Link, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import Loading from './Loading'
 import * as RUTAS from '../../utils/rutas'
 import './index.css'
@@ -14,6 +14,15 @@ export default function App () {
   const onClickDismiss = key => () => {
     notistackRef.current.closeSnackbar(key)
   }
+
+  const routes = mapeableObject({
+    [RUTAS.HOME]: () => '/',
+    [RUTAS.CONFIGURAR_AGENDAS]: lazy(() => import('../Agendas/Configuracion')),
+    [RUTAS.CONFIGURAR_ESPECIALIDADES]: lazy(() => import('../Agendas/Administracion/Especialidades')),
+    [RUTAS.CONFIGURAR_PROFESIONALES]: lazy(() => import('../Agendas/Administracion/Profesionales')),
+    [RUTAS.FACTURACION]: () => 'facturacion',
+    '*': lazy(() => import('./NotFound'))
+  })
 
   return (
     <BrowserRouter>
@@ -28,7 +37,17 @@ export default function App () {
       >
         <NavBar />
         <Suspense fallback={<Loading />}>
-          <Routes />
+          <Routes>
+            {
+              routes.map((Component, path) => (
+                <Route
+                  key={path}
+                  exact path={path}
+                  element={<Component />}
+                />
+              ))
+            }
+          </Routes>
         </Suspense>
       </SnackbarProvider>
     </BrowserRouter>
@@ -71,30 +90,5 @@ function NavBar () {
         <Button className='Toolbar-text-color' component={Link} to={RUTAS.FACTURACION}>Facturación</Button>
       </Toolbar>
     </AppBar>
-  )
-}
-
-function Routes () {
-  const routes = mapeableObject({
-    [RUTAS.HOME]: () => '/',
-    [RUTAS.CONFIGURAR_AGENDAS]: lazy(() => import('../Agendas/Configuracion')),
-    [RUTAS.CONFIGURAR_ESPECIALIDADES]: lazy(() => import('../Agendas/Administracion/Especialidades')),
-    [RUTAS.CONFIGURAR_PROFESIONALES]: lazy(() => import('../Agendas/Administracion/Profesionales')),
-    [RUTAS.FACTURACION]: () => '/facturacion',
-    '*': lazy(() => import('./NotFound'))
-  })
-
-  return (
-    <Switch>
-      {
-        routes.map((component, path) => (
-          <Route
-            key={path}
-            exact path={path}
-            component={component}
-          />
-        ))
-      }
-    </Switch>
   )
 }
