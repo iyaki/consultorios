@@ -2,11 +2,10 @@
 
 PORT="${1:-8080}"
 
-cd "$(dirname "$0")/../" || exit
+SCRIPT_DIR="$(dirname $(realpath "$0"))"
 
-composer install \
-  --optimize-autoloader \
-  --no-cache \
-  --no-interaction
+cd "$SCRIPT_DIR/../"
+
+"$SCRIPT_DIR/setup"
 
 php -S "localhost:$PORT" -t public public/index.php

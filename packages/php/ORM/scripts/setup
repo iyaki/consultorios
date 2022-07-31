@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR="$(dirname $(realpath "$0"))"
+
+source "$SCRIPT_DIR/../../../packages/bash/php_utils.sh"
+
+composer_setup \
+  "$SCRIPT_DIR/../" \
+  update

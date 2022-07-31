@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR="$(dirname "$0")"
+WEBAPP_DIR="$(dirname $(realpath "$0"))/../"
 
-"$SCRIPT_DIR/../backend/scripts/serve" &
-
-"$SCRIPT_DIR/../frontend/scripts/serve"
+( "$WEBAPP_DIR/backend/scripts/serve" & "$WEBAPP_DIR/frontend/scripts/serve" )

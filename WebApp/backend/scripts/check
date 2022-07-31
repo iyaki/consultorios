@@ -8,23 +8,13 @@ fi
 
 CODE_DIRECOTRY='app/'
 
-SCRIPT_DIR="$(dirname "$0")"
+SCRIPT_DIR="$(dirname $(realpath "$0"))"
 
-source "$SCRIPT_DIR/../../../packages/bash/utils.sh"
+source "$SCRIPT_DIR/../../../packages/bash/ci_utils.sh"
 
 cd "$SCRIPT_DIR/../"
 
-composer install \
-  --classmap-authoritative \
-  --no-cache \
-  --no-interaction
-
-check_exit_status $?
-print_separator
-
-composer check-platform-reqs \
-  --no-cache \
-  --no-interaction
+"$SCRIPT_DIR/setup"
 
 check_exit_status $?
 print_separator

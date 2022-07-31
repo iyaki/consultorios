@@ -8,9 +8,9 @@ fi
 
 CODE_DIRECOTRY='src/'
 
-SCRIPT_DIR="$(dirname "$0")"
+SCRIPT_DIR="$(dirname $(realpath "$0"))"
 
-source "$SCRIPT_DIR/../../../bash/utils.sh"
+source "$SCRIPT_DIR/../../../bash/ci_utils.sh"
 
 cd "$SCRIPT_DIR/../"
 

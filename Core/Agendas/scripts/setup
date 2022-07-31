@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR="$(dirname $(realpath "$0"))"
+
+ORIGINAL_DIR="$(realpath "$(pwd -P)")"
+
+cd "$SCRIPT_DIR/../"
+
+source "$SCRIPT_DIR/../../../packages/bash/php_utils.sh"
+
+composer_setup \
+  "$SCRIPT_DIR/../" \
+  update
+
+"$SCRIPT_DIR/../vendor/bin/doctrine-migrations" \
+  migrate \
+  --no-interaction
+  # "--configuration=$SCRIPT_DIR/../migrations.php"
+
+cd "$ORIGINAL_DIR"
