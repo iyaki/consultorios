@@ -42,8 +42,4 @@ final class OpenApiGenerator
         return $this->openApi->toYaml();
     }
 
-    public function toJson(): string
-    {
-        return $this->openApi->toJson();
-    }
 }

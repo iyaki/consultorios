@@ -71,14 +71,6 @@ final class Application
             )
         );
 
-        $this->app->get(
-            $uriBasePath . 'openapi.json',
-            static fn (): ResponseInterface => new JsonResponse(
-                (new OpenApiGenerator($documentationPath, $uriBasePath))->toJson(),
-                200
-            )
-        );
-
         if ($devMode && $_SERVER['REQUEST_METHOD'] !== 'OPTIONS') {
             $this->app->pipe(
                 (new ValidationMiddlewareBuilder())->fromYaml(
