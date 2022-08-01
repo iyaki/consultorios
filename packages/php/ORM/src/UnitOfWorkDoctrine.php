@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Consultorios\ORM;
 
 use Consultorios\UnitOfWork\UnitOfWorkInterface;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 final class UnitOfWorkDoctrine implements UnitOfWorkInterface
 {
     public function __construct(
-        private readonly EntityManager $em
+        private readonly EntityManagerInterface $em
     ) {
     }
 
     public function beginTransaction(): void
     {
-        $this->em->getConnection()->beginTransaction();
+        $this->em->beginTransaction();
     }
 
     public function commit(): void
@@ -29,8 +29,6 @@ final class UnitOfWorkDoctrine implements UnitOfWorkInterface
 
     public function rollback(): void
     {
-        if ($this->em->getConnection()->isTransactionActive()) {
-            $this->em->rollback();
-        }
+        $this->em->rollback();
     }
 }
