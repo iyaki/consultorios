@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="$(dirname $(realpath "$0"))"
 
-source "$SCRIPT_DIR/../../../packages/bash/php_utils.sh"
+source "$SCRIPT_DIR/../../../bash/php_utils.sh"
 
 composer_setup \
   "$SCRIPT_DIR/../" \
