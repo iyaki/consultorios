@@ -1,6 +1,5 @@
 # Consultorios
 
-Pet project for proofs of concept about system design
 Proyecto "de juguete" para realizar pruebas de concepto de diseño de sistemas
 y uso de tecnologías.
 
