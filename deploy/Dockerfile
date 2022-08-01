@@ -31,7 +31,11 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Argentina/Buenos_Aires
 
 RUN apt update \
-  && apt install -y \
+  && apt install \
+    --assume-yes \
+    --quiet \
+    --no-install-recommends \
+    --purge \
     autoconf \
     bison \
     build-essential \
@@ -71,18 +75,29 @@ COPY --from=asdf-vm-base /root/.asdf /root/.asdf
 SHELL ["/bin/bash", "-c"]
 
 RUN apt update \
-  && apt install -y \
-    git \
+  && apt install \
+    --assume-yes \
+    --quiet \
+    --no-install-recommends \
+    --purge \
+    ca-certificates \
+    g++ \
+    gcc \
+    make \
+  && source ~/.asdf/asdf.sh \
+  && asdf plugin add php https://github.com/asdf-community/asdf-php.git \
+  && asdf install php ${PHP_VERSION} \
+  && cp -r ~/.asdf/installs/php/${PHP_VERSION} ~/php \
+  && apt purge \
+    --assume-yes \
+    --quiet \
     autoconf \
     bison \
     g++ \
     gcc \
     make \
+    pkg-config \
     re2c \
-  && source ~/.asdf/asdf.sh \
-  && asdf plugin add php https://github.com/asdf-community/asdf-php.git \
-  && asdf install php ${PHP_VERSION} \
-  && cp -r ~/.asdf/installs/php/${PHP_VERSION} ~/php \
   && rm -rf \
     ~/.asdf \
     ~/php/bin/peardev \
@@ -96,6 +111,9 @@ FROM php-dependecies as php-runtime
 COPY --from=php-build /root/php /root/php
 
 ENV PATH="/root/php/bin:/root/.config/composer/vendor/bin:${PATH}"
+
+# Set php.ini path
+ENV PHPRC="/root/php/conf.d/php.ini"
 
 FROM alpine:latest as php-phive
 
@@ -117,13 +135,18 @@ LABEL org.opencontainers.image.source="https://github.com/iyaki/consultorios"
 COPY --from=php-phive /root/phive.phar /root/php/bin/phive
 
 RUN apt update \
-  && apt install -y gnupg \
+  && apt install \
+    --assume-yes \
+    --quiet \
+    --no-install-recommends \
+    --purge \
+    ca-certificates \
+    gnupg \
   && composer global require \
     --update-no-dev \
     --update-with-all-dependencies \
     --prefer-stable \
     --sort-packages \
-    --optimize-autoloader \
     --classmap-authoritative \
     povils/phpmnd \
     psalm/plugin-phpunit \
@@ -141,9 +164,14 @@ RUN apt update \
     composer-require-checker \
     composer-unused \
     phpcpd \
-  && apt purge -y \
+  && apt purge \
+    --assume-yes \
+    --quiet \
     gnupg \
-  && apt autoremove -y \
+  && apt autoremove \
+    --assume-yes \
+    --quiet \
+    --purge \
   && rm -rf \
     /tmp/* \
     /root/php/bin/phive \
@@ -164,7 +192,13 @@ ENV PATH="/root/nodejs/bin:${PATH}"
 SHELL ["/bin/bash", "-c"]
 
 RUN apt update \
-  && apt install -y \
+  && apt install \
+    --assume-yes \
+    --reinstall \
+    --quiet \
+    --no-install-recommends \
+    --purge \
+    ca-certificates \
     curl \
     git \
     gnupg \
@@ -207,8 +241,16 @@ COPY --from=php-phive /root/phive.phar /root/php/bin/phive
 COPY ./deploy/dev/packages/git-delta_0.13.0_amd64.deb ./git-delta.deb
 
 RUN apt update \
-  && apt upgrade -y \
-  && apt install -y \
+  # && apt upgrade \
+  #   --assume-yes \
+  #   --quiet \
+  #   --no-install-recommends \
+  #   --purge \
+  && apt install \
+    --assume-yes \
+    --quiet \
+    --no-install-recommends \
+    --purge \
     ./git-delta.deb \
     bash-completion \
     bat \
@@ -223,7 +265,6 @@ RUN apt update \
     --update-with-all-dependencies \
     --prefer-stable \
     --sort-packages \
-    --optimize-autoloader \
     --classmap-authoritative \
     phpmetrics/phpmetrics \
     psy/psysh:@stable \
@@ -240,7 +281,9 @@ RUN apt update \
     churn \
     phploc \
 # Cleanup
-  && apt purge -y \
+  && apt purge \
+    --assume-yes \
+    --quiet \
     alsa-topology-conf \
     alsa-ucm-conf \
     fontconfig-config \
@@ -248,7 +291,10 @@ RUN apt update \
     manpages \
     manpages-dev \
   && apt update \
-  && apt autoremove -y \
+  && apt autoremove \
+    --assume-yes \
+    --quiet \
+    --purge \
   && rm -rf \
     /tmp/* \
     /usr/local/bin/phive \
@@ -265,12 +311,21 @@ RUN apt update \
     /usr/share/alsa \
     /usr/share/sounds \
     /var/lib/dpkg/status-old \
-    ./git-delta.deb
+    ./git-delta.deb \
+  # Bash completions for composer \
+  composer self-update
+  # composer completion bash > composer_completion.bash \
+  # mv composer_completion.bash /etc/bash_completion.d/composer
 
   COPY --from=node-build /root/nodejs /root/nodejs
 
   COPY ./deploy/dev/bin/jq /usr/local/bin/jq
 
   ENV PATH="/root/nodejs/bin:${PATH}"
+
+# Path para ejecutar binarios por proyecto
+  ENV PATH="./node_modules/.bin:${PATH}"
+  ENV PATH="./vendor/bin:${PATH}"
+  ENV PATH="./scripts:${PATH}"
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
