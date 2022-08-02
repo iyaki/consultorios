@@ -104,16 +104,17 @@ RUN apt update \
     ~/php/bin/php-cgi \
     ~/php/bin/phpdbg \
     ~/php/lib/* \
-    ~/php/php/*
+    ~/php/php/* \
+  && /root/php/bin/composer self-update
 
 FROM php-dependecies as php-runtime
 
 COPY --from=php-build /root/php /root/php
 
-ENV PATH="/root/php/bin:/root/.config/composer/vendor/bin:${PATH}"
+ENV PATH="/root/php/bin:/root/.composer/vendor/bin:${PATH}"
 
 # Set php.ini path
-ENV PHPRC="/root/php/conf.d/php.ini"
+# ENV PHPRC="/root/php/conf.d/php.ini" El auto_prepend_file del php.ini rompe rector
 
 FROM alpine:latest as php-phive
 
@@ -311,9 +312,8 @@ RUN apt update \
     /usr/share/alsa \
     /usr/share/sounds \
     /var/lib/dpkg/status-old \
-    ./git-delta.deb \
+    ./git-delta.deb
   # Bash completions for composer \
-  composer self-update
   # composer completion bash > composer_completion.bash \
   # mv composer_completion.bash /etc/bash_completion.d/composer
 
