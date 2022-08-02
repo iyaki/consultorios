@@ -23,21 +23,6 @@ namespace Consultorios\RESTFramework\OpenAPI;
  *          ),
  *      ),
  *  ),
- *  @OA\Get(
- *      path=URI_OPENAPI_PATH_JSON,
- *      description="Esta documentación",
- *      tags={"Documentación"},
- *      @OA\Response(
- *          response=200,
- *          description="OpenAPI JSON documentation",
- *          @OA\MediaType(
- *              mediaType="application/json",
- *              @OA\Schema(
- *                  type="string",
- *              ),
- *          ),
- *      ),
- *  ),
  *  @OA\Schema(
  *      schema="Error",
  *      description="Error procesando la petición.",

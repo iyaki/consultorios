@@ -6,9 +6,7 @@ namespace Consultorios\RESTFramework;
 
 use Consultorios\RESTFramework\Clockwork\ClockworkMiddleware;
 use Consultorios\RESTFramework\OpenAPI\OpenApiGenerator;
-use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\TextResponse;
-use Laminas\ServiceManager\ServiceManager;
 use League\OpenAPIValidation\PSR15\ValidationMiddlewareBuilder;
 use Mezzio\Cors\Middleware\CorsMiddleware;
 use Mezzio\Handler\NotFoundHandler;
@@ -17,22 +15,44 @@ use Mezzio\Router\Middleware\DispatchMiddleware;
 use Mezzio\Router\Middleware\ImplicitOptionsMiddleware;
 use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Envoltura para \Mezzio\Application
  */
 final class Application
 {
-    private readonly ServiceManager $container;
-
     private readonly \Mezzio\Application $app;
 
-    public function __construct(array $config)
-    {
-        $this->container = (require __DIR__ . '/../config/container.php')($config);
+    private readonly ResponseFactoryInterface $responseFactory;
 
-        $this->app = $this->container->get(\Mezzio\Application::class);
+    private readonly bool $devMode;
+
+    /**
+     * @param callable(RoutesConfigurator): void $configurator
+     */
+    public function __construct(
+        callable $configurator,
+        string $uriBasePath,
+        string $documentationPath
+    ) {
+        $container = (require __DIR__ . '/../config/container.php')();
+
+        $this->app = $container->get(\Mezzio\Application::class);
+
+        $this->responseFactory = $container->get(ResponseFactoryInterface::class);
+
+        $this->devMode = (bool) $container->get('config')['dev_mode'] ?? false;
+
+        $this->configureRoutes(
+            $configurator,
+            $uriBasePath,
+            $documentationPath
+        );
     }
 
     public function run(): void
@@ -43,14 +63,13 @@ final class Application
     /**
      * @param callable(RoutesConfigurator): void $configurator
      */
-    public function configureRoutes(
+    private function configureRoutes(
         callable $configurator,
         string $uriBasePath,
         string $documentationPath
     ): void {
-        $devMode = (bool) ($this->container->get('config')['dev_mode'] ?? false);
-
-        if ($devMode) {
+        if ($this->devMode) {
+            /* Middleware for itsgoingd/clockwork */
             $this->app->pipe(new ClockworkMiddleware());
         }
 
@@ -60,6 +79,7 @@ final class Application
 
         $this->app->pipe(RouteMiddleware::class);
 
+        /* OpenAPI Spec generator based on comments (by zircote/swagger-php) */
         $this->app->get(
             $uriBasePath . 'openapi.yaml',
             static fn (): ResponseInterface => new TextResponse(
@@ -71,15 +91,34 @@ final class Application
             )
         );
 
-        if ($devMode && $_SERVER['REQUEST_METHOD'] !== 'OPTIONS') {
-            $this->app->pipe(
-                (new ValidationMiddlewareBuilder())->fromYaml(
-                    (new OpenApiGenerator($documentationPath, $uriBasePath))->toYaml()
-                )->getValidationMiddleware()
-            );
+        if ($this->devMode) {
+            /* OpenAPI Spec validation middleware for dev environments */
+            $this->app->pipe(new class($this->devMode, $documentationPath, $uriBasePath) implements MiddlewareInterface {
+                public function __construct(
+                    private readonly string $documentationPath,
+                    private readonly string $uriBasePath
+                ) {
+                }
+
+                public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+                {
+                    if (strtolower($request->getMethod()) === 'options') {
+                        return $handler->handle($request);
+                    }
+
+                    return (new ValidationMiddlewareBuilder())->fromYaml(
+                        (new OpenApiGenerator($this->documentationPath, $this->uriBasePath))->toYaml()
+                    )->getValidationMiddleware()->process($request, $handler);
+                }
+            });
         }
 
-        $configurator(new RoutesConfigurator($this->container, $uriBasePath));
+        /* User defined routes configuration */
+        $configurator(new RoutesConfigurator(
+            $this->app,
+            $this->responseFactory,
+            $uriBasePath
+        ));
 
         $this->app->pipe(ImplicitOptionsMiddleware::class);
         $this->app->pipe(MethodNotAllowedMiddleware::class);

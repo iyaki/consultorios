@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 use Laminas\ServiceManager\ServiceManager;
 
-return static function (array $config) {
-    $dependencies = [];
+return static function () {
+
+    $dependencies['services'] = [
+        'config' => [
+            ...require __DIR__ . '/config.php',
+            ...require __DIR__ . '/cors.php',
+        ]
+    ];
 
     $configProviders = array_map(
-        fn (string $configProvider): array => (new $configProvider())()['dependencies'],
+        static fn (string $configProvider): array => (new $configProvider())()['dependencies'],
         [
             \Mezzio\ConfigProvider::class,
             \Mezzio\Router\FastRouteRouter\ConfigProvider::class,
@@ -19,12 +25,7 @@ return static function (array $config) {
         ]
     );
 
-    $dependencies = array_merge_recursive($dependencies, ...$configProviders);
-
-    $dependencies['services']['config'] = array_merge_recursive(
-        $config,
-        require __DIR__ . '/cors.php',
+    return new ServiceManager(
+        array_merge_recursive($dependencies, ...$configProviders)
     );
-
-    return new ServiceManager($dependencies);
 };

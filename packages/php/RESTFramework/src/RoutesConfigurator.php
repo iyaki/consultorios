@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Consultorios\RESTFramework;
 
 use Mezzio\Application;
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -17,18 +16,20 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final class RoutesConfigurator
 {
-    private readonly Application $app;
-
     public function __construct(
-        private readonly ContainerInterface $container,
+        private readonly Application $app,
+        private readonly ResponseFactoryInterface $responseFactory,
         private readonly string $basePath = ''
     ) {
-        $this->app = $this->container->get(Application::class);
     }
 
     public function withBasePath(string $path): self
     {
-        return new self($this->container, $path);
+        return new self(
+            $this->app,
+            $this->responseFactory,
+            $path
+        );
     }
 
     public function basePath(): string
@@ -42,7 +43,7 @@ final class RoutesConfigurator
     public function responseFactory(array $transformers): ResponseFactory
     {
         return new ResponseFactory(
-            $this->container->get(ResponseFactoryInterface::class),
+            $this->responseFactory,
             $transformers
         );
     }

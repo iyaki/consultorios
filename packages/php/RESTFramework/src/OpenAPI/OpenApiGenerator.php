@@ -30,7 +30,7 @@ final class OpenApiGenerator
 
         $openApi = Generator::scan([__DIR__, $documentationPath]);
 
-        if ($openApi === null) {
+        if (! $openApi instanceof OpenApi) {
             throw new \Exception('Error procesando la documentación OpenAPI');
         }
 
@@ -41,5 +41,4 @@ final class OpenApiGenerator
     {
         return $this->openApi->toYaml();
     }
-
 }

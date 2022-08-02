@@ -22,8 +22,8 @@
     "zircote/swagger-php": "^4.4"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9",
-    "consultorios/dev-tools-settings": "*"
+    "consultorios/dev-tools-settings": "*",
+    "phpunit/phpunit": "^9"
   },
   "autoload": {
     "psr-4": {
