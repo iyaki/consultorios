@@ -46,7 +46,7 @@ final class Application
 
         $this->responseFactory = $container->get(ResponseFactoryInterface::class);
 
-        $this->devMode = (bool) $container->get('config')['dev_mode'] ?? false;
+        $this->devMode = (bool) ($container->get('config')['dev_mode'] ?? false);
 
         $this->configureRoutes(
             $configurator,
@@ -93,7 +93,7 @@ final class Application
 
         if ($this->devMode) {
             /* OpenAPI Spec validation middleware for dev environments */
-            $this->app->pipe(new class($this->devMode, $documentationPath, $uriBasePath) implements MiddlewareInterface {
+            $this->app->pipe(new class($documentationPath, $uriBasePath) implements MiddlewareInterface {
                 public function __construct(
                     private readonly string $documentationPath,
                     private readonly string $uriBasePath

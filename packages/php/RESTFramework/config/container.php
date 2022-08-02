@@ -6,10 +6,12 @@ use Laminas\ServiceManager\ServiceManager;
 
 return static function () {
 
-    $dependencies['services'] = [
-        'config' => [
-            ...require __DIR__ . '/config.php',
-            ...require __DIR__ . '/cors.php',
+    $dependencies = [
+        'services' => [
+            'config' => [
+                ...require __DIR__ . '/config.php',
+                ...require __DIR__ . '/cors.php',
+            ]
         ]
     ];
 
