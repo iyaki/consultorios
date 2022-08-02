@@ -105,6 +105,7 @@ RUN apt update \
     ~/php/bin/phpdbg \
     ~/php/lib/* \
     ~/php/php/* \
+  && PATH="/root/php/bin:${PATH}" \
   && /root/php/bin/composer self-update
 
 FROM php-dependecies as php-runtime
