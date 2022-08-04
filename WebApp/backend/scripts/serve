@@ -8,4 +8,4 @@ cd "$SCRIPT_DIR/../"
 
 "$SCRIPT_DIR/setup"
 
-php -S "localhost:$PORT" -t public -c deploy/dev/php/conf.d/php.ini
+php -S "localhost:$PORT" -t public -c "${SCRIPT_DIR}/../../../deploy/dev/php/conf.d/php.ini"
