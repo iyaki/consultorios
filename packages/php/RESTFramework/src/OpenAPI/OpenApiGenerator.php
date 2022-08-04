@@ -24,10 +24,6 @@ final class OpenApiGenerator
             define('URI_OPENAPI_PATH_YAML', $uriBasePath . 'openapi.yaml');
         }
 
-        if (! defined('URI_OPENAPI_PATH_JSON')) {
-            define('URI_OPENAPI_PATH_JSON', $uriBasePath . 'openapi.json');
-        }
-
         $openApi = Generator::scan([__DIR__, $documentationPath]);
 
         if (! $openApi instanceof OpenApi) {

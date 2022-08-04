@@ -11,6 +11,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 (new Application(
     require __DIR__ . '/../config/routes.php',
-    '/webapp/',
-    __DIR__ . '/../app/'
+    __DIR__ . '/../app/',
+    '/webapp/'
 ))->run();
