@@ -31,7 +31,7 @@ final class Application
 
     /**
      * @param \Closure(RoutesConfigurator): void $routesConfigurator
-     * @param ?\Closure(ServiceManager):void) $containerConfigurator
+     * @param ?\Closure(ServiceManager):void $containerConfigurator
      */
     public function __construct(
         \Closure $routesConfigurator,
@@ -89,9 +89,9 @@ final class Application
 
         /* OpenAPI Spec generator based on comments (by zircote/swagger-php) */
         $this->app->get(
-            $uriBasePath . 'openapi.yaml',
-            static fn (): ResponseInterface => new TextResponse(
-                $this->generateOpenApiYaml($documentationPath, $uriBasePath),
+            $uriBasePath . 'openapi',
+            fn (ServerRequestInterface $request): ResponseInterface => new TextResponse(
+                $this->generateOpenApiYaml($documentationPath, $request->getUri()->getPath()),
                 200,
                 [
                     'Content-Type' => 'application/x-yaml',

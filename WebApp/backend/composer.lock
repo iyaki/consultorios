@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b43ab1e08b71b6b23007c92ea793eeef",
+    "content-hash": "4c8238e42fe10af2528f3a85098cb785",
     "packages": [
         {
             "name": "brick/math",
@@ -236,7 +236,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../packages/php/RESTFramework",
-                "reference": "dfc854b28e158a6def2464beb0ac51039fb1d071"
+                "reference": "3e0dcdf6cca82ce4a2db92e2abab1b57f88cfc97"
             },
             "require": {
                 "ext-json": "*",

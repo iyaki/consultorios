@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Consultorios\WebApp;
 
-/**
- *  @OA\Info(
- *      title="WebApp",
- *      description="API interna de la aplicación web",
- *      version="0.1"
- *  ),
- */
+use OpenApi\Attributes as OA;
+
+#[OA\Info(
+    version: '0.1',
+    description: 'API interna de la aplicación web',
+    title: 'WebApp'
+)]
 final class BaseOpenAPI
 {
 }

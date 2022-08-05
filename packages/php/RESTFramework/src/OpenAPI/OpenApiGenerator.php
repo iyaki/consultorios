@@ -11,7 +11,7 @@ final class OpenApiGenerator
 {
     private readonly OpenApi $openApi;
 
-    public function __construct(string $documentationPath, string $uriBasePath)
+    public function __construct(string $documentationPath, string $documentationUri)
     {
         $schema = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off' ? 'http' : 'https';
         $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
@@ -21,7 +21,7 @@ final class OpenApiGenerator
         }
 
         if (! defined('URI_OPENAPI_PATH_YAML')) {
-            define('URI_OPENAPI_PATH_YAML', $uriBasePath . 'openapi.yaml');
+            define('URI_OPENAPI_PATH_YAML', $documentationUri);
         }
 
         $openApi = Generator::scan([__DIR__, $documentationPath]);
