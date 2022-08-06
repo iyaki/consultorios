@@ -1,4 +1,6 @@
 # syntax=docker/dockerfile:1
+ARG PHP_VERSION=8.1.8
+
 FROM alpine:latest as asdf-vm-base
 
 RUN apk add --no-cache git \
@@ -68,7 +70,7 @@ RUN apt update \
 
 FROM php-dependecies as php-build
 
-ARG PHP_VERSION=8.1.8
+ARG PHP_VERSION
 
 COPY --from=asdf-vm-base /root/.asdf /root/.asdf
 
@@ -105,17 +107,19 @@ RUN apt update \
     ~/php/bin/phpdbg \
     ~/php/lib/* \
     ~/php/php/* \
-  && PATH="/root/php/bin:${PATH}" \
-  && /root/php/bin/composer self-update
+  && mkdir -p ~/.asdf/installs/php \
+  && mv ~/php ~/.asdf/installs/php/${PHP_VERSION}
 
 FROM php-dependecies as php-runtime
 
-COPY --from=php-build /root/php /root/php
+ARG PHP_VERSION
 
-ENV PATH="/root/php/bin:/root/.composer/vendor/bin:${PATH}"
+COPY --from=php-build /root/.asdf/installs/php/${PHP_VERSION} /root/.asdf/installs/php/${PHP_VERSION}
+
+ENV PATH="/root/.asdf/installs/php/${PHP_VERSION}/bin:/root/.composer/vendor/bin:${PATH}"
 
 # Set php.ini path
-# ENV PHPRC="/root/php/conf.d/php.ini" El auto_prepend_file del php.ini rompe rector
+# ENV PHPRC="/root/.asdf/installs/php/${PHP_VERSION}/conf.d/php.ini" El auto_prepend_file del php.ini rompe rector
 
 FROM alpine:latest as php-phive
 
@@ -134,7 +138,7 @@ FROM php-runtime as php-ci
 
 LABEL org.opencontainers.image.source="https://github.com/iyaki/consultorios"
 
-COPY --from=php-phive /root/phive.phar /root/php/bin/phive
+COPY --from=php-phive /root/phive.phar /root/.asdf/installs/php/${PHP_VERSION}/bin/phive
 
 RUN apt update \
   && apt install \
@@ -152,6 +156,7 @@ RUN apt update \
     --classmap-authoritative \
     povils/phpmnd \
     psalm/plugin-phpunit \
+    symplify/easy-ci \
     symplify/easy-coding-standard \
     vimeo/psalm \
 # Even more utilities
@@ -176,7 +181,7 @@ RUN apt update \
     --purge \
   && rm -rf \
     /tmp/* \
-    /root/php/bin/phive \
+    /root/.asdf/installs/php/${PHP_VERSION}/bin/phive \
     /var/lib/apt/lists/* \
     /var/lib/dpkg/info/* \
     /var/lib/dpkg/status-old \
@@ -238,7 +243,9 @@ LABEL org.opencontainers.image.source="https://github.com/iyaki/consultorios"
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
-COPY --from=php-phive /root/phive.phar /root/php/bin/phive
+ARG PHP_VERSION
+
+COPY --from=php-phive /root/phive.phar /root/.asdf/installs/php/${PHP_VERSION}/bin/phive
 
 COPY ./deploy/dev/packages/git-delta_0.13.0_amd64.deb ./git-delta.deb
 
