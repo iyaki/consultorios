@@ -2,6 +2,7 @@ on:
   push:
     paths:
       - 'WebApp/backend/**'
+      - 'packages/bash/**'
   pull_request:
     types:
       - opened
@@ -9,6 +10,7 @@ on:
       - reopened
     paths:
       - 'WebApp/backend/**'
+      - 'packages/bash/**'
 
 jobs:
   continuous_integration:

@@ -2,6 +2,7 @@ on:
   push:
     paths:
       - 'packages/php/ORM/**'
+      - 'packages/bash/**'
   pull_request:
     types:
       - opened
@@ -9,6 +10,7 @@ on:
       - reopened
     paths:
       - 'packages/php/ORM/**'
+      - 'packages/bash/**'
 
 jobs:
   continuous_integration:
