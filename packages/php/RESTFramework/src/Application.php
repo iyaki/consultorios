@@ -33,7 +33,7 @@ final class Application
 
     /**
      * @param \Closure(RoutesConfigurator): void $routesConfigurator
-     * @param ?\Closure(ServiceManager):void $containerConfigurator
+     * @param ?\Closure(ServiceManager): void $containerConfigurator
      */
     public function __construct(
         \Closure $routesConfigurator,

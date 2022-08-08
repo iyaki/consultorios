@@ -31,6 +31,11 @@
     },
     "exclude-from-classmap": ["*Test.php"]
   },
+  "autoload-dev": {
+    "psr-4": {
+        "Consultorios\\RESTFramework\\Fixtures\\": "fixtures"
+    }
+},
   "config": {
     "platform": {
       "php": "8.1"
