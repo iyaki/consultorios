@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Integración continua para WebApp/frontend
     container:
-      image: ghcr.io/iyaki/consultorios-ci-php:latest
+      image: ghcr.io/iyaki/consultorios-ci-nodejs:latest
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}

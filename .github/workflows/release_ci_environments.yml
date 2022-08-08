@@ -10,7 +10,7 @@ jobs:
     steps:
       -  uses: actions/checkout@v3
 
-      - name: Build image
+      - name: Build ci-php image
         run: |
           DOCKER_BUILDKIT=1 docker build \
             --progress plain \
@@ -18,8 +18,19 @@ jobs:
             --tag ghcr.io/iyaki/consultorios-ci-php:latest \
             deploy/
 
+      - name: Build ci-nodejs image
+        run: |
+          DOCKER_BUILDKIT=1 docker build \
+            --progress plain \
+            --target node-runtime \
+            --tag ghcr.io/iyaki/consultorios-ci-nodejs:latest \
+            deploy/
+
       - name: Login into ghcr.io
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Push image
+      - name: Push ci-php image
         run: docker push ghcr.io/iyaki/consultorios-ci-php:latest
+
+      - name: Push ci-nodejs image
+        run: docker push ghcr.io/iyaki/consultorios-ci-nodejs:latest

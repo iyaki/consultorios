@@ -174,7 +174,13 @@ RUN apt update \
   && apt purge \
     --assume-yes \
     --quiet \
+    alsa-topology-conf \
+    alsa-ucm-conf \
+    fontconfig-config \
+    fonts-dejavu-core \
     gnupg \
+    manpages \
+    manpages-dev \
   && apt autoremove \
     --assume-yes \
     --quiet \
@@ -213,6 +219,20 @@ RUN apt update \
   && asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git \
   && asdf install nodejs ${NODE_VERSION} \
   && cp -r ~/.asdf/installs/nodejs/${NODE_VERSION} ~/nodejs \
+  && apt purge \
+    --assume-yes \
+    --quiet \
+    alsa-topology-conf \
+    alsa-ucm-conf \
+    fontconfig-config \
+    fonts-dejavu-core \
+    gnupg \
+    manpages \
+    manpages-dev \
+  && apt autoremove \
+    --assume-yes \
+    --quiet \
+    --purge \
   && rm -rf \
     ~/.asdf \
     ~/nodejs/lib/node_modules/npm/.licensee.json \
@@ -235,6 +255,12 @@ RUN apt update \
     ~/nodejs/lib/node_modules/npm/tap-snapshots/* \
     ~/nodejs/LICENSE \
     ~/nodejs/README.md
+
+FROM node-build as node-runtime
+
+LABEL org.opencontainers.image.source="https://github.com/iyaki/consultorios"
+
+ENV PATH="/root/nodejs/bin:${PATH}"
 
 FROM php-ci as dev-env
 
@@ -289,16 +315,6 @@ RUN apt update \
     --trust-gpg-keys 96141E4421A9B0D5,4AA394086372C20A \
     churn \
     phploc \
-# Cleanup
-  && apt purge \
-    --assume-yes \
-    --quiet \
-    alsa-topology-conf \
-    alsa-ucm-conf \
-    fontconfig-config \
-    fonts-dejavu-core \
-    manpages \
-    manpages-dev \
   && apt update \
   && apt autoremove \
     --assume-yes \
