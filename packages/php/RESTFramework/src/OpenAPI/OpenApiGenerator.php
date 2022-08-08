@@ -43,7 +43,7 @@ final class OpenApiGenerator
             define('URI_OPENAPI_PATH_YAML', $documentationUri);
         }
 
-        $openApi = Generator::scan([__DIR__, $documentationPath]);
+        $openApi = Generator::scan([__DIR__ . '/../', $documentationPath]);
 
         if (! $openApi instanceof OpenApi) {
             throw new \Exception('Error procesando la documentación OpenAPI');
