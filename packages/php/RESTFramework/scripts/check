@@ -14,58 +14,35 @@ source "$SCRIPT_DIR/../../../bash/ci_utils.sh"
 
 cd "$SCRIPT_DIR/../"
 
-"$SCRIPT_DIR/setup"
+ci-setup "$SCRIPT_DIR"
 
-check_exit_status $?
-print_separator
+check-conflicts
 
-ecs --clear-cache
+commented-code "$CODE_DIRECOTRY"
 
-check_exit_status $?
-print_separator
+file-class-name "$CODE_DIRECOTRY"
 
-composer-unused \
-  --excludePackage=laminas/laminas-servicemanager \
+multi-classes "$CODE_DIRECOTRY"
+
+coding-standars
+
+unused-packages \
   --excludePackage=league/openapi-psr7-validator \
   --excludePackage=mezzio/mezzio-cors \
   --excludePackage=mezzio/mezzio-fastroute \
   --excludePackage=mezzio/mezzio-helpers \
-  --excludePackage=mezzio/mezzio \
-  --excludePackage=zircote/swagger-php
+  --excludePackage=mezzio/mezzio
 
-check_exit_status $?
-print_separator
+find-transitive-depndencies "$SCRIPT_DIR/../require-checker.json"
 
-composer-require-checker
+find-magic-numbers \
+  --exclude-path="Clockwork/" \
+  -- "$CODE_DIRECOTRY"
 
-check_exit_status $?
-print_separator
+find-copy-pasted-code "$CODE_DIRECOTRY"
 
-phpmnd \
-  --include-numeric-string \
-  -- $CODE_DIRECOTRY
+static-analysis
 
-check_exit_status $?
-print_separator
+remake-autoloader
 
-phpcpd $CODE_DIRECOTRY
-
-check_exit_status $?
-print_separator
-
-psalm \
-  --threads=4 \
-  --no-cache
-
-check_exit_status $?
-print_separator
-
-composer dump-autoload \
-  --optimize \
-  --no-cache \
-  --no-interaction
-
-if [ "$EXIT_STATUS" != "0" ]
-then
-  exit 1
-fi
+exit $EXIT_STATUS

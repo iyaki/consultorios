@@ -27,6 +27,8 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final class Application
 {
+    private const HTTP_METHOD_OPTIONS = 'options';
+
     private readonly \Mezzio\Application $app;
 
     /**
@@ -102,7 +104,7 @@ final class Application
         if ($devMode) {
             /* OpenAPI Spec validation middleware for dev environments */
             $this->app->pipe(fn (ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface => (
-                strtolower($request->getMethod()) === 'options'
+                strtolower($request->getMethod()) === self::HTTP_METHOD_OPTIONS
                 ? $handler->handle($request)
                 : (
                     $this

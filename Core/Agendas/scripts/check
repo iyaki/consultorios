@@ -14,45 +14,28 @@ source "$SCRIPT_DIR/../../../packages/bash/ci_utils.sh"
 
 cd "$SCRIPT_DIR/../"
 
-"$SCRIPT_DIR/setup"
+ci-setup "$SCRIPT_DIR"
 
-check_exit_status $?
-print_separator
+check-conflicts
 
-ecs --clear-cache
+commented-code "$CODE_DIRECOTRY"
 
-check_exit_status $?
-print_separator
+file-class-name "$CODE_DIRECOTRY"
 
-composer-unused --excludePackage=ramsey/uuid
+multi-classes "$CODE_DIRECOTRY"
 
-check_exit_status $?
-print_separator
+coding-standars
 
-composer-require-checker
+unused-packages --excludePackage=ramsey/uuid
 
-check_exit_status $?
-print_separator
+find-transitive-depndencies
 
-phpmnd \
-  --strings \
-  --include-numeric-string \
-  -- $CODE_DIRECOTRY
+find-magic-numbers -- "$CODE_DIRECOTRY"
 
-check_exit_status $?
-print_separator
+find-copy-pasted-code "$CODE_DIRECOTRY"
 
-phpcpd $CODE_DIRECOTRY
-
-check_exit_status $?
-print_separator
-
-psalm \
-  --threads=4 \
-  --no-cache
-
-check_exit_status $?
-print_separator
+static-analysis
+print_separator 'validate doctrine schema'
 
 if [ -z "$CI" ]
 then
@@ -62,18 +45,12 @@ else
 fi
 
 check_exit_status $?
-print_separator
+print_separator 'unit tests'
 
 vendor/bin/phpunit $CODE_DIRECOTRY
 
 check_exit_status $?
 
-composer dump-autoload \
-  --optimize \
-  --no-cache \
-  --no-interaction
+remake-autoloader
 
-if [ "$EXIT_STATUS" != "0" ]
-then
-  exit 1
-fi
+exit $EXIT_STATUS

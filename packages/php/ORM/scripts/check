@@ -14,56 +14,32 @@ source "$SCRIPT_DIR/../../../bash/ci_utils.sh"
 
 cd "$SCRIPT_DIR/../"
 
-"$SCRIPT_DIR/setup"
+ci-setup "$SCRIPT_DIR"
 
-check_exit_status $?
-print_separator
+check-conflicts
 
-ecs --clear-cache
+commented-code "$CODE_DIRECOTRY"
 
-check_exit_status $?
-print_separator
+file-class-name "$CODE_DIRECOTRY"
 
-composer-unused \
+multi-classes "$CODE_DIRECOTRY"
+
+coding-standars
+
+unused-packages \
   --excludePackage=consultorios/unit-of-work \
   --excludePackage=doctrine/migrations \
   --excludePackage=ext-pdo_mysql \
   --excludePackage=symfony/cache
 
-check_exit_status $?
-print_separator
+find-transitive-depndencies
 
-composer-require-checker
+find-magic-numbers -- "$CODE_DIRECOTRY"
 
-check_exit_status $?
-print_separator
+find-copy-pasted-code "$CODE_DIRECOTRY"
 
-phpmnd \
-  --strings \
-  --include-numeric-string \
-  -- $CODE_DIRECOTRY
+static-analysis
 
-check_exit_status $?
-print_separator
+remake-autoloader
 
-phpcpd $CODE_DIRECOTRY
-
-check_exit_status $?
-print_separator
-
-psalm \
-  --threads=4 \
-  --no-cache
-
-check_exit_status $?
-print_separator
-
-composer dump-autoload \
-  --optimize \
-  --no-cache \
-  --no-interaction
-
-if [ $EXIT_STATUS != 0 ]
-then
-  exit 1
-fi
+exit $EXIT_STATUS

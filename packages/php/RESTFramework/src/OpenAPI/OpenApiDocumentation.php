@@ -6,6 +6,7 @@ namespace Consultorios\RESTFramework\OpenAPI;
 
 use OpenApi\Attributes as OA;
 
+/** @psalm-suppress UndefinedConstant */
 #[OA\Server(url: SERVER_HOST)]
 #[OA\Schema(
     schema: 'Error',
@@ -55,6 +56,7 @@ use OpenApi\Attributes as OA;
     ]
 )]
 #[OA\Get(
+    /** @psalm-suppress UndefinedConstant */
     path: URI_OPENAPI_PATH_YAML,
     description: 'Esta documentación',
     tags: ['Documentación']
