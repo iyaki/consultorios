@@ -83,7 +83,7 @@ function unused-packages() {
 function find-transitive-depndencies() {
   print_separator "${FUNCNAME[0]}"
 
-  if [ -z "$1"]
+  if [ -z "$1" ]
   then
     composer-require-checker
   else
