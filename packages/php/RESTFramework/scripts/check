@@ -27,7 +27,6 @@ multi-classes "$CODE_DIRECOTRY"
 coding-standars
 
 unused-packages \
-  --excludePackage=league/openapi-psr7-validator \
   --excludePackage=mezzio/mezzio-cors \
   --excludePackage=mezzio/mezzio-fastroute \
   --excludePackage=mezzio/mezzio-helpers \
@@ -44,5 +43,9 @@ find-copy-pasted-code "$CODE_DIRECOTRY"
 static-analysis
 
 remake-autoloader
+
+print_separator unit-tests
+./vendor/bin/phpunit
+check_exit_status $?
 
 exit $EXIT_STATUS

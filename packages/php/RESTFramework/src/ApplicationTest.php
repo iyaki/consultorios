@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework;
 
+use Consultorios\RESTFramework\Fixtures\DummyEmitter;
 use Consultorios\RESTFramework\Fixtures\TestGetHandler;
-use Laminas\Diactoros\Response\TextResponse;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\HttpHandlerRunner\Emitter\EmitterInterface;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * @internal Test class
@@ -112,7 +111,7 @@ final class ApplicationTest extends TestCase
         $app->run();
 
         $this->assertStatusCode(404, $emitter->lastEmittedResponse);
-        $this->assertBody('Cannot GET ' . self::HOST .'/cualquiera', $emitter->lastEmittedResponse);
+        $this->assertBody('Cannot GET ' . self::HOST . '/cualquiera', $emitter->lastEmittedResponse);
     }
 
     public function testMethodNotOkNoDevMode(): void
@@ -169,7 +168,7 @@ final class ApplicationTest extends TestCase
 
     private function routesConfigurator(RoutesConfigurator $routesConfigurator): void
     {
-        $routesConfigurator->get('test', static fn(): TestGetHandler => new TestGetHandler());
+        $routesConfigurator->get('test', static fn (): TestGetHandler => new TestGetHandler());
     }
 
     private function request(string $method, string $uri): ServerRequestInterface
@@ -190,16 +189,9 @@ final class ApplicationTest extends TestCase
         return static fn (): ServerRequestInterface => $request;
     }
 
-    private function emitter(): object
+    private function emitter(): DummyEmitter
     {
-        return new class() implements EmitterInterface {
-            public ?ResponseInterface $lastEmittedResponse = null;
-
-            public function emit(ResponseInterface $response): bool
-            {
-                return (bool) ($this->lastEmittedResponse = $response);
-            }
-        };
+        return new DummyEmitter();
     }
 
     /**

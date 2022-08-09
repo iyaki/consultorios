@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework;
 
+use Consultorios\RESTFramework\Fixtures\DummyDTO;
+use Consultorios\RESTFramework\Fixtures\DummyTransformer;
 use Laminas\Diactoros\Response\TextResponse;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 
 final class ResponseFactoryTest extends TestCase
 {
+    /**
+     * @var string
+     */
     private const EXCEPTION_MESSAGE = 'Soy un mensaje de error';
 
     public function testCreateResponseFromItemResource(): void

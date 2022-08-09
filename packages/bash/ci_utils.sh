@@ -90,7 +90,6 @@ function find-transitive-depndencies() {
     composer-require-checker --config-file="$1"
   fi
 
-
   check_exit_status $?
 }
 

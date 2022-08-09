@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Consultorios\RESTFramework;
+namespace Consultorios\RESTFramework\Fixtures;
 
 /**
  * Clase utilizada en las pruebas unitarias de AbstractWebAppResponseFactoryFractal.

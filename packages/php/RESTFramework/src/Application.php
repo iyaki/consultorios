@@ -27,8 +27,14 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final class Application
 {
+    /**
+     * @var string
+     */
     private const HTTP_METHOD_OPTIONS = 'options';
 
+    /**
+     * @var string
+     */
     private const OPENAPI_PATH = 'openapi';
 
     private readonly \Mezzio\Application $app;

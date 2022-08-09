@@ -9,16 +9,34 @@ use OpenApi\Generator;
 
 final class OpenApiGenerator
 {
+    /**
+     * @var string
+     */
     private const SERVER_HTTPS_INDEX = 'HTTPS';
 
+    /**
+     * @var string
+     */
     private const SERVER_HTTPS_VALUE_OFF = 'off';
 
+    /**
+     * @var string
+     */
     private const SERVER_HTTP_HOST_INDEX = 'HTTP_HOST';
 
+    /**
+     * @var string
+     */
     private const SCHEMA_HTTPS = 'https';
 
+    /**
+     * @var string
+     */
     private const SCHEMA_HTTP = 'http';
 
+    /**
+     * @var string
+     */
     private const LOCALHOST = 'localhost';
 
     private readonly OpenApi $openApi;
