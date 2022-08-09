@@ -19,7 +19,7 @@ services:
       - ~/.gitignore-global:/root/.gitignore-global
       - ~/.ssh:/root/.ssh
       - ~/.config/git/authorized_signers:/root/.config/git/authorized_signers
-      # - ./php/conf.d/php.ini:/root/php/conf.d/php.ini
+      - ./php/conf.d:/root/.asdf/installs/php/8.1.8/conf.d
     environment:
       - DEV_MODE=${DEV_MODE}
       - DB_HOST=${DB_HOST}

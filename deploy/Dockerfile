@@ -105,7 +105,6 @@ RUN apt update \
     ~/php/bin/peardev \
     ~/php/bin/php-cgi \
     ~/php/bin/phpdbg \
-    ~/php/lib/* \
     ~/php/php/* \
   && mkdir -p ~/.asdf/installs/php \
   && mv ~/php ~/.asdf/installs/php/${PHP_VERSION}
@@ -315,6 +314,7 @@ RUN apt update \
     --trust-gpg-keys 96141E4421A9B0D5,4AA394086372C20A \
     churn \
     phploc \
+  && pecl install xdebug \
   && apt update \
   && apt autoremove \
     --assume-yes \
