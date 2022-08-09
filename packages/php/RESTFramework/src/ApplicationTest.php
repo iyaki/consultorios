@@ -23,6 +23,25 @@ final class ApplicationTest extends TestCase
 {
     private const HOST = 'https://127.0.0.1';
 
+    public function testOpenApi(): void
+    {
+        $emitter = $this->emitter();
+
+        $app = $this->app(
+            $emitter,
+            $this->request(
+                'GET',
+                self::HOST . '/openapi'
+            )
+        );
+
+        $app->run();
+
+        $this->assertStatusCode(200, $emitter->lastEmittedResponse);
+        $this->assertBody(file_get_contents(__DIR__ . '/../fixtures/openapi'), $emitter->lastEmittedResponse);
+        $this->assertHeader('Content-Type', 'application/x-yaml', $emitter->lastEmittedResponse);
+    }
+
     public function testPathAndMethodOKDevMode(): void
     {
         $emitter = $this->emitter();

@@ -10,9 +10,6 @@ use Psr\Http\Message\ResponseFactoryInterface;
 
 final class ResponseFactoryTest extends TestCase
 {
-    /**
-     * @var string
-     */
     private const EXCEPTION_MESSAGE = 'Soy un mensaje de error';
 
     public function testCreateResponseFromItemResource(): void

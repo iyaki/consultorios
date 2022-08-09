@@ -6,4 +6,24 @@ SCRIPT_DIR="$(dirname $(realpath "$0"))"
 
 "$SCRIPT_DIR/setup"
 
-php -c "${SCRIPT_DIR}/../../../../deploy/dev/php/conf.d/php.ini" "${SCRIPT_DIR}/../vendor/bin/phpunit" "$CODE_DIRECOTRY"
+# XDEBUG_MODE=coverage php \
+#   -c "${SCRIPT_DIR}/../../../../deploy/dev/php/composer-autoload.ini" \
+#   "${SCRIPT_DIR}/../vendor/bin/phpunit" \
+#     --coverage-text \
+#     --coverage-filter="${SCRIPT_DIR}/../src" \
+#     --path-coverage \
+#     --strict-global-state \
+#     --process-isolation \
+#     --globals-backup \
+#     --static-backup \
+#     --colors=auto \
+#     --fail-on-warning \
+#     --no-interaction \
+#     --order-by=random \
+#     --do-not-cache-result \
+#     "$CODE_DIRECOTRY"
+
+XDEBUG_MODE=coverage "${SCRIPT_DIR}/../vendor/bin/phpunit" \
+    --coverage-text \
+    --prepend="/root/.composer/vendor/autoload.php" \
+    --do-not-cache-result

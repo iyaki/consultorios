@@ -29,6 +29,8 @@ final class Application
 {
     private const HTTP_METHOD_OPTIONS = 'options';
 
+    private const OPENAPI_PATH = 'openapi';
+
     private readonly \Mezzio\Application $app;
 
     /**
@@ -91,9 +93,9 @@ final class Application
 
         /* OpenAPI Spec generator based on comments (by zircote/swagger-php) */
         $this->app->get(
-            $uriBasePath . 'openapi',
-            fn (ServerRequestInterface $request): ResponseInterface => new TextResponse(
-                $this->generateOpenApiYaml($documentationPath, $request->getUri()->getPath()),
+            $uriBasePath . self::OPENAPI_PATH,
+            fn (): ResponseInterface => new TextResponse(
+                $this->generateOpenApiYaml($documentationPath, $uriBasePath . self::OPENAPI_PATH),
                 200,
                 [
                     'Content-Type' => 'application/x-yaml',
@@ -110,7 +112,7 @@ final class Application
                     $this
                         ->openApiValidationMiddleware(
                             $documentationPath,
-                            $uriBasePath
+                            $uriBasePath . self::OPENAPI_PATH
                         )->process($request, $handler)
                 )
             ));
@@ -142,11 +144,11 @@ final class Application
 
     private function openApiValidationMiddleware(
         string $documentationPath,
-        string $uriBasePath
+        string $documentationUri
     ): MiddlewareInterface {
         return (new ValidationMiddlewareBuilder())
             ->fromYaml(
-                $this->generateOpenApiYaml($documentationPath, $uriBasePath)
+                $this->generateOpenApiYaml($documentationPath, $documentationUri)
             )->getValidationMiddleware()
         ;
     }

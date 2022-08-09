@@ -17,9 +17,6 @@ use OpenApi\Attributes as OA;
 )]
 final class TestGetHandler implements RequestHandlerInterface
 {
-    public function __construct()
-    {}
-
     #[OA\Get(
         path: '/test',
         description: 'Test',

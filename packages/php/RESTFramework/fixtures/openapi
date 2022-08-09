@@ -1,0 +1,70 @@
+openapi: 3.0.0
+info:
+  title: Test
+  description: Test
+  version: '0.1'
+paths:
+  /openapi:
+    get:
+      tags:
+        - Documentación
+      description: 'Esta documentación'
+      responses:
+        '200':
+          description: 'OpenAPI YAML documentation'
+          content:
+            application/x-yaml:
+              schema:
+                type: string
+      servers:
+        -
+          url: 'http://localhost'
+  /test:
+    get:
+      tags:
+        - Test
+      description: Test
+      operationId: e96b568e3cd5df963f8cc126d0f472e8
+      responses:
+        '200':
+          description: 'Test Response'
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    Error:
+      description: 'Error procesando la petición'
+      required:
+        - message
+        - code
+        - file
+        - line
+        - trace
+      properties:
+        message:
+          description: 'Mensaje descriptivo del error ocurrido.'
+          type: string
+          nullable: false
+        code:
+          description: 'Código indentificador del error.'
+          type: string
+          pattern: '[0-9]+'
+          nullable: false
+        file:
+          description: 'Archivo donde ocurrió el error.'
+          type: string
+          nullable: false
+        line:
+          description: 'Número de línea del archivo donde ocurrió el error.'
+          type: number
+          format: int64
+          nullable: false
+        trace:
+          description: 'Lista de llamadas internas de la aplicación que finalizaron en el error.'
+          type: string
+          format: int64
+          nullable: false
+      type: object
+      additionalProperties: false
