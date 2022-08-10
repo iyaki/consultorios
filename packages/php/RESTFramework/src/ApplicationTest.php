@@ -45,6 +45,8 @@ final class ApplicationTest extends TestCase
     {
         $emitter = $this->emitter();
 
+        putenv('DEV_MODE=1');
+
         $app = $this->app(
             $emitter,
             $this->request(
@@ -64,6 +66,8 @@ final class ApplicationTest extends TestCase
     {
         $emitter = $this->emitter();
 
+        putenv('DEV_MODE=1');
+
         $app = $this->app(
             $emitter,
             $this->request(
@@ -80,6 +84,8 @@ final class ApplicationTest extends TestCase
     public function testMethodNotOkDevMode(): void
     {
         $emitter = $this->emitter();
+
+        putenv('DEV_MODE=1');
 
         $app = $this->app(
             $emitter,
