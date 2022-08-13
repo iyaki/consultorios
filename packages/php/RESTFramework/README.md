@@ -49,3 +49,11 @@ Documentación útil:
     uriBasePath: '/webapp/'
 ))->run();
 ```
+
+### Development Mode
+
+El modo de desarrollo del framework se habilita mediante la variable de entorno `DEV_MODE`. En caso de que dicha variable contenga un valor "trusty" el development mode se activara con las siguientes consecuencias:
+
+- Se validará que TODOS los requests que reciba la aplicación se correspondan con la documentación OpenAPI generada mediante zircote/swagger-php.
+- Se habilitará la config `debug` de mezzio.
+- Se habilitará [clockwork](https://underground.works/clockwork/)
