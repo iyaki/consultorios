@@ -123,6 +123,14 @@ function static-analysis() {
   check_exit_status $?
 }
 
+function check-var-dump() {
+  print_separator "${FUNCNAME[0]}"
+
+  var-dump-check --laravel --exclude vendor/ .
+
+  check_exit_status $?
+}
+
 function remake-autoloader() {
   composer dump-autoload \
     --optimize \

@@ -24,6 +24,8 @@ file-class-name "$CODE_DIRECOTRY"
 
 multi-classes "$CODE_DIRECOTRY"
 
+check-var-dump
+
 coding-standars
 
 unused-packages
