@@ -32,6 +32,24 @@ paths:
             text/plain:
               schema:
                 type: string
+    post:
+      tags:
+        - Test
+      description: Test
+      operationId: 5eaf91676a4cad1e122732ae620a0f7d
+      responses:
+        '400':
+          description: 'Error inesperado'
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: { $ref: '#/components/schemas/Error' }
+                type: object
+                nullable: false
+                additionalProperties: false
 components:
   schemas:
     Error:
@@ -64,7 +82,6 @@ components:
         trace:
           description: 'Lista de llamadas internas de la aplicación que finalizaron en el error.'
           type: string
-          format: int64
           nullable: false
       type: object
       additionalProperties: false

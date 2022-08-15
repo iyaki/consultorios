@@ -12,11 +12,6 @@ use Psr\Http\Message\ResponseFactoryInterface;
 
 final class ResponseFactoryTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private const EXCEPTION_MESSAGE = 'Soy un mensaje de error';
-
     public function testCreateResponseFromItemResource(): void
     {
         $webAppResponseFactory = $this->getWebAppResponseFactory();
@@ -40,26 +35,6 @@ final class ResponseFactoryTest extends TestCase
         $this->assertJsonStringEqualsJsonString(
             '{"data": null}',
             (string) $response->getBody()
-        );
-    }
-
-    public function testCreateResponseFromItemThrowable(): void
-    {
-        $webAppResponseFactory = $this->getWebAppResponseFactory();
-
-        $response = $webAppResponseFactory->createResponseFromItem(
-            new \Exception(self::EXCEPTION_MESSAGE)
-        );
-
-        $decodedResponseBody = json_decode(
-            (string) $response->getBody(),
-            false,
-            512,
-            JSON_THROW_ON_ERROR
-        );
-        $this->assertSame(
-            self::EXCEPTION_MESSAGE,
-            $decodedResponseBody->data->message
         );
     }
 
@@ -88,15 +63,6 @@ final class ResponseFactoryTest extends TestCase
             '{"data": []}',
             (string) $response->getBody()
         );
-    }
-
-    public function testCreateResponseFromCollectionThrowable(): void
-    {
-        $webAppResponseFactory = $this->getWebAppResponseFactory();
-
-        $this->expectException(\Exception::class);
-
-        $webAppResponseFactory->createResponseFromCollection([new \Exception()]);
     }
 
     private function getWebAppResponseFactory(): ResponseFactory

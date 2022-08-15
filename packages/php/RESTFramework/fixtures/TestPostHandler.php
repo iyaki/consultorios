@@ -10,23 +10,35 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use OpenApi\Attributes as OA;
 
-final class TestGetHandler implements RequestHandlerInterface
+final class TestPostHandler implements RequestHandlerInterface
 {
-    #[OA\Get(
+    #[OA\Post(
         path: '/test',
         description: 'Test',
         tags: ['Test']
     )]
     #[OA\Response(
-        response: 200,
-        description: 'Test Response',
-        content: new OA\MediaType(
-            mediaType: 'text/plain',
-            schema: new OA\Schema(type: 'string')
+        response: 400,
+        description: 'Error inesperado',
+        content: new OA\JsonContent(
+            type: 'object',
+            nullable: false,
+            required: ['data'],
+            additionalProperties: false,
+            properties:[
+                new OA\Property(
+                    property: 'data',
+                    type: 'object',
+                    nullable: false,
+                    ref: '#/components/schemas/Error'
+                ),
+            ]
         )
     )]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        throw new \Exception('Error en tiempo de ejecución');
+
         return new TextResponse('Hey!');
     }
 

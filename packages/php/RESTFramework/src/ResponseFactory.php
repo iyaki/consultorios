@@ -19,20 +19,13 @@ use Psr\Http\Message\ResponseInterface;
 final class ResponseFactory
 {
     /**
-     * @var array<class-string, class-string>
-     */
-    private array $transformers = [
-        \Throwable::class => ThrowableTransformer::class,
-    ];
-
-    /**
      * @param array<class-string, class-string> $transformers
      */
     public function __construct(
         private readonly ResponseFactoryInterface $responseFactory,
-        array $transformers
+        /** @var array<class-string, class-string> */
+        private readonly array $transformers
     ) {
-        $this->transformers += $transformers;
     }
 
     public function createResponseFromItem(?object $resource, int $code = 200, string $reasonPhrase = ''): ResponseInterface

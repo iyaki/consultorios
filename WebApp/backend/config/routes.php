@@ -23,8 +23,6 @@ return static function (RoutesConfigurator $routes): void {
 
     $routes = $routes->withBasePath($webAppUriPath . 'agendas/');
 
-    $routes->pipe(static fn(): ExceptionMiddleware => new ExceptionMiddleware($responseFactory));
-
     $especialidadesPath = 'especialidades';
     $routes->delete(
         $especialidadesPath . '/{id}',

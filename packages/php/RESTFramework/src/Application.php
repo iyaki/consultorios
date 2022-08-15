@@ -124,6 +124,8 @@ final class Application
             ));
         }
 
+        $this->app->pipe(ExceptionMiddleware::class);
+
         /* User defined routes configuration */
         $configurator(new RoutesConfigurator(
             $this->app,

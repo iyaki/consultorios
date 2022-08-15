@@ -9,4 +9,5 @@ SCRIPT_DIR="$(dirname $(realpath "$0"))"
 "${SCRIPT_DIR}/../vendor/bin/phpunit" \
     --coverage-text \
     --prepend="/root/.composer/vendor/autoload.php" \
-    --do-not-cache-result
+    --do-not-cache-result \
+    $@

@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
+use Consultorios\RESTFramework\ExceptionMiddleware;
+use Consultorios\RESTFramework\ExceptionMiddlewareFactory;
 use Laminas\ServiceManager\ServiceManager;
+use Psr\Http\Message\ServerRequestInterface;
 
 return static function () {
 
@@ -12,6 +15,9 @@ return static function () {
                 ...require __DIR__ . '/config.php',
                 ...require __DIR__ . '/cors.php',
             ]
+        ],
+        'factories' => [
+            ExceptionMiddleware::class => ExceptionMiddlewareFactory::class,
         ]
     ];
 

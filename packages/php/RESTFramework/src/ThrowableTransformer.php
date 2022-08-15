@@ -62,7 +62,6 @@ final class ThrowableTransformer extends TransformerAbstract
         description: 'Lista de llamadas internas de la aplicación que finalizaron en el error.',
         type: 'string',
         nullable: false,
-        format: 'int64'
     )]
     public function transform(\Throwable $throwable): array
     {
