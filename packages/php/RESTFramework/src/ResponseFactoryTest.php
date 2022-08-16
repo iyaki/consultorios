@@ -7,11 +7,47 @@ namespace Consultorios\RESTFramework;
 use Consultorios\RESTFramework\Fixtures\DummyDTO;
 use Consultorios\RESTFramework\Fixtures\DummyTransformer;
 use Laminas\Diactoros\Response\TextResponse;
+use Laminas\Diactoros\ResponseFactory as DiactorosResponseFactory;
+use League\Fractal\TransformerAbstract;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseFactoryInterface;
 
 final class ResponseFactoryTest extends TestCase
 {
+    public function testConstructWithInvalidTransformers(): void
+    {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('Invalid transformer: stdClass');
+
+        new ResponseFactory(
+            new DiactorosResponseFactory(),
+            [
+                (new class() {})::class => (new \stdClass())::class,
+            ]
+        );
+    }
+
+    public function testConstructWithoutTransformers(): void
+    {
+        $webAppResponseFactory = new ResponseFactory(
+            new DiactorosResponseFactory(),
+            []
+        );
+
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('There is no transformer configured for: stdClass');
+
+        $webAppResponseFactory->createResponseFromItem(
+            (object) []
+        );
+
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('There is no transformer configured for: stdClass');
+
+        $webAppResponseFactory->createResponseFromCollection([
+            (object) []
+        ]);
+    }
+
     public function testCreateResponseFromItemResource(): void
     {
         $webAppResponseFactory = $this->getWebAppResponseFactory();
@@ -23,6 +59,18 @@ final class ResponseFactoryTest extends TestCase
         $this->assertJsonStringEqualsJsonString(
             '{"data":{"property":":D"}}',
             (string) $response->getBody()
+        );
+    }
+
+    public function testCreateResponseFromItemResourceWithoutTransformer(): void
+    {
+        $webAppResponseFactory = $this->getWebAppResponseFactory();
+
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('There is no transformer configured for: stdClass');
+
+        $webAppResponseFactory->createResponseFromItem(
+            (object) []
         );
     }
 
@@ -53,6 +101,18 @@ final class ResponseFactoryTest extends TestCase
         );
     }
 
+    public function testCreateResponseFromCollectionResourceWithoutTransformer(): void
+    {
+        $webAppResponseFactory = $this->getWebAppResponseFactory();
+
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('There is no transformer configured for: stdClass');
+
+        $webAppResponseFactory->createResponseFromCollection([
+            (object) [],
+        ]);
+    }
+
     public function testCreateResponseFromCollectionEmpty(): void
     {
         $webAppResponseFactory = $this->getWebAppResponseFactory();
@@ -65,17 +125,23 @@ final class ResponseFactoryTest extends TestCase
         );
     }
 
+    public function testCreateResponseFromCollectionThrowable(): void
+    {
+        $webAppResponseFactory = $this->getWebAppResponseFactory();
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Multiple errors are not allowed');
+
+        $webAppResponseFactory->createResponseFromCollection([new \Exception()]);
+    }
+
     private function getWebAppResponseFactory(): ResponseFactory
     {
-        $psrResponseFactory = $this->createStub(ResponseFactoryInterface::class);
-        $psrResponseFactory->method('createResponse')
-            ->willReturnCallback(static fn (int $code = 200): TextResponse => new TextResponse('', $code))
-        ;
-
         return new ResponseFactory(
-            $psrResponseFactory,
+            new DiactorosResponseFactory(),
             [
                 DummyDTO::class => DummyTransformer::class,
+                (new class() {})::class => (new class() extends TransformerAbstract {})::class,
             ]
         );
     }

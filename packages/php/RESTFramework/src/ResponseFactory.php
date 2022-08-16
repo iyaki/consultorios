@@ -10,6 +10,7 @@ use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\Resource\NullResource;
 use League\Fractal\Resource\ResourceAbstract;
+use League\Fractal\TransformerAbstract;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -26,6 +27,11 @@ final class ResponseFactory
         /** @var array<class-string, class-string> */
         private readonly array $transformers
     ) {
+        foreach ($transformers as $transformer) {
+            if (! is_subclass_of($transformer, TransformerAbstract::class)) {
+                throw new \UnexpectedValueException('Invalid transformer: ' . $transformer);
+            }
+        }
     }
 
     public function createResponseFromItem(?object $resource, int $code = 200, string $reasonPhrase = ''): ResponseInterface
@@ -65,7 +71,7 @@ final class ResponseFactory
             }
         }
 
-        throw new \UnexpectedValueException('There is no transformer configured for ' . $resource::class);
+        throw new \UnexpectedValueException('There is no transformer configured for: ' . $resource::class);
     }
 
     private function transformResourceToJson(ResourceAbstract $resource): string
@@ -89,8 +95,8 @@ final class ResponseFactory
         $resource = reset($resources);
 
         if ($resource instanceof \Throwable) {
-            throw new Exception(
-                'El envío de multiples errores no esta permitido'
+            throw new \Exception(
+                'Multiple errors are not allowed'
             );
         }
 
@@ -101,7 +107,7 @@ final class ResponseFactory
         }
 
         throw new \UnexpectedValueException(
-            'No hay transformer configurado para: ' . $resource::class
+            'There is no transformer configured for: ' . $resource::class
         );
     }
 }
