@@ -25,7 +25,7 @@ trait RequestBodyHelper
             JSON_THROW_ON_ERROR
         );
 
-        if (!property_exists($body, 'data')) {
+        if (! property_exists($body, 'data')) {
             throw new \Exception('Invalid body format');
         }
 

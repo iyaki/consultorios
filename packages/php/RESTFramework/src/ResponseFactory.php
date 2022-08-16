@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework;
 
-use Exception;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;

@@ -11,12 +11,22 @@ final class RequestBodyHelperTest extends TestCase
 {
     use RequestBodyHelper;
 
+    public function __clone()
+    {
+        throw new \Exception('Cloning this class is not allowed');
+    }
+
+    public function __sleep()
+    {
+        throw new \Exception("This class can't be serialized");
+    }
+
     public function testGetDataOk(): void
     {
         $data = $this->getData($this->request([
             'data' => [
                 'prop1' => 'value1',
-            ]
+            ],
         ]));
 
         $this->assertSame($data->prop1, 'value1');
@@ -27,8 +37,9 @@ final class RequestBodyHelperTest extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Invalid body data');
 
-        $this->getData($this->request(['data' => null]));
-
+        $this->getData($this->request([
+            'data' => null,
+        ]));
     }
 
     public function testGetDataInvalidBody(): void
@@ -37,7 +48,6 @@ final class RequestBodyHelperTest extends TestCase
         $this->expectExceptionMessage('Invalid body format');
 
         $this->getData($this->request(['asd']));
-
     }
 
     private function request(array $body): ServerRequest
@@ -51,19 +61,9 @@ final class RequestBodyHelperTest extends TestCase
         );
 
         $request->getBody()->write(
-            json_encode($body)
+            json_encode($body, JSON_THROW_ON_ERROR)
         );
 
         return $request;
-    }
-
-    public function __clone()
-    {
-        throw new \Exception('Cloning this class is not allowed');
-    }
-
-    public function __sleep()
-    {
-        throw new \Exception('This class can\'t be serialized');
     }
 }

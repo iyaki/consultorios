@@ -6,7 +6,6 @@ namespace Consultorios\RESTFramework;
 
 use Consultorios\RESTFramework\Fixtures\DummyDTO;
 use Consultorios\RESTFramework\Fixtures\DummyTransformer;
-use Laminas\Diactoros\Response\TextResponse;
 use Laminas\Diactoros\ResponseFactory as DiactorosResponseFactory;
 use League\Fractal\TransformerAbstract;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +20,8 @@ final class ResponseFactoryTest extends TestCase
         new ResponseFactory(
             new DiactorosResponseFactory(),
             [
-                (new class() {})::class => (new \stdClass())::class,
+                (new class() {
+                })::class => (new \stdClass())::class,
             ]
         );
     }
@@ -44,7 +44,7 @@ final class ResponseFactoryTest extends TestCase
         $this->expectExceptionMessage('There is no transformer configured for: stdClass');
 
         $webAppResponseFactory->createResponseFromCollection([
-            (object) []
+            (object) [],
         ]);
     }
 
@@ -141,7 +141,9 @@ final class ResponseFactoryTest extends TestCase
             new DiactorosResponseFactory(),
             [
                 DummyDTO::class => DummyTransformer::class,
-                (new class() {})::class => (new class() extends TransformerAbstract {})::class,
+                (new class() {
+                })::class => (new class() extends TransformerAbstract {
+                })::class,
             ]
         );
     }
