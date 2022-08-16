@@ -12,9 +12,12 @@ composer_setup \
   "$SCRIPT_DIR/../" \
   update
 
-"$SCRIPT_DIR/../vendor/bin/doctrine-migrations" \
-  migrate \
-  --no-interaction
-  # "--configuration=$SCRIPT_DIR/../migrations.php"
+if [ -z $CI ]
+then
+  "$SCRIPT_DIR/../vendor/bin/doctrine-migrations" \
+    migrate \
+    --no-interaction
+    # "--configuration=$SCRIPT_DIR/../migrations.php"
+fi
 
 cd "$ORIGINAL_DIR"
