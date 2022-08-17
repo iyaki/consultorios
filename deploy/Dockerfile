@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG PHP_VERSION=8.1.8
+ARG PHP_VERSION=8.1.9
 
 FROM alpine:latest as asdf-vm-base
 
@@ -277,11 +277,11 @@ COPY --from=php-phive /root/phive.phar /root/.asdf/installs/php/${PHP_VERSION}/b
 COPY ./deploy/dev/packages/git-delta_0.13.0_amd64.deb ./git-delta.deb
 
 RUN apt update \
-  # && apt upgrade \
-  #   --assume-yes \
-  #   --quiet \
-  #   --no-install-recommends \
-  #   --purge \
+  && apt upgrade \
+    --assume-yes \
+    --quiet \
+    --no-install-recommends \
+    --purge \
   && apt install \
     --assume-yes \
     --quiet \
@@ -338,10 +338,10 @@ RUN apt update \
     /usr/share/alsa \
     /usr/share/sounds \
     /var/lib/dpkg/status-old \
-    ./git-delta.deb
-  # Bash completions for composer \
-  # composer completion bash > composer_completion.bash \
-  # mv composer_completion.bash /etc/bash_completion.d/composer
+    ./git-delta.deb \
+  # Bash completions for composer
+  && composer completion bash > composer_completion.bash \
+  && cp composer_completion.bash /etc/bash_completion.d/composer
 
   COPY --from=node-build /root/nodejs /root/nodejs
 
