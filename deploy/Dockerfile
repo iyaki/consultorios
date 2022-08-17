@@ -1,5 +1,4 @@
 # syntax=docker/dockerfile:1
-ARG PHP_VERSION=8.1.9
 
 FROM alpine:latest as asdf-vm-base
 
@@ -136,6 +135,8 @@ RUN apk add --no-cache \
 FROM php-runtime as php-ci
 
 LABEL org.opencontainers.image.source="https://github.com/iyaki/consultorios"
+
+ARG PHP_VERSION
 
 COPY --from=php-phive /root/phive.phar /root/.asdf/installs/php/${PHP_VERSION}/bin/phive
 
