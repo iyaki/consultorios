@@ -153,6 +153,8 @@ RUN apt update \
     --prefer-stable \
     --sort-packages \
     --classmap-authoritative \
+    php-parallel-lint/php-console-highlighter \
+    php-parallel-lint/php-var-dump-check \
     povils/phpmnd \
     psalm/plugin-phpunit \
     symplify/easy-ci \
@@ -300,8 +302,6 @@ RUN apt update \
     --prefer-stable \
     --sort-packages \
     --classmap-authoritative \
-    php-parallel-lint/php-console-highlighter \
-    php-parallel-lint/php-var-dump-check \
     phpmetrics/phpmetrics \
     psy/psysh:@stable \
     rector/rector \
