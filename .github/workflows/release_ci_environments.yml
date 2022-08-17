@@ -15,7 +15,7 @@ jobs:
         run: |
           source deploy/dev/.env
           DOCKER_BUILDKIT=1 docker build \
-            --build-arg PHP_VERSION="${PHP_VERSION}"
+            --build-arg PHP_VERSION="${PHP_VERSION}" \
             --progress plain \
             --target php-ci \
             --tag ghcr.io/iyaki/consultorios-ci-php:latest \
