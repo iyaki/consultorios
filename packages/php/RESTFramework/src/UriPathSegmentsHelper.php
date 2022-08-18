@@ -16,6 +16,8 @@ trait UriPathSegmentsHelper
      *
      * @throws \Exception excepción lanzada cuando la URI no cuenta con el
      * segmento del path del Id.
+     *
+     * @todo Change name to getResourceId
      */
     private function getId(ServerRequestInterface $request): string
     {
@@ -24,9 +26,15 @@ trait UriPathSegmentsHelper
 
     /**
      * Busca un Id en el path de una url.
+     *
+     * @todo Change name to findResourceId
      */
     private function findId(ServerRequestInterface $request): ?string
     {
-        return explode('/', $request->getUri()->getPath())[4] ?? null;
+        $idSegment = explode('/', $request->getUri()->getPath())[4] ?? null;
+        if (empty($idSegment)) {
+            return null;
+        }
+        return $idSegment;
     }
 }
