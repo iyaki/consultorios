@@ -24,6 +24,15 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class RoutesConfiguratorTest extends TestCase
 {
+    public function __clone()
+    {
+        throw new \Exception('Cloning this class is not allowed');
+    }
+
+    public function __sleep()
+    {
+        throw new \Exception('This class can\'t be serialized');
+    }
 
     public function testBasePath(): void
     {
@@ -58,14 +67,14 @@ final class RoutesConfiguratorTest extends TestCase
         $rouesConfigurator = $this->routesConfigurator($app);
 
         $path = 'holu';
-        $rouesConfigurator->get($path, fn() => null);
+        $rouesConfigurator->get($path, $this->requestHandlerFactory(...));
 
         $routes = $app->getRoutes();
         $route = reset($routes);
 
         $this->assertSame($path, $route->getPath());
-        $this->assertCount(1, $route->getAllowedMethods());
-        $this->assertContains('GET', $route->getAllowedMethods());
+        $this->assertCount(1, (array) $route->getAllowedMethods());
+        $this->assertContains('GET', (array) $route->getAllowedMethods());
     }
 
     public function testGetWithBasePath(): void
@@ -79,14 +88,14 @@ final class RoutesConfiguratorTest extends TestCase
         ;
 
         $path = '/holu';
-        $rouesConfigurator->get($path, fn() => null);
+        $rouesConfigurator->get($path, $this->requestHandlerFactory(...));
 
         $routes = $app->getRoutes();
         $route = reset($routes);
 
         $this->assertSame($basePath . $path, $route->getPath());
-        $this->assertCount(1, $route->getAllowedMethods());
-        $this->assertContains('GET', $route->getAllowedMethods());
+        $this->assertCount(1, (array) $route->getAllowedMethods());
+        $this->assertContains('GET', (array) $route->getAllowedMethods());
     }
 
     public function testPost(): void
@@ -96,14 +105,14 @@ final class RoutesConfiguratorTest extends TestCase
         $rouesConfigurator = $this->routesConfigurator($app);
 
         $path = 'holu';
-        $rouesConfigurator->post($path, fn() => null);
+        $rouesConfigurator->post($path, $this->requestHandlerFactory(...));
 
         $routes = $app->getRoutes();
         $route = reset($routes);
 
         $this->assertSame($path, $route->getPath());
-        $this->assertCount(1, $route->getAllowedMethods());
-        $this->assertContains('POST', $route->getAllowedMethods());
+        $this->assertCount(1, (array) $route->getAllowedMethods());
+        $this->assertContains('POST', (array) $route->getAllowedMethods());
     }
 
     public function testPostWithBasePath(): void
@@ -117,14 +126,14 @@ final class RoutesConfiguratorTest extends TestCase
         ;
 
         $path = '/holu';
-        $rouesConfigurator->post($path, fn() => null);
+        $rouesConfigurator->post($path, $this->requestHandlerFactory(...));
 
         $routes = $app->getRoutes();
         $route = reset($routes);
 
         $this->assertSame($basePath . $path, $route->getPath());
-        $this->assertCount(1, $route->getAllowedMethods());
-        $this->assertContains('POST', $route->getAllowedMethods());
+        $this->assertCount(1, (array) $route->getAllowedMethods());
+        $this->assertContains('POST', (array) $route->getAllowedMethods());
     }
 
     public function testPut(): void
@@ -134,14 +143,14 @@ final class RoutesConfiguratorTest extends TestCase
         $rouesConfigurator = $this->routesConfigurator($app);
 
         $path = 'holu';
-        $rouesConfigurator->put($path, fn() => null);
+        $rouesConfigurator->put($path, $this->requestHandlerFactory(...));
 
         $routes = $app->getRoutes();
         $route = reset($routes);
 
         $this->assertSame($path, $route->getPath());
-        $this->assertCount(1, $route->getAllowedMethods());
-        $this->assertContains('PUT', $route->getAllowedMethods());
+        $this->assertCount(1, (array) $route->getAllowedMethods());
+        $this->assertContains('PUT', (array) $route->getAllowedMethods());
     }
 
     public function testPutWithBasePath(): void
@@ -155,14 +164,14 @@ final class RoutesConfiguratorTest extends TestCase
         ;
 
         $path = '/holu';
-        $rouesConfigurator->put($path, fn() => null);
+        $rouesConfigurator->put($path, $this->requestHandlerFactory(...));
 
         $routes = $app->getRoutes();
         $route = reset($routes);
 
         $this->assertSame($basePath . $path, $route->getPath());
-        $this->assertCount(1, $route->getAllowedMethods());
-        $this->assertContains('PUT', $route->getAllowedMethods());
+        $this->assertCount(1, (array) $route->getAllowedMethods());
+        $this->assertContains('PUT', (array) $route->getAllowedMethods());
     }
 
     public function testPatch(): void
@@ -172,14 +181,14 @@ final class RoutesConfiguratorTest extends TestCase
         $rouesConfigurator = $this->routesConfigurator($app);
 
         $path = 'holu';
-        $rouesConfigurator->patch($path, fn() => null);
+        $rouesConfigurator->patch($path, $this->requestHandlerFactory(...));
 
         $routes = $app->getRoutes();
         $route = reset($routes);
 
         $this->assertSame($path, $route->getPath());
-        $this->assertCount(1, $route->getAllowedMethods());
-        $this->assertContains('PATCH', $route->getAllowedMethods());
+        $this->assertCount(1, (array) $route->getAllowedMethods());
+        $this->assertContains('PATCH', (array) $route->getAllowedMethods());
     }
 
     public function testPatchWithBasePath(): void
@@ -193,14 +202,14 @@ final class RoutesConfiguratorTest extends TestCase
         ;
 
         $path = '/holu';
-        $rouesConfigurator->patch($path, fn() => null);
+        $rouesConfigurator->patch($path, $this->requestHandlerFactory(...));
 
         $routes = $app->getRoutes();
         $route = reset($routes);
 
         $this->assertSame($basePath . $path, $route->getPath());
-        $this->assertCount(1, $route->getAllowedMethods());
-        $this->assertContains('PATCH', $route->getAllowedMethods());
+        $this->assertCount(1, (array) $route->getAllowedMethods());
+        $this->assertContains('PATCH', (array) $route->getAllowedMethods());
     }
 
     public function testDelete(): void
@@ -210,14 +219,14 @@ final class RoutesConfiguratorTest extends TestCase
         $rouesConfigurator = $this->routesConfigurator($app);
 
         $path = 'holu';
-        $rouesConfigurator->delete($path, fn() => null);
+        $rouesConfigurator->delete($path, $this->requestHandlerFactory(...));
 
         $routes = $app->getRoutes();
         $route = reset($routes);
 
         $this->assertSame($path, $route->getPath());
-        $this->assertCount(1, $route->getAllowedMethods());
-        $this->assertContains('DELETE', $route->getAllowedMethods());
+        $this->assertCount(1, (array) $route->getAllowedMethods());
+        $this->assertContains('DELETE', (array) $route->getAllowedMethods());
     }
 
     public function testDeleteWithBasePath(): void
@@ -231,14 +240,14 @@ final class RoutesConfiguratorTest extends TestCase
         ;
 
         $path = '/holu';
-        $rouesConfigurator->delete($path, fn() => null);
+        $rouesConfigurator->delete($path, $this->requestHandlerFactory(...));
 
         $routes = $app->getRoutes();
         $route = reset($routes);
 
         $this->assertSame($basePath . $path, $route->getPath());
-        $this->assertCount(1, $route->getAllowedMethods());
-        $this->assertContains('DELETE', $route->getAllowedMethods());
+        $this->assertCount(1, (array) $route->getAllowedMethods());
+        $this->assertContains('DELETE', (array) $route->getAllowedMethods());
     }
 
     public function testAny(): void
@@ -248,7 +257,7 @@ final class RoutesConfiguratorTest extends TestCase
         $rouesConfigurator = $this->routesConfigurator($app);
 
         $path = 'holu';
-        $rouesConfigurator->any($path, fn() => null);
+        $rouesConfigurator->any($path, $this->requestHandlerFactory(...));
 
         $routes = $app->getRoutes();
         $route = reset($routes);
@@ -268,7 +277,7 @@ final class RoutesConfiguratorTest extends TestCase
         ;
 
         $path = '/holu';
-        $rouesConfigurator->any($path, fn() => null);
+        $rouesConfigurator->any($path, $this->requestHandlerFactory(...));
 
         $routes = $app->getRoutes();
         $route = reset($routes);
@@ -286,7 +295,7 @@ final class RoutesConfiguratorTest extends TestCase
 
         $bodyMessage = 'Middleware de prueba :)';
 
-        $rouesConfigurator->pipe(fn() => new class($bodyMessage) implements MiddlewareInterface {
+        $rouesConfigurator->pipe(fn () => new class($bodyMessage) implements MiddlewareInterface {
             private readonly string $bodyMessage;
 
             public function __construct(string $bodyMessage)
@@ -305,16 +314,6 @@ final class RoutesConfiguratorTest extends TestCase
         $this->assertSame($bodyMessage, (string) $response->getBody());
     }
 
-    public function __clone()
-    {
-        throw new \Exception('Cloning this class is not allowed');
-    }
-
-    public function __sleep()
-    {
-        throw new \Exception('This class can\'t be serialized');
-    }
-
     private function routesConfigurator(Application $app): RoutesConfigurator
     {
         return new RoutesConfigurator(
@@ -331,5 +330,15 @@ final class RoutesConfiguratorTest extends TestCase
             new RouteCollector($this->createMock(RouterInterface::class)),
             $this->createMock(RequestHandlerRunnerInterface::class),
         );
+    }
+
+    private function requestHandlerFactory(): RequestHandlerInterface
+    {
+        return new class() implements RequestHandlerInterface {
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
+                return new Response();
+            }
+        };
     }
 }
