@@ -6,6 +6,7 @@ namespace Consultorios\RESTFramework;
 
 use Consultorios\RESTFramework\Clockwork\ClockworkMiddleware;
 use Consultorios\RESTFramework\OpenAPI\OpenApiGenerator;
+use Consultorios\RESTFramework\OpenAPI\OpenApiSpecHandler;
 use Laminas\Diactoros\Response\TextResponse;
 use Laminas\ServiceManager\ServiceManager;
 use League\OpenAPIValidation\PSR15\ValidationMiddlewareBuilder;
@@ -16,6 +17,7 @@ use Mezzio\Router\Middleware\DispatchMiddleware;
 use Mezzio\Router\Middleware\ImplicitOptionsMiddleware;
 use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -52,9 +54,12 @@ final class Application
         /** @var ServiceManager $container */
         $container = (require __DIR__ . '/../config/container.php')();
 
-        if (is_callable($containerConfigurator)) {
-            $containerConfigurator($container);
-        }
+        $this->extraContainerConfigurations(
+            $container,
+            $uriBasePath,
+            $documentationPath,
+            $containerConfigurator
+        );
 
         $this->app = $container->get(\Mezzio\Application::class);
 
@@ -98,16 +103,7 @@ final class Application
         $this->app->pipe(RouteMiddleware::class);
 
         /* OpenAPI Spec generator based on comments (by zircote/swagger-php) */
-        $this->app->get(
-            $uriBasePath . self::OPENAPI_PATH,
-            fn (): ResponseInterface => new TextResponse(
-                $this->generateOpenApiYaml($documentationPath, $uriBasePath . self::OPENAPI_PATH),
-                200,
-                [
-                    'Content-Type' => 'application/x-yaml',
-                ]
-            )
-        );
+        $this->app->get($uriBasePath . self::OPENAPI_PATH, OpenApiSpecHandler::class);
 
         if ($devMode) {
             /* OpenAPI Spec validation middleware for dev environments */
@@ -159,5 +155,22 @@ final class Application
                 $this->generateOpenApiYaml($documentationPath, $documentationUri)
             )->getValidationMiddleware()
         ;
+    }
+
+    /**
+     * @param ?\Closure(ServiceManager): void $containerConfigurator
+     */
+    private function extraContainerConfigurations(
+        ServiceManager $container,
+        string $uriBasePath,
+        string $documentationPath,
+        ?\Closure $containerConfigurator
+    ): void {
+        $container->setService('documentationUri', $uriBasePath . self::OPENAPI_PATH);
+        $container->setService('documentationPath', $documentationPath);
+
+        if (is_callable($containerConfigurator)) {
+            $containerConfigurator($container);
+        }
     }
 }
