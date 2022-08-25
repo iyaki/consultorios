@@ -22,6 +22,7 @@ services:
       - ~/.ssh:/root/.ssh
       - ~/.config/git/authorized_signers:/root/.config/git/authorized_signers
       - ./php/conf.d:/root/.asdf/installs/php/${PHP_VERSION}/conf.d
+      - vscode-server:/home/root/.vscode-server
     environment:
       - DEV_MODE=${DEV_MODE}
       - DB_HOST=${DB_HOST}
@@ -38,3 +39,6 @@ services:
       - MYSQL_PASSWORD=${DB_PASSWORD}
     ports:
       - "8083:3306"
+
+volumes:
+  vscode-server:
