@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework\OpenAPI;
 
+use Consultorios\RESTFramework\UriHelper;
 use OpenApi\Attributes as OA;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -13,6 +14,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 #[OA\Server(url: OpenApiGenerator::SERVER_HOST_PLACEHOLDER)]
 final class OpenApiSpecHandler implements RequestHandlerInterface
 {
+    use UriHelper;
+
     public function __construct(
         private readonly ResponseFactoryInterface $responseFactory,
         private readonly string $documentationPath,
@@ -61,13 +64,7 @@ final class OpenApiSpecHandler implements RequestHandlerInterface
 
     private function yamlSpec(ServerRequestInterface $request): string
     {
-        $uri = $request->getUri();
-        $serverHost = sprintf(
-            $uri->getPort() ? '%s://%s:%s' : '%s://%s',
-            $uri->getScheme(),
-            $uri->getHost(),
-            $uri->getPort()
-        );
+        $serverHost = $this->getBaseUri($request);
 
         return (
             new OpenApiGenerator($this->documentationPath)

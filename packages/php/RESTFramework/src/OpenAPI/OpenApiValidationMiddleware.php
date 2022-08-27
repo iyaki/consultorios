@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework\OpenAPI;
 
+use Consultorios\RESTFramework\UriHelper;
 use League\OpenAPIValidation\PSR15\ValidationMiddlewareBuilder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -12,6 +13,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class OpenApiValidationMiddleware implements MiddlewareInterface
 {
+    use UriHelper;
+
     /**
      * @var string
      */
@@ -64,13 +67,7 @@ final class OpenApiValidationMiddleware implements MiddlewareInterface
 
     private function yamlSpec(ServerRequestInterface $request): string
     {
-        $uri = $request->getUri();
-        $serverHost = sprintf(
-            $uri->getPort() ? '%s://%s:%s' : '%s://%s',
-            $uri->getScheme(),
-            $uri->getHost(),
-            $uri->getPort()
-        );
+        $serverHost = $this->getBaseUri($request);
 
         return (
             new OpenApiGenerator($this->documentationPath)

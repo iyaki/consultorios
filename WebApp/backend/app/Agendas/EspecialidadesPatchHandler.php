@@ -8,7 +8,7 @@ use Consultorios\Core\Agendas\Domain\EspecialidadId;
 use Consultorios\Core\Agendas\UseCases\Especialidades;
 use Consultorios\RESTFramework\RequestBodyHelper;
 use Consultorios\RESTFramework\ResponseFactory;
-use Consultorios\RESTFramework\UriPathSegmentsHelper;
+use Consultorios\RESTFramework\UriHelper;
 use OpenApi\Attributes as OA;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -18,7 +18,7 @@ final class EspecialidadesPatchHandler implements RequestHandlerInterface
 {
     use RequestBodyHelper;
 
-    use UriPathSegmentsHelper;
+    use UriHelper;
 
     public function __construct(
         private readonly ResponseFactory $responseFactory,
@@ -97,7 +97,7 @@ final class EspecialidadesPatchHandler implements RequestHandlerInterface
     )]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $id = $this->getId($request);
+        $id = $this->getResourceIdFromPath($request);
         $data = $this->getData($request);
 
         $especialidad = $this->especialidades->editar(

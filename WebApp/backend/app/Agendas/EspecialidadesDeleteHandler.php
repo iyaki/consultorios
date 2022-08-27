@@ -7,7 +7,7 @@ namespace Consultorios\WebApp\Agendas;
 use Consultorios\Core\Agendas\Domain\EspecialidadId;
 use Consultorios\Core\Agendas\UseCases\Especialidades;
 use Consultorios\RESTFramework\ResponseFactory;
-use Consultorios\RESTFramework\UriPathSegmentsHelper;
+use Consultorios\RESTFramework\UriHelper;
 use OpenApi\Attributes as OA;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -15,7 +15,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class EspecialidadesDeleteHandler implements RequestHandlerInterface
 {
-    use UriPathSegmentsHelper;
+    use UriHelper;
 
     public function __construct(
         private readonly ResponseFactory $responseFactory,
@@ -63,7 +63,7 @@ final class EspecialidadesDeleteHandler implements RequestHandlerInterface
     )]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $id = $this->getId($request);
+        $id = $this->getResourceIdFromPath($request);
         $this->especialidades->eliminar(new EspecialidadId($id));
 
         return $this->responseFactory->createResponseFromItem(null, 200);
