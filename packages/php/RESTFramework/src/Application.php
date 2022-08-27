@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Consultorios\RESTFramework;
 
 use Consultorios\RESTFramework\Clockwork\ClockworkMiddleware;
-use Consultorios\RESTFramework\OpenAPI\OpenApiGenerator;
 use Consultorios\RESTFramework\OpenAPI\OpenApiSpecHandler;
-use Laminas\Diactoros\Response\TextResponse;
+use Consultorios\RESTFramework\OpenAPI\OpenApiValidationMiddleware;
 use Laminas\ServiceManager\ServiceManager;
-use League\OpenAPIValidation\PSR15\ValidationMiddlewareBuilder;
 use Mezzio\Cors\Middleware\CorsMiddleware;
 use Mezzio\Handler\NotFoundHandler;
 use Mezzio\Helper\ServerUrlMiddleware;
@@ -17,23 +15,13 @@ use Mezzio\Router\Middleware\DispatchMiddleware;
 use Mezzio\Router\Middleware\ImplicitOptionsMiddleware;
 use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Envoltura para \Mezzio\Application
  */
 final class Application
 {
-    /**
-     * @var string
-     */
-    private const HTTP_METHOD_OPTIONS = 'options';
-
     /**
      * @var string
      */
@@ -70,7 +58,6 @@ final class Application
         $this->configureRoutes(
             $routesConfigurator,
             $uriBasePath,
-            $documentationPath,
             $devMode,
             $responseFactory
         );
@@ -87,7 +74,6 @@ final class Application
     private function configureRoutes(
         callable $configurator,
         string $uriBasePath,
-        string $documentationPath,
         bool $devMode,
         ResponseFactoryInterface $responseFactory
     ): void {
@@ -107,17 +93,7 @@ final class Application
 
         if ($devMode) {
             /* OpenAPI Spec validation middleware for dev environments */
-            $this->app->pipe(fn (ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface => (
-                strtolower($request->getMethod()) === self::HTTP_METHOD_OPTIONS
-                ? $handler->handle($request)
-                : (
-                    $this
-                        ->openApiValidationMiddleware(
-                            $documentationPath,
-                            $uriBasePath . self::OPENAPI_PATH
-                        )->process($request, $handler)
-                )
-            ));
+            $this->app->pipe(OpenApiValidationMiddleware::class);
         }
 
         $this->app->pipe(ExceptionMiddleware::class);
@@ -135,26 +111,6 @@ final class Application
         $this->app->pipe(DispatchMiddleware::class);
 
         $this->app->pipe(NotFoundHandler::class);
-    }
-
-    private function generateOpenApiYaml(
-        string $documentationPath,
-        string $uriBasePath
-    ): string {
-        return (
-            new OpenApiGenerator($documentationPath, $uriBasePath)
-        )->toYaml();
-    }
-
-    private function openApiValidationMiddleware(
-        string $documentationPath,
-        string $documentationUri
-    ): MiddlewareInterface {
-        return (new ValidationMiddlewareBuilder())
-            ->fromYaml(
-                $this->generateOpenApiYaml($documentationPath, $documentationUri)
-            )->getValidationMiddleware()
-        ;
     }
 
     /**

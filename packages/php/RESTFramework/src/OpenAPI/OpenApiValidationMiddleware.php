@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace Consultorios\RESTFramework\OpenAPI;
 
-use OpenApi\Attributes as OA;
-use Psr\Http\Message\ResponseFactoryInterface;
+use League\OpenAPIValidation\PSR15\ValidationMiddlewareBuilder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-final class OpenApiSpecHandler implements RequestHandlerInterface
+final class OpenApiValidationMiddleware implements MiddlewareInterface
 {
+    /**
+     * @var string
+     */
+    private const HTTP_METHOD_OPTIONS = 'options';
+
     public function __construct(
-        private readonly ResponseFactoryInterface $responseFactory,
         private readonly string $documentationPath,
         private readonly string $documentationUri
     ) {
@@ -29,27 +33,28 @@ final class OpenApiSpecHandler implements RequestHandlerInterface
         throw new \Exception("This class can't be serialized");
     }
 
-    #[OA\Server(url: 'SERVER_HOST_PLACEHOLDER')]
-    #[OA\Get(
-        path: 'URI_OPENAPI_PATH_YAML_PLACEHOLDER',
-        description: 'Esta documentación',
-        tags: ['Documentación']
-    )]
-    #[OA\Response(
-        response: 200,
-        description: 'OpenAPI YAML documentation',
-        content: new OA\MediaType(
-            mediaType: 'application/x-yaml',
-            schema: new OA\Schema(type: 'string')
-        )
-    )]
-    public function handle(ServerRequestInterface $request): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $response = $this->responseFactory->createResponse();
+        return
+            strtolower($request->getMethod()) === self::HTTP_METHOD_OPTIONS
+            ? $handler->handle($request)
+            : (
+                $this
+                    ->openApiValidationMiddleware(
+                        $request
+                    )->process($request, $handler)
+            )
+        ;
+    }
 
-        $response->getBody()->write($this->yamlSpec($request));
-
-        return $response->withAddedHeader('Content-Type', 'application/x-yaml');
+    private function openApiValidationMiddleware(
+        ServerRequestInterface $request
+    ): MiddlewareInterface {
+        return (new ValidationMiddlewareBuilder())
+            ->fromYaml(
+                $this->yamlSpec($request)
+            )->getValidationMiddleware()
+        ;
     }
 
     private function yamlSpec(ServerRequestInterface $request): string

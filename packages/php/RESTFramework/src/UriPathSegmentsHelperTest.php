@@ -11,8 +11,14 @@ final class UriPathSegmentsHelperTest extends TestCase
 {
     use UriPathSegmentsHelper;
 
+    /**
+     * @var string
+     */
     private const BASE_URI = 'https://localhost:8080/leapp/context/elrecurso/';
 
+    /**
+     * @var string
+     */
     private const ID = '42';
 
     public function __clone()

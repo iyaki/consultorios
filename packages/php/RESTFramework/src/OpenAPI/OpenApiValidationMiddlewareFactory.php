@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace Consultorios\RESTFramework\OpenAPI;
 
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
 
-final class OpenApiSpecHandlerFactory
+final class OpenApiValidationMiddlewareFactory
 {
-    public function __invoke(ContainerInterface $container): OpenApiSpecHandler
+    public function __invoke(ContainerInterface $container): OpenApiValidationMiddleware
     {
-        return new OpenApiSpecHandler(
-            $container->get(ResponseFactoryInterface::class),
+        return new OpenApiValidationMiddleware(
             $container->get('documentationPath'),
             $container->get('documentationUri')
         );

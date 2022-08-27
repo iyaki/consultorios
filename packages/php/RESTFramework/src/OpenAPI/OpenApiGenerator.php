@@ -29,11 +29,11 @@ final class OpenApiGenerator
         return str_replace(
             [
                 'SERVER_HOST_PLACEHOLDER',
-                'URI_OPENAPI_PATH_YAML_PLACEHOLDER'
+                'URI_OPENAPI_PATH_YAML_PLACEHOLDER',
             ],
             [
-                "'{$serverHost}'",
-                $uriOpenApi
+                sprintf('\'%s\'', $serverHost),
+                $uriOpenApi,
             ],
             $this->openApi->toYaml()
         );

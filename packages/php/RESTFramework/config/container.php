@@ -6,6 +6,8 @@ use Consultorios\RESTFramework\ExceptionMiddleware;
 use Consultorios\RESTFramework\ExceptionMiddlewareFactory;
 use Consultorios\RESTFramework\OpenAPI\OpenApiSpecHandler;
 use Consultorios\RESTFramework\OpenAPI\OpenApiSpecHandlerFactory;
+use Consultorios\RESTFramework\OpenAPI\OpenApiValidationMiddleware;
+use Consultorios\RESTFramework\OpenAPI\OpenApiValidationMiddlewareFactory;
 use Laminas\ServiceManager\ServiceManager;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -21,6 +23,7 @@ return static function () {
         'factories' => [
             ExceptionMiddleware::class => ExceptionMiddlewareFactory::class,
             OpenApiSpecHandler::class => OpenApiSpecHandlerFactory::class,
+            OpenApiValidationMiddleware::class => OpenApiValidationMiddlewareFactory::class,
         ]
     ];
 

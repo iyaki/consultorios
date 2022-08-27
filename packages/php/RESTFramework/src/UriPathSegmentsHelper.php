@@ -35,6 +35,7 @@ trait UriPathSegmentsHelper
         if (empty($idSegment)) {
             return null;
         }
+
         return $idSegment;
     }
 }
