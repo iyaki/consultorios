@@ -11,8 +11,8 @@ final class OpenApiValidationMiddlewareFactory
     public function __invoke(ContainerInterface $container): OpenApiValidationMiddleware
     {
         return new OpenApiValidationMiddleware(
-            $container->get('documentationPath'),
-            $container->get('documentationUri')
+            $container->get('documentationParams')['path'],
+            $container->get('documentationParams')['uri']
         );
     }
 

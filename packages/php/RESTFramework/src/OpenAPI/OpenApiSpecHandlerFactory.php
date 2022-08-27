@@ -13,8 +13,8 @@ final class OpenApiSpecHandlerFactory
     {
         return new OpenApiSpecHandler(
             $container->get(ResponseFactoryInterface::class),
-            $container->get('documentationPath'),
-            $container->get('documentationUri')
+            $container->get('documentationParams')['path'],
+            $container->get('documentationParams')['uri']
         );
     }
 

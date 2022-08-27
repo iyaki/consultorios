@@ -39,7 +39,6 @@ final class Application
         string $uriBasePath,
         ?\Closure $containerConfigurator = null
     ) {
-        /** @var ServiceManager $container */
         $container = (require __DIR__ . '/../config/container.php')();
 
         $this->extraContainerConfigurations(
@@ -122,8 +121,10 @@ final class Application
         string $documentationPath,
         ?\Closure $containerConfigurator
     ): void {
-        $container->setService('documentationUri', $uriBasePath . self::OPENAPI_PATH);
-        $container->setService('documentationPath', $documentationPath);
+        $container->setService('documentationParams', [
+            'uri' => $uriBasePath . self::OPENAPI_PATH,
+            'path' => $documentationPath,
+        ]);
 
         if (is_callable($containerConfigurator)) {
             $containerConfigurator($container);

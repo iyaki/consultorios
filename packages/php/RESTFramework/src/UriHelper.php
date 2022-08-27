@@ -53,7 +53,7 @@ trait UriHelper
             $uri->getPort() ? '%s://%s:%s' : '%s://%s',
             $uri->getScheme(),
             $uri->getHost(),
-            $uri->getPort()
+            (string) $uri->getPort()
         );
     }
 }
