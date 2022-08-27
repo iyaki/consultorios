@@ -154,8 +154,10 @@ RUN apt update \
     --prefer-stable \
     --sort-packages \
     --classmap-authoritative \
+    brianium/paratest \
     php-parallel-lint/php-console-highlighter \
     php-parallel-lint/php-var-dump-check \
+    phpunit/phpunit ^9 \
     povils/phpmnd \
     psalm/plugin-phpunit \
     symplify/easy-ci \

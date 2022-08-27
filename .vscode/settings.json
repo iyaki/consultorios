@@ -1,0 +1,8 @@
+{
+  "intelephense.rename.namespaceMode": "all",
+  "intelephense.references.exclude": [],
+  "intelephense.rename.exclude": [],
+  "intelephense.environment.includePaths": [
+    "/root/.composer/vendor/"
+  ]
+}

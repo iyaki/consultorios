@@ -10,7 +10,6 @@
     "ramsey/uuid": "^4.3"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9",
     "consultorios/dev-tools-settings": "*"
   },
   "autoload": {

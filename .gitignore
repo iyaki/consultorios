@@ -1,2 +1,3 @@
 code-metrics/
 phpunit-coverage/
+!/.vscode/

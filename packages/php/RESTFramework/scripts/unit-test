@@ -4,10 +4,13 @@ CODE_DIRECOTRY='src/'
 
 SCRIPT_DIR="$(dirname $(realpath "$0"))"
 
-"$SCRIPT_DIR/setup"
+if [ ! -d "$SCRIPT_DIR/../vendor" ]
+then
+  "$SCRIPT_DIR/setup"
+fi
 
-"${SCRIPT_DIR}/../vendor/bin/phpunit" \
+paratest \
     --coverage-text \
-    --prepend="/root/.composer/vendor/autoload.php" \
-    --do-not-cache-result \
+    --passthru="'--prepend' '/root/.composer/vendor/autoload.php' '--do-not-cache-result'" \
+    --runner=WrapperRunner
     $@
