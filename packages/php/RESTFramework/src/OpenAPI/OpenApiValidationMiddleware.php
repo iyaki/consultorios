@@ -23,11 +23,17 @@ final class OpenApiValidationMiddleware implements MiddlewareInterface
     ) {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function __clone()
     {
         throw new \Exception('Cloning this class is not allowed');
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function __sleep()
     {
         throw new \Exception("This class can't be serialized");
@@ -35,8 +41,7 @@ final class OpenApiValidationMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        return
-            strtolower($request->getMethod()) === self::HTTP_METHOD_OPTIONS
+        return strtolower($request->getMethod()) === self::HTTP_METHOD_OPTIONS
             ? $handler->handle($request)
             : (
                 $this

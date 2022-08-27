@@ -9,15 +9,21 @@ use OpenApi\Generator;
 
 final class OpenApiGenerator
 {
+    public const SERVER_HOST_PLACEHOLDER = 'SERVER_HOST_PLACEHOLDER';
+
+    public const URI_PATH_OPENAPI_YAML_PLACEHOLDER = 'URI_PATH_OPENAPI_YAML_PLACEHOLDER';
+
     private readonly OpenApi $openApi;
 
     public function __construct(string $documentationPath)
     {
         $openApi = Generator::scan([__DIR__ . '/../', $documentationPath]);
 
+        // @codeCoverageIgnoreStart
         if (! $openApi instanceof OpenApi) {
             throw new \Exception('Error procesando la documentación OpenAPI');
         }
+        // @codeCoverageIgnoreEnd
 
         $this->openApi = $openApi;
     }
@@ -28,8 +34,8 @@ final class OpenApiGenerator
     ): string {
         return str_replace(
             [
-                'SERVER_HOST_PLACEHOLDER',
-                'URI_OPENAPI_PATH_YAML_PLACEHOLDER',
+                self::SERVER_HOST_PLACEHOLDER,
+                self::URI_PATH_OPENAPI_YAML_PLACEHOLDER,
             ],
             [
                 sprintf('\'%s\'', $serverHost),

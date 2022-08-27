@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+#[OA\Server(url: OpenApiGenerator::SERVER_HOST_PLACEHOLDER)]
 final class OpenApiSpecHandler implements RequestHandlerInterface
 {
     public function __construct(
@@ -19,19 +20,25 @@ final class OpenApiSpecHandler implements RequestHandlerInterface
     ) {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function __clone()
     {
         throw new \Exception('Cloning this class is not allowed');
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function __sleep()
     {
         throw new \Exception("This class can't be serialized");
     }
 
-    #[OA\Server(url: 'SERVER_HOST_PLACEHOLDER')]
     #[OA\Get(
-        path: 'URI_OPENAPI_PATH_YAML_PLACEHOLDER',
+        path: OpenApiGenerator::URI_PATH_OPENAPI_YAML_PLACEHOLDER,
+        operationId: 'openApiSpec',
         description: 'Esta documentación',
         tags: ['Documentación']
     )]

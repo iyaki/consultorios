@@ -12,5 +12,5 @@ fi
 paratest \
     --coverage-text \
     --passthru="'--prepend' '/root/.composer/vendor/autoload.php' '--do-not-cache-result'" \
-    --runner=WrapperRunner
+    --functional \
     $@

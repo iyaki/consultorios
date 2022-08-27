@@ -3,12 +3,16 @@ info:
   title: Test
   description: Test
   version: '0.1'
+servers:
+  -
+    url: SERVER_HOST_PLACEHOLDER
 paths:
   /openapi:
     get:
       tags:
         - Documentación
       description: 'Esta documentación'
+      operationId: openApiSpec
       responses:
         '200':
           description: 'OpenAPI YAML documentation'
@@ -16,9 +20,6 @@ paths:
             application/x-yaml:
               schema:
                 type: string
-      servers:
-        -
-          url: 'http://localhost'
   /test:
     get:
       tags:

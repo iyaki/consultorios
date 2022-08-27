@@ -7,6 +7,7 @@ namespace Consultorios\RESTFramework;
 use Consultorios\RESTFramework\Fixtures\DummyEmitter;
 use Consultorios\RESTFramework\Fixtures\TestGetHandler;
 use Consultorios\RESTFramework\Fixtures\TestPostHandler;
+use Consultorios\RESTFramework\OpenAPI\OpenApiGenerator;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\HttpHandlerRunner\Emitter\EmitterInterface;
 use Laminas\ServiceManager\ServiceManager;
@@ -41,11 +42,20 @@ final class ApplicationTest extends TestCase
 
         $app->run();
 
+        $openApiSpec = str_replace(
+            OpenApiGenerator::SERVER_HOST_PLACEHOLDER,
+            sprintf('\'%s\'', self::HOST),
+            file_get_contents(__DIR__ . '/../fixtures/openapi')
+        );
+
         $this->assertStatusCode(200, $emitter->lastEmittedResponse);
-        $this->assertBody(file_get_contents(__DIR__ . '/../fixtures/openapi'), $emitter->lastEmittedResponse);
+        $this->assertBody($openApiSpec, $emitter->lastEmittedResponse);
         $this->assertHeader('Content-Type', 'application/x-yaml', $emitter->lastEmittedResponse);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testConstructOkWithoutContainerConfigurator(): void
     {
         new Application(
@@ -53,8 +63,6 @@ final class ApplicationTest extends TestCase
             __DIR__ . '/../fixtures/',
             '/',
         );
-
-        $this->assertTrue(true);
     }
 
     public function testPathAndMethodOKDevMode(): void
@@ -202,6 +210,28 @@ final class ApplicationTest extends TestCase
         $emitter = $this->emitter();
 
         putenv('DEV_MODE=0');
+
+        $app = $this->app(
+            $emitter,
+            $this->request(
+                'OPTIONS',
+                self::HOST . '/test'
+            )
+        );
+
+        $app->run();
+
+        $this->assertStatusCode(200, $emitter->lastEmittedResponse);
+        $this->assertBody('', $emitter->lastEmittedResponse);
+        $this->assertHeader('Allow', 'GET', $emitter->lastEmittedResponse);
+        $this->assertHeader('Vary', 'Origin', $emitter->lastEmittedResponse);
+    }
+
+    public function testOptionsCorsDevMode(): void
+    {
+        $emitter = $this->emitter();
+
+        putenv('DEV_MODE=1');
 
         $app = $this->app(
             $emitter,
