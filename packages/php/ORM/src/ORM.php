@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Consultorios\ORM;
 
-use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
-use Doctrine\Migrations\Configuration\Migration\PhpFile;
-use Doctrine\Migrations\DependencyFactory;
-use Doctrine\Migrations\MigratorConfiguration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 use Doctrine\Persistence\Mapping\Driver\PHPDriver;
@@ -51,30 +47,6 @@ final class ORM
             $this->connection(),
             $doctrineConfig
         );
-
-        // foreach ($this->mappingsPaths as $path) {
-        //     $df = DependencyFactory::fromEntityManager(
-        //         new PhpFile($path . '/../../migrations.php'),
-        //         new ExistingEntityManager($this->em)
-        //     );
-        //     $migratorConfiguration = $migratorConfiguration = (new MigratorConfiguration())
-        //         ->setDryRun(false)
-        //         ->setTimeAllQueries(false)
-        //         ->setAllOrNothing(true)
-        //     ;
-        //     $planCalculator = $df->getMigrationPlanCalculator();
-        //     $plan = $planCalculator->getPlanUntilVersion(
-        //         $df->getVersionAliasResolver()->resolveVersionAlias('latest')
-        //     );
-        //     $migrator = $df->getMigrator();
-        //     $sql = $migrator->migrate($plan, $migratorConfiguration);
-        //     $df
-        //         ->getDependencyFactory()
-        //         ->getQueryWriter()
-        //         ->write($path, $plan->getDirection(), $sql)
-        //     ;
-        //     dump($sql);
-        // }
 
         return $this->em;
     }

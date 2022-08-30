@@ -4,6 +4,4 @@ SCRIPT_DIR="$(dirname $(realpath "$0"))"
 
 cd "$SCRIPT_DIR/../"
 
-"$SCRIPT_DIR/setup"
-
-npm start $@
+npm install --save-exact

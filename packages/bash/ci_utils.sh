@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# TODO: Suggest how to repeat individual failed tests
-# TODO: Supress all outputs (except summary)
 # TODO: Allow cache for local executions and disable on CI
 
 EXIT_STATUS=0
@@ -40,18 +38,18 @@ function variable_value() {
 }
 
 function get_shared_variable_path() {
-  local SHARED_VARIABLES_BASEPATH="/dev/shm/"
-  echo "${SHARED_VARIABLES_BASEPATH}${1}"
+  local SHARED_VARIABLES_BASEPATH="/dev/shm"
+  echo "${SHARED_VARIABLES_BASEPATH}/${NAMESPACE}_${1}"
 }
 
 function initialize_shared_variable() {
   SHARED_VARIABLE_PATH="$(get_shared_variable_path "${1}")"
   if [ -f "$SHARED_VARIABLE_PATH" ]
   then
-    rm "$SHARED_VARIABLE_PATH"
+    rm -f "$SHARED_VARIABLE_PATH"
   fi
 
-  declare -xA "$1"
+  declare -A "$1"
   declare -p "$1" > "$SHARED_VARIABLE_PATH"
 }
 
@@ -99,143 +97,4 @@ function show_summary() {
       printf "$validation - ${RED}FAILED${NORMAL} - Try: $(variable_value "$ON_ERROR_TRY_VARNAME" "$validation")\n"
     fi
   done
-}
-
-function ci-setup() {
-  if [ -d "$SCRIPT_DIR/../vendor" ] && [ -z "$CI" ]
-  then
-    return
-  fi
-
-  "${1}/setup"
-
-  add_to_summary "$?"
-}
-
-function check-conflicts() {
-  easy-ci check-conflicts --quiet .
-
-  add_to_summary "$?"
-
-  add_to_try "easy-ci check-conflicts $PWD"
-}
-
-function commented-code() {
-  easy-ci check-commented-code --quiet "$1"
-
-  add_to_summary "$?"
-
-  add_to_try "easy-ci check-commented-code "$1""
-}
-
-function file-class-name() {
-  easy-ci check-file-class-name --quiet "$1"
-
-  add_to_summary "$?"
-
-  add_to_try "easy-ci check-file-class-name $1"
-}
-
-function multi-classes() {
-  easy-ci find-multi-classes "$1"
-
-  add_to_summary "$?"
-
-  add_to_try "easy-ci find-multi-classes $1"
-
-}
-
-function coding-standars() {
-  ecs --no-error-table --no-progress-bar --quiet
-
-  add_to_summary "$?"
-
-  add_to_try "ecs --clear-cache"
-}
-
-function unused-packages() {
-  composer-unused --no-progress --quiet $@
-
-  add_to_summary "$?"
-
-  add_to_try "composer-unused $@"
-}
-
-function find-transitive-depndencies() {
-
-  composer-require-checker --quiet $@
-
-  add_to_summary "$?"
-
-  add_to_try "composer-require-checker $@"
-}
-
-function find-magic-numbers() {
-  phpmnd \
-    --hint \
-    --strings \
-    --include-numeric-string \
-    --quiet \
-    $@
-
-  add_to_summary "$?"
-
-  add_to_try "phpmnd --hint --strings --include-numeric-string --progress $@"
-}
-
-function find-copy-pasted-code() {
-  phpcpd "$1"
-
-  add_to_summary "$?"
-
-  add_to_try "phpcpd $1"
-}
-
-function static-analysis() {
-  psalm --no-progress --no-suggestions
-
-  add_to_summary "$?"
-
-  add_to_try "psalm --no-cache"
-}
-
-function check-var-dump() {
-  var-dump-check --laravel --exclude vendor/ .
-
-  add_to_summary "$?"
-
-  add_to_try "var-dump-check --laravel --exclude vendor/ $PWD"
-}
-
-function unit-tests() {
-  paratest --passthru="'--no-coverage' '--no-logging' '--no-interaction'"
-
-  add_to_summary "$?"
-
-  add_to_try "paratest"
-}
-
-function validate-doctrine-schema() {
-  if [ -z "$CI" ]
-  then
-    ./vendor/bin/doctrine orm:validate-schema
-
-    add_to_summary "$?"
-
-    add_to_try "./vendor/bin/doctrine orm:validate-schema"
-  else
-    ./vendor/bin/doctrine orm:validate-schema --skip-sync
-
-    add_to_summary "$?"
-
-    add_to_try "./vendor/bin/doctrine orm:validate-schema --skip-sync"
-  fi
-}
-
-function remake-autoloader() {
-  composer dump-autoload \
-    --optimize \
-    --no-cache \
-    --no-interaction \
-    --quiet
 }

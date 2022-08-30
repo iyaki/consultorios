@@ -5,11 +5,14 @@ CODE_DIRECOTRY='app/'
 
 SCRIPT_DIR="$(dirname $(realpath "$0"))"
 
+NAMESPACE="$(basename $(realpath "$SCRIPT_DIR/../"))"
 source "$SCRIPT_DIR/../../../packages/bash/ci_utils.sh"
+
+source "$SCRIPT_DIR/../../../packages/bash/php_utils.sh"
 
 cd "$SCRIPT_DIR/../"
 
-ci-setup "$SCRIPT_DIR"
+php-ci-setup "$SCRIPT_DIR"
 
 check-conflicts &
 

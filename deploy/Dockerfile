@@ -140,12 +140,15 @@ ARG PHP_VERSION
 
 COPY --from=php-phive /root/phive.phar /root/.asdf/installs/php/${PHP_VERSION}/bin/phive
 
+COPY ./deploy/dev/packages/lefthook_1.1.1_amd64.deb ./lefthook.deb
+
 RUN apt update \
   && apt install \
     --assume-yes \
     --quiet \
     --no-install-recommends \
     --purge \
+    ./lefthook.deb \
     ca-certificates \
     gnupg \
   && composer global require \
@@ -203,8 +206,6 @@ FROM ubuntu:latest as node-build
 ARG NODE_VERSION=14.18.1
 
 COPY --from=asdf-vm-base /root/.asdf /root/.asdf
-
-ENV PATH="/root/nodejs/bin:${PATH}"
 
 SHELL ["/bin/bash", "-c"]
 
@@ -344,7 +345,10 @@ RUN apt update \
     ./git-delta.deb \
   # Bash completions for composer
   && composer completion bash > composer_completion.bash \
-  && cp composer_completion.bash /etc/bash_completion.d/composer
+  && mv composer_completion.bash /etc/bash_completion.d/composer \
+  # Bash completions for lefthook
+  && lefthook completion bash > lefthook_completion.bash \
+  && mv lefthook_completion.bash /etc/bash_completion.d/lefthook
 
   COPY --from=node-build /root/nodejs /root/nodejs
 

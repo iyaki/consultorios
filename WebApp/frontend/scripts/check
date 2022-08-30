@@ -14,7 +14,7 @@ cd "$SCRIPT_DIR/../"
 
 print_separator "setup"
 
-npm install --save-exact
+"$SCRIPT_DIR/setup"
 
 check_exit_status $?
 print_separator "style conventions"
