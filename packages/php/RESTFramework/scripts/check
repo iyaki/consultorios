@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-if [ -z "$CI" ]
-then
-  set -e
-  set -o pipefail
-fi
-
 CODE_DIRECOTRY='src/'
 
 SCRIPT_DIR="$(dirname $(realpath "$0"))"
@@ -16,38 +10,40 @@ cd "$SCRIPT_DIR/../"
 
 ci-setup "$SCRIPT_DIR"
 
-check-conflicts
+check-conflicts &
 
-commented-code "$CODE_DIRECOTRY"
+commented-code "$CODE_DIRECOTRY" &
 
-file-class-name "$CODE_DIRECOTRY"
+file-class-name "$CODE_DIRECOTRY" &
 
-multi-classes "$CODE_DIRECOTRY"
+multi-classes "$CODE_DIRECOTRY" &
 
-check-var-dump
+check-var-dump &
 
-coding-standars
+coding-standars &
 
 unused-packages \
   --excludePackage=mezzio/mezzio-cors \
   --excludePackage=mezzio/mezzio-fastroute \
   --excludePackage=mezzio/mezzio-helpers \
-  --excludePackage=mezzio/mezzio
+  --excludePackage=mezzio/mezzio &
 
-find-transitive-depndencies "$SCRIPT_DIR/../require-checker.json"
+find-transitive-depndencies --config-file="$SCRIPT_DIR/../require-checker.json" &
 
 find-magic-numbers \
   --exclude-path="Clockwork/" \
-  -- "$CODE_DIRECOTRY"
+  -- "$CODE_DIRECOTRY" &
 
-find-copy-pasted-code "$CODE_DIRECOTRY"
+find-copy-pasted-code "$CODE_DIRECOTRY" &
 
-static-analysis
+static-analysis &
+
+unit-tests &
+
+wait
 
 remake-autoloader
 
-print_separator unit-tests
-paratest
-check_exit_status $?
+show_summary
 
 exit $EXIT_STATUS

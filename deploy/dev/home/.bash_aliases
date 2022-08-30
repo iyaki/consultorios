@@ -37,7 +37,6 @@ alias gtdr='git tag --delete origin '
 
 # Development utilities
 alias fix='rector && ecs --fix'
-alias phpunit='vendor/bin/phpunit '
 
 # bat cat clone with syntax highlighting - https://github.com/sharkdp/bat
 alias bat='batcat'

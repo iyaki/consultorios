@@ -11,6 +11,6 @@ fi
 
 paratest \
     --coverage-text \
-    --passthru="'--prepend' '/root/.composer/vendor/autoload.php' '--do-not-cache-result'" \
+    --passthru="'--prepend' '/root/.composer/vendor/autoload.php'" \
     --functional \
     $@
