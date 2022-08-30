@@ -124,6 +124,8 @@ function commented-code() {
   easy-ci check-commented-code --quiet "$1"
 
   add_to_summary "$?"
+
+  add_to_try "easy-ci check-commented-code "$1""
 }
 
 function file-class-name() {
