@@ -6,5 +6,4 @@ source "$SCRIPT_DIR/../../../bash/php_utils.sh"
 
 composer_setup \
   "$SCRIPT_DIR/../" \
-  update \
-  $@
+  update

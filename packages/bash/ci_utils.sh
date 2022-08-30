@@ -107,7 +107,7 @@ function ci-setup() {
     return
   fi
 
-  "${1}/setup" --quiet
+  "${1}/setup"
 
   add_to_summary "$?"
 }
@@ -211,6 +211,23 @@ function unit-tests() {
   add_to_summary "$?"
 
   add_to_try "paratest"
+}
+
+function validate-doctrine-schema() {
+  if [ -z "$CI" ]
+  then
+    ./vendor/bin/doctrine orm:validate-schema
+
+    add_to_summary "$?"
+
+    add_to_try "./vendor/bin/doctrine orm:validate-schema"
+  else
+    ./vendor/bin/doctrine orm:validate-schema --skip-sync
+
+    add_to_summary "$?"
+
+    add_to_try "./vendor/bin/doctrine orm:validate-schema --skip-sync"
+  fi
 }
 
 function remake-autoloader() {
