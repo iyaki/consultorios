@@ -11,7 +11,9 @@ services:
       dockerfile: ./deploy/Dockerfile
       target: dev-env
     volumes:
+      # project
       - ../..:/application
+      # dotfiles
       - ./home/.bashrc:/root/.bashrc
       - ./home/.bash_aliases:/root/.bash_aliases
       - ./home/.bash_completion:/root/.bash_completion
@@ -21,7 +23,9 @@ services:
       - ~/.gitignore-global:/root/.gitignore-global
       - ~/.ssh:/root/.ssh
       - ~/.config/git/authorized_signers:/root/.config/git/authorized_signers
+      # php ini settings
       - ./php/conf.d:/root/.asdf/installs/php/${PHP_VERSION}/conf.d
+      # Visual Studio Code Remote Server for speed-up startups
       - vscode-server:/home/root/.vscode-server
     environment:
       - DEV_MODE=${DEV_MODE}
