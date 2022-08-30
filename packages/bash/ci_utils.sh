@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# TODO: Allow cache for local executions and disable on CI
-
 EXIT_STATUS=0
 function check_exit_status() {
   if [ "$EXIT_STATUS" == "0" ]

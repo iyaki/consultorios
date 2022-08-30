@@ -56,7 +56,13 @@ function multi-classes() {
 }
 
 function coding-standars() {
-  ecs --no-error-table --no-progress-bar --quiet
+  local CACHE_PARAM=""
+  if [ ! -z "$CI" ]
+  then
+    CACHE_PARAM="--clear-cache"
+  fi
+
+  ecs --no-error-table --no-progress-bar --quiet $CACHE_PARAM
 
   add_to_summary "$?"
 
@@ -102,7 +108,13 @@ function find-copy-pasted-code() {
 }
 
 function static-analysis() {
-  psalm --no-progress --no-suggestions
+  local CACHE_PARAM=""
+  if [ ! -z "$CI" ]
+  then
+    CACHE_PARAM="--no-cache"
+  fi
+
+  psalm --no-progress --no-suggestions $CACHE_PARAM
 
   add_to_summary "$?"
 
@@ -126,20 +138,17 @@ function unit-tests() {
 }
 
 function validate-doctrine-schema() {
+  local SKIP_SYNC_PARAM="--skip-sync"
   if [ -z "$CI" ]
   then
-    ./vendor/bin/doctrine orm:validate-schema
-
-    add_to_summary "$?"
-
-    add_to_try "./vendor/bin/doctrine orm:validate-schema"
-  else
-    ./vendor/bin/doctrine orm:validate-schema --skip-sync
-
-    add_to_summary "$?"
-
-    add_to_try "./vendor/bin/doctrine orm:validate-schema --skip-sync"
+    SKIP_SYNC_PARAM=""
   fi
+
+  ./vendor/bin/doctrine orm:validate-schema $SKIP_SYNC_PARAM
+
+  add_to_summary "$?"
+
+  add_to_try "./vendor/bin/doctrine orm:validate-schema $SKIP_SYNC_PARAM"
 }
 
 function remake-autoloader() {
