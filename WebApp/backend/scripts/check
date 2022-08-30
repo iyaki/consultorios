@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-if [ -z "$CI" ]
-then
-  set -e
-  set -o pipefail
-fi
 
 CODE_DIRECOTRY='app/'
 
@@ -16,32 +11,36 @@ cd "$SCRIPT_DIR/../"
 
 ci-setup "$SCRIPT_DIR"
 
-check-conflicts
+check-conflicts &
 
-commented-code "$CODE_DIRECOTRY"
+commented-code "$CODE_DIRECOTRY" &
 
-file-class-name "$CODE_DIRECOTRY"
+file-class-name "$CODE_DIRECOTRY" &
 
-multi-classes "$CODE_DIRECOTRY"
+multi-classes "$CODE_DIRECOTRY" &
 
-check-var-dump
+check-var-dump &
 
-coding-standars
+coding-standars &
 
-unused-packages --excludePackage=consultorios/rest-framework
+unused-packages --excludePackage=consultorios/rest-framework &
 
-find-transitive-depndencies
+find-transitive-depndencies &
 
-find-magic-numbers -- $CODE_DIRECOTRY
+find-magic-numbers -- "$CODE_DIRECOTRY" &
 
-find-copy-pasted-code "$CODE_DIRECOTRY"
+find-copy-pasted-code "$CODE_DIRECOTRY" &
 
-static-analysis
+static-analysis &
 
 # vendor/bin/phpunit $CODE_DIRECOTRY
 
 # check_exit_status "$UNIT_TESTS_STATUS"
 
+wait
+
 remake-autoloader
+
+show_summary
 
 exit $EXIT_STATUS
