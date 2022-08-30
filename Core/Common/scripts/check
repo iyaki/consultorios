@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-if [ -z "$CI" ]
-then
-  set -e
-  set -o pipefail
-fi
-
 CODE_DIRECOTRY='src/'
 
 SCRIPT_DIR="$(dirname $(realpath "$0"))"
@@ -16,28 +10,32 @@ cd "$SCRIPT_DIR/../"
 
 ci-setup "$SCRIPT_DIR"
 
-check-conflicts
+check-conflicts &
 
-commented-code "$CODE_DIRECOTRY"
+commented-code "$CODE_DIRECOTRY" &
 
-file-class-name "$CODE_DIRECOTRY"
+file-class-name "$CODE_DIRECOTRY" &
 
-multi-classes "$CODE_DIRECOTRY"
+multi-classes "$CODE_DIRECOTRY" &
 
-check-var-dump
+check-var-dump &
 
-coding-standars
+coding-standars &
 
-unused-packages
+unused-packages &
 
-find-transitive-depndencies
+find-transitive-depndencies &
 
-find-magic-numbers -- "$CODE_DIRECOTRY"
+find-magic-numbers -- "$CODE_DIRECOTRY" &
 
-find-copy-pasted-code "$CODE_DIRECOTRY"
+find-copy-pasted-code "$CODE_DIRECOTRY" &
 
-static-analysis
+static-analysis &
+
+wait
 
 remake-autoloader
+
+show_summary
 
 exit $EXIT_STATUS
