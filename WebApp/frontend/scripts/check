@@ -1,34 +1,38 @@
 #!/usr/bin/env bash
 
-if [ -z "$CI" ]
-then
-  set -e
-  set -o pipefail
-fi
-
 SCRIPT_DIR="$(dirname $(realpath "$0"))"
 
 source "$SCRIPT_DIR/../../../packages/bash/ci_utils.sh"
 
+function style-conventions() {
+  ./node_modules/.bin/standard
+
+  add_to_summary "$?"
+
+  add_to_try "standard"
+}
+
+function tests() {
+  CI=1 npm test --silent --ci
+
+  add_to_summary "$?"
+
+  add_to_try "npm test --no-cache"
+}
+
 cd "$SCRIPT_DIR/../"
 
-print_separator "setup"
-
-"$SCRIPT_DIR/setup"
-
-check_exit_status $?
-print_separator "style conventions"
-
-node_modules/.bin/standard
-
-check_exit_status $?
-print_separator "unit tests"
-
-CI=true npm test
-
-check_exit_status $?
-
-if [ $EXIT_STATUS != 0 ]
+if [ ! -d "${SCRIPT_DIR}/../node_modules" ] && [ ! -z "$CI" ]
 then
-  exit 1
+  "$SCRIPT_DIR/setup"
 fi
+
+style-conventions &
+
+tests &
+
+wait
+
+show_summary
+
+exit $EXIT_STATUS
