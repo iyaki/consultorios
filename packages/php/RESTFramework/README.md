@@ -2,6 +2,12 @@
 
 ## Envoltura para simplificar el desarrollo de APIs REST utilizando [mezzio](https://docs.mezzio.dev/)
 
+## Caracteristicas
+Mezzio
+Swagger-php
+Clockworck
+JSON:API (Fractal)
+
 ### Instalación
 
 1. Configurar composer para aceptar repositorios locales:
