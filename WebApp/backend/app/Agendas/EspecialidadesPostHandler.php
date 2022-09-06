@@ -36,7 +36,7 @@ final class EspecialidadesPostHandler implements RequestHandlerInterface
             nullable: false,
             required: ['data'],
             additionalProperties: false,
-            properties:[
+            properties: [
                 new OA\Property(
                     property: 'data',
                     type: 'object',
@@ -54,7 +54,7 @@ final class EspecialidadesPostHandler implements RequestHandlerInterface
             nullable: false,
             required: ['data'],
             additionalProperties: false,
-            properties:[
+            properties: [
                 new OA\Property(
                     property: 'data',
                     type: 'object',
@@ -72,7 +72,7 @@ final class EspecialidadesPostHandler implements RequestHandlerInterface
             nullable: false,
             required: ['data'],
             additionalProperties: false,
-            properties:[
+            properties: [
                 new OA\Property(
                     property: 'data',
                     type: 'object',

@@ -35,7 +35,7 @@ final class EspecialidadesGetHandler implements RequestHandlerInterface
             nullable: false,
             required: ['data'],
             additionalProperties: false,
-            properties:[
+            properties: [
                 new OA\Property(
                     property: 'data',
                     type: 'array',
@@ -54,7 +54,7 @@ final class EspecialidadesGetHandler implements RequestHandlerInterface
             nullable: false,
             required: ['data'],
             additionalProperties: false,
-            properties:[
+            properties: [
                 new OA\Property(
                     property: 'data',
                     type: 'object',

@@ -7,7 +7,7 @@ namespace Consultorios\Core\Agendas\UseCases;
 use Consultorios\Core\Agendas\Domain\Especialidad;
 use Consultorios\Core\Agendas\Domain\EspecialidadId;
 use Consultorios\Core\Agendas\Domain\EspecialidadRepositoryInterface;
-use Consultorios\UnitOfWork\UnitOfWorkInterface;
+use Consultorios\ORM\UnitOfWorkInterface;
 
 /**
  * Servicio de casos de uso existentes para trabajar con especialidades.

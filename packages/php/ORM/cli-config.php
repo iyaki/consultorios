@@ -15,7 +15,7 @@ if (! \function_exists('\Consultorios\ORM\getDoctrineCliConfig')) {
             require $baseDir . '/config/database.php',
             [$baseDir . '/config/mappings'],
             true
-        ))->entityManager();
+        ))->entityManager;
 
         return ConsoleRunner::createHelperSet($em);
     }

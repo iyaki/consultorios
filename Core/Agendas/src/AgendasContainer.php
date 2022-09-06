@@ -21,9 +21,9 @@ final class AgendasContainer
         );
 
         return new Especialidades(
-            $orm->unitOfWork(),
+            $orm->unitOfWork,
             new EspecialidadRepositoryDoctrine(
-                $orm->entityManager()
+                $orm->entityManager
             )
         );
     }

@@ -49,7 +49,7 @@ final class EspecialidadesPatchHandler implements RequestHandlerInterface
             nullable: false,
             required: ['data'],
             additionalProperties: false,
-            properties:[
+            properties: [
                 new OA\Property(
                     property: 'data',
                     type: 'object',
@@ -67,7 +67,7 @@ final class EspecialidadesPatchHandler implements RequestHandlerInterface
             nullable: false,
             required: ['data'],
             additionalProperties: false,
-            properties:[
+            properties: [
                 new OA\Property(
                     property: 'data',
                     type: 'object',
@@ -85,7 +85,7 @@ final class EspecialidadesPatchHandler implements RequestHandlerInterface
             nullable: false,
             required: ['data'],
             additionalProperties: false,
-            properties:[
+            properties: [
                 new OA\Property(
                     property: 'data',
                     type: 'object',

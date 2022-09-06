@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Consultorios\ORM;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMSetup;
 use Doctrine\Persistence\Mapping\Driver\PHPDriver;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -13,27 +14,33 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 final class ORM
 {
-    private ?EntityManager $em = null;
+    public readonly EntityManagerInterface $entityManager;
 
-    private ?UnitOfWorkDoctrine $uow = null;
+    public readonly UnitOfWorkInterface $unitOfWork;
 
     public function __construct(
-        private readonly DatabaseConnectionSettings $dbSettings,
-        private readonly array $mappingsPaths,
-        private readonly bool $devMode
+        DatabaseConnectionSettings $dbSettings,
+        array $mappingsPaths,
+        bool $devMode
     ) {
+        $this->entityManager = $this->createEntityManager(
+            $dbSettings,
+            $mappingsPaths,
+            $devMode
+        );
+
+        $this->unitOfWork = $this->createUnitOfWork($this->entityManager);
     }
 
-    public function entityManager(): EntityManager
-    {
-        if ($this->em !== null) {
-            return $this->em;
-        }
-
-        $doctrineConfig = ORMSetup::createConfiguration($this->devMode);
+    private function createEntityManager(
+        DatabaseConnectionSettings $dbSettings,
+        array $mappingsPaths,
+        bool $devMode
+    ): EntityManager {
+        $doctrineConfig = ORMSetup::createConfiguration($devMode);
 
         $doctrineConfig->setMetadataDriverImpl(
-            new PHPDriver($this->mappingsPaths)
+            new PHPDriver($mappingsPaths)
         );
 
         $doctrineConfig->setMetadataCache(
@@ -43,29 +50,26 @@ final class ORM
             ])
         );
 
-        $this->em = EntityManager::create(
-            $this->connection(),
+        return EntityManager::create(
+            $this->connection($dbSettings),
             $doctrineConfig
         );
-
-        return $this->em;
     }
 
-    public function unitOfWork(): UnitOfWorkDoctrine
+    private function createUnitOfWork(EntityManagerInterface $entityManager): UnitOfWorkDoctrine
     {
-        if ($this->uow === null) {
-            $this->uow = new UnitOfWorkDoctrine($this->entityManager());
-        }
-
-        return $this->uow;
+        return new UnitOfWorkDoctrine($entityManager);
     }
 
     /**
      * @return mixed[]
      */
-    private function connection(): array
+    private function connection(DatabaseConnectionSettings $dbSettings): array
     {
-        return getenv('CI') ? $this->connectionInMemorySQLite() : $this->connectionMySQL();
+        return getenv('CI')
+            ? $this->connectionInMemorySQLite()
+            : $this->connectionMySQL($dbSettings)
+        ;
     }
 
     /**
@@ -82,15 +86,15 @@ final class ORM
     /**
      * @return array{driver: string, host: string, port: int, dbname: string, user: string, password: string, charset: string}
      */
-    private function connectionMySQL(): array
+    private function connectionMySQL(DatabaseConnectionSettings $dbSettings): array
     {
         return [
             'driver' => 'pdo_mysql',
-            'host' => $this->dbSettings->host,
+            'host' => $dbSettings->host,
             'port' => 3306,
-            'dbname' => $this->dbSettings->database,
-            'user' => $this->dbSettings->user,
-            'password' => $this->dbSettings->password,
+            'dbname' => $dbSettings->database,
+            'user' => $dbSettings->user,
+            'password' => $dbSettings->password,
             'charset' => 'utf8',
         ];
     }

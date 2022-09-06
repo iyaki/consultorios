@@ -7,10 +7,10 @@ namespace Consultorios\ORM;
 final class DatabaseConnectionSettings
 {
     public function __construct(
-        public string $host,
-        public string $database,
-        public string $user,
-        public string $password,
+        public readonly string $host,
+        public readonly string $database,
+        public readonly string $user,
+        public readonly string $password,
     ) {
     }
 }

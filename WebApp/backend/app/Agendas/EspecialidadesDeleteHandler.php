@@ -51,7 +51,7 @@ final class EspecialidadesDeleteHandler implements RequestHandlerInterface
             nullable: false,
             required: ['data'],
             additionalProperties: false,
-            properties:[
+            properties: [
                 new OA\Property(
                     property: 'data',
                     type: 'object',

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Consultorios\UnitOfWork;
+namespace Consultorios\ORM;
 
 interface UnitOfWorkInterface
 {

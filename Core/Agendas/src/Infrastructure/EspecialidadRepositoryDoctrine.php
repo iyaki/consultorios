@@ -7,9 +7,9 @@ namespace Consultorios\Core\Agendas\Infrastructure;
 use Consultorios\Core\Agendas\Domain\Especialidad;
 use Consultorios\Core\Agendas\Domain\EspecialidadId;
 use Consultorios\Core\Agendas\Domain\EspecialidadRepositoryInterface;
-// TODO: Encapsular estas dependencias con doctrine dentro del package ORM
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+// TODO: Encapsular la generación de UUIDs dentro del ORM
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -24,7 +24,7 @@ final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInte
     private readonly EntityRepository $repository;
 
     public function __construct(
-        private readonly EntityManager $em
+        private readonly EntityManagerInterface $em
     ) {
         $this->repository = $this->em->getRepository(Especialidad::class);
     }
