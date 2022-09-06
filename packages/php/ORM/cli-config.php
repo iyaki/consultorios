@@ -19,5 +19,4 @@ if (! \function_exists('\Consultorios\ORM\getDoctrineCliConfig')) {
 
         return ConsoleRunner::createHelperSet($em);
     }
-
 }

@@ -26,7 +26,6 @@ check-var-dump &
 coding-standars &
 
 unused-packages \
-  --excludePackage=consultorios/unit-of-work \
   --excludePackage=doctrine/migrations \
   --excludePackage=ext-pdo_mysql \
   --excludePackage=symfony/cache &

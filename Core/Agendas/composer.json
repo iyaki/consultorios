@@ -5,7 +5,6 @@
     "php": "~8.1",
     "consultorios/core-common": "*",
     "consultorios/orm": "*",
-    "consultorios/unit-of-work": "*",
     "doctrine/orm": "^2.12",
     "ramsey/uuid": "^4.3"
   },
