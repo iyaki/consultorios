@@ -2,7 +2,7 @@
 
 ## Envoltura para simplificar el desarrollo de APIs REST utilizando [mezzio](https://docs.mezzio.dev/)
 
-## Caracteristicas
+### Caracteristicas
 Mezzio
 Swagger-php
 Clockworck
@@ -36,7 +36,7 @@ El campo `url` debe apuntar al path contenedor de RESTFramework (`packages/php/`
 composer require consultorios/rest-framework
 ```
 
-Adicionalmente se sugiere instalar `zircote/swagger-php` para evitar "weak dependencies a la hora de documentar la api:
+Adicionalmente se sugiere instalar `zircote/swagger-php` para evitar *weak dependencies* a la hora de documentar la api:
 
 ```shell
 composer require zircote/swagger-php
