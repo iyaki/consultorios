@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# shellcheck shell=bash
 
 EXIT_STATUS=0
 function check_exit_status() {
@@ -11,7 +11,7 @@ function check_exit_status() {
 function print_separator() {
   local TITLE="***"
 
-  if [ ! -z "${1}" ]
+  if [ -n "${1}" ]
   then
     TITLE="* ${1} *"
   fi
@@ -77,7 +77,8 @@ function add_to_try() {
 }
 
 function show_summary() {
-  local RED=$(tput setaf 1)
+  local RED
+  RED=$(tput setaf 1)
   local GREEN=$(tput setaf 2)
   local NORMAL=$(tput sgr0)
 

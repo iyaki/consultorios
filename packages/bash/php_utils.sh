@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 composer_setup() {
   composer "${2:-install}" \
     --working-dir="${1:-.}" \
@@ -35,7 +37,7 @@ function commented-code() {
 
   add_to_summary "$?"
 
-  add_to_try "easy-ci check-commented-code "$1""
+  add_to_try "easy-ci check-commented-code $1"
 }
 
 function file-class-name() {

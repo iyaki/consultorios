@@ -1,14 +1,29 @@
 #!/usr/bin/env bash
 
-lefthook install
+function setup-all() {
+  local ORIGINAL_DIR
+  ORIGINAL_DIR="$(realpath "$(pwd -P)")"
 
-SCRIPT_DIR="$(dirname $(realpath "$0"))"
+  local SCRIPT_DIR
+  SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-ROOT_FOLDER="$SCRIPT_DIR/.."
+  local ROOT_FOLDER
+  ROOT_FOLDER="$SCRIPT_DIR/.."
 
-"$ROOT_FOLDER/Core/Agendas/scripts/setup"
-"$ROOT_FOLDER/Core/Common/scripts/setup"
-"$ROOT_FOLDER/packages/php/ORM/scripts/setup"
-"$ROOT_FOLDER/packages/php/RESTFramework/scripts/setup"
-"$ROOT_FOLDER/WebApp/backend/scripts/setup"
-"$ROOT_FOLDER/WebApp/frontend/scripts/setup"
+  cd "$ROOT_FOLDER" || exit
+
+  lefthook install
+
+  "$ROOT_FOLDER/Core/Agendas/scripts/setup" &
+  "$ROOT_FOLDER/Core/Common/scripts/setup" &
+  "$ROOT_FOLDER/packages/php/ORM/scripts/setup" &
+  "$ROOT_FOLDER/packages/php/RESTFramework/scripts/setup" &
+  "$ROOT_FOLDER/WebApp/backend/scripts/setup" &
+  "$ROOT_FOLDER/WebApp/frontend/scripts/setup" &
+
+  wait
+
+  cd "$ORIGINAL_DIR" || exit
+}
+
+setup-all

@@ -2,14 +2,17 @@
 
 CODE_DIRECOTRY='src/'
 
-SCRIPT_DIR="$(dirname $(realpath "$0"))"
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-NAMESPACE="$(basename $(realpath "$SCRIPT_DIR/../"))"
+# shellcheck disable=SC2034
+NAMESPACE="$(basename "$(realpath "$SCRIPT_DIR/../")")"
+# shellcheck source=/dev/null
 source "$SCRIPT_DIR/../../../packages/bash/ci_utils.sh"
 
+# shellcheck source=/dev/null
 source "$SCRIPT_DIR/../../../packages/bash/php_utils.sh"
 
-cd "$SCRIPT_DIR/../"
+cd "$SCRIPT_DIR/../" || exit
 
 php-ci-setup "$SCRIPT_DIR"
 
@@ -45,4 +48,4 @@ remake-autoloader
 
 show_summary
 
-exit $EXIT_STATUS
+exit "$EXIT_STATUS"

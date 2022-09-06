@@ -1,23 +1,28 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR="$(dirname $(realpath "$0"))"
+function setup-agendas() {
+  local SCRIPT_DIR
+  SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-ORIGINAL_DIR="$(realpath "$(pwd -P)")"
+  local ORIGINAL_DIR
+  ORIGINAL_DIR="$(realpath "$(pwd -P)")"
 
-cd "$SCRIPT_DIR/../"
+  cd "$SCRIPT_DIR/../" || exit
 
-source "$SCRIPT_DIR/../../../packages/bash/php_utils.sh"
+  source "$SCRIPT_DIR/../../../packages/bash/php_utils.sh"
 
-composer_setup \
-  "$SCRIPT_DIR/../" \
-  update
+  composer_setup \
+    "$SCRIPT_DIR/../" \
+    update
 
-if [ -z $CI ]
-then
-  "$SCRIPT_DIR/../vendor/bin/doctrine-migrations" \
-    migrate \
-    --no-interaction
-    # "--configuration=$SCRIPT_DIR/../migrations.php"
-fi
+  if [ -z "$CI" ]
+  then
+    "$SCRIPT_DIR/../vendor/bin/doctrine-migrations" \
+      migrate \
+      --no-interaction
+  fi
 
-cd "$ORIGINAL_DIR"
+  cd "$ORIGINAL_DIR" || exit
+}
+
+setup-agendas

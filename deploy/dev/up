@@ -6,7 +6,7 @@ CACHE_DIR='.cache/dev'
 
 OPTIONS=( "$@" )
 
-cd "$(dirname $0)" || exit
+cd "$(dirname "$0")" || exit
 
 mkdir -p ${CACHE_DIR}
 
@@ -21,10 +21,10 @@ do
   DOCKERFILE="${FOLDER}/Dockerfile"
   DOCKERFILE_SUM="${CACHE_DIR}/${FOLDER}/Dockerfile.sum"
 
-  if [ ! -f "${DOCKERFILE_SUM}" ] || [ "$(sha256sum ${DOCKERFILE})" != "$(cat ${DOCKERFILE_SUM})" ]
+  if [ ! -f "${DOCKERFILE_SUM}" ] || [ "$(sha256sum "${DOCKERFILE}")" != "$(cat "${DOCKERFILE_SUM}")" ]
   then
     OPTIONS+=("--build")
-    sha256sum ${DOCKERFILE} > ${DOCKERFILE_SUM}
+    sha256sum "${DOCKERFILE}" > "${DOCKERFILE_SUM}"
   fi
 done
 
@@ -32,3 +32,5 @@ done
 OPTIONS=("$(echo "${OPTIONS[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')")
 
 docker compose --project-name ${PROJECT_NAME} up --detach ${OPTIONS[@]} dev
+
+docker exec -it consultorios-dev-1 "/application/scripts/setup"
