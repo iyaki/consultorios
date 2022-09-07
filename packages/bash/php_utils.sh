@@ -59,7 +59,7 @@ function multi-classes() {
 
 function coding-standars() {
   local CACHE_PARAM=""
-  if [ ! -z "$CI" ]
+  if [ -n "$CI" ]
   then
     CACHE_PARAM="--clear-cache"
   fi
@@ -76,7 +76,7 @@ function unused-packages() {
 
   add_to_summary "$?"
 
-  add_to_try "composer-unused $@"
+  add_to_try "composer-unused $*"
 }
 
 function find-transitive-depndencies() {
@@ -85,7 +85,7 @@ function find-transitive-depndencies() {
 
   add_to_summary "$?"
 
-  add_to_try "composer-require-checker $@"
+  add_to_try "composer-require-checker $*"
 }
 
 function find-magic-numbers() {
@@ -98,7 +98,7 @@ function find-magic-numbers() {
 
   add_to_summary "$?"
 
-  add_to_try "phpmnd --hint --strings --include-numeric-string --progress $@"
+  add_to_try "phpmnd --hint --strings --include-numeric-string --progress $*"
 }
 
 function find-copy-pasted-code() {
@@ -111,7 +111,7 @@ function find-copy-pasted-code() {
 
 function static-analysis() {
   local CACHE_PARAM=""
-  if [ ! -z "$CI" ]
+  if [ -n "$CI" ]
   then
     CACHE_PARAM="--no-cache"
   fi
