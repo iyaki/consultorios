@@ -62,6 +62,7 @@ final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInte
         $this->em->persist($especialidad);
     }
 
+    // TODO: Transferir la responsabilidad de buscar la entidad antes de eliminarla al Service Especialidades
     public function remove(EspecialidadId $id): void
     {
         $this->em->remove(

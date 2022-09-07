@@ -109,6 +109,26 @@ final class EspecialidadesTest extends TestCase
         );
     }
 
+    public function testEliminarOk(): void
+    {
+        $especialidadABorrar = reset($this->repositoryStorage);
+
+        $id = (string) $especialidadABorrar->id();
+
+        $this->especialidadesCasosDeUso()->eliminar(new EspecialidadId($id));
+
+        foreach ($this->repositoryStorage as $especialidadGuardada) {
+            $this->assertNotSame($especialidadABorrar, $especialidadGuardada);
+        }
+    }
+
+    public function testEliminarIdErroneo(): void
+    {
+        $this->expectException(\UnexpectedValueException::class);
+
+        $this->especialidadesCasosDeUso()->eliminar(new EspecialidadId(self::ID));
+    }
+
     private function especialidadesCasosDeUso(): Especialidades
     {
         $uow = $this->createStub(UnitOfWorkInterface::class);
@@ -143,6 +163,23 @@ final class EspecialidadesTest extends TestCase
         $repository->method('add')
             ->willReturnCallback(function (Especialidad $e): void {
                 $this->repositoryStorage[] = $e;
+            })
+        ;
+
+        $repository->method('remove')
+            ->willReturnCallback(function (EspecialidadId $id): void {
+                $get = fn (EspecialidadId $id): Especialidad => array_values(array_filter(
+                    $this->repositoryStorage,
+                    static fn (Especialidad $e): bool => (string) $e->id() === (string) $id
+                ))[0] ?? throw new \UnexpectedValueException();
+
+                $especialidadKey = \array_search(
+                    $get($id),
+                    $this->repositoryStorage,
+                    true
+                );
+
+                unset($this->repositoryStorage[$especialidadKey]);
             })
         ;
 
