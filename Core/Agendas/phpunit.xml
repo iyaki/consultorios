@@ -32,7 +32,6 @@
         </include>
         <exclude>
             <directory suffix="Test.php">src</directory>
-            <directory suffix=".php">src/Clockwork</directory>
         </exclude>
     </coverage>
 </phpunit>
