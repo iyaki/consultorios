@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 function setup-all() {
+  mkdir -p /tmp
+
   local ORIGINAL_DIR
   ORIGINAL_DIR="$(realpath "$(pwd -P)")"
 
