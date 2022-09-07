@@ -2,13 +2,20 @@
 
 SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-if [ ! -d "$SCRIPT_DIR/../vendor" ]
+# shellcheck source=/dev/null
+source "$SCRIPT_DIR/../../../bash/php_utils.sh"
+
+php-ci-setup "$SCRIPT_DIR"
+
+if [ "$1" = "coverage-serve" ]
 then
-  "$SCRIPT_DIR/setup"
+  php -S localhost:8080 -t phpunit-coverage
+
+  exit
 fi
 
-paratest \
+phpunit \
+    --prepend /root/.composer/vendor/autoload.php \
     --coverage-text \
-    --passthru="'--prepend' '/root/.composer/vendor/autoload.php'" \
-    --functional \
-    $@
+    --coverage-html phpunit-coverage\
+    "$@"
