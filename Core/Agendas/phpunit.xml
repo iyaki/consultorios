@@ -32,6 +32,7 @@
         </include>
         <exclude>
             <directory suffix="Test.php">src</directory>
+            <file>src/AgendasContainer.php</file>
         </exclude>
     </coverage>
 </phpunit>
