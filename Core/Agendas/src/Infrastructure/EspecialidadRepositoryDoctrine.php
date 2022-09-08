@@ -8,7 +8,7 @@ use Consultorios\Core\Agendas\Domain\Especialidad;
 use Consultorios\Core\Agendas\Domain\EspecialidadId;
 use Consultorios\Core\Agendas\Domain\EspecialidadRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Persistence\ObjectRepository;
 // TODO: Encapsular la generación de UUIDs dentro del ORM
 use Ramsey\Uuid\Uuid;
 
@@ -19,9 +19,9 @@ use Ramsey\Uuid\Uuid;
 final class EspecialidadRepositoryDoctrine implements EspecialidadRepositoryInterface
 {
     /**
-     * @var EntityRepository<Especialidad>
+     * @var ObjectRepository<Especialidad>
      */
-    private readonly EntityRepository $repository;
+    private readonly ObjectRepository $repository;
 
     public function __construct(
         private readonly EntityManagerInterface $em
