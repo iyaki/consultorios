@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Consultorios\ORM;
 
+/**
+ * @psalm-immutable
+ */
 final class DatabaseConnectionSettings
 {
     public function __construct(
