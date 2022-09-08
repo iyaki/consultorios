@@ -67,7 +67,6 @@ final class EspecialidadRepositoryDoctrineTest extends TestCase
             'nombre' => $nombreEspecialidad,
         ]);
 
-        $this->assertIsArray($especialidades);
         $this->assertContainsOnlyInstancesOf(Especialidad::class, $especialidades);
         $this->assertCount(count($listaEspecialidades), $especialidades);
         $this->assertContains($especialidad1, $especialidades);
@@ -84,7 +83,6 @@ final class EspecialidadRepositoryDoctrineTest extends TestCase
             'nombre' => $nombreEspecialidad,
         ]);
 
-        $this->assertIsArray($especialidades);
         $this->assertCount(0, $especialidades);
     }
 
@@ -145,9 +143,11 @@ final class EspecialidadRepositoryDoctrineTest extends TestCase
 
     private function createEspecialidad(?string $uuid = null, ?string $nombre = null): Especialidad
     {
+        $nombreDefault = 'asd';
+
         return new Especialidad(
             new EspecialidadId($uuid ?? $this->createUUID()),
-            $nombre ?? 'asd'
+            $nombre ?? $nombreDefault
         );
     }
 

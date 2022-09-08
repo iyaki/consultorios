@@ -28,7 +28,7 @@ check-var-dump &
 
 coding-standars &
 
-unused-packages --excludePackage=ramsey/uuid &
+unused-packages &
 
 find-transitive-depndencies &
 

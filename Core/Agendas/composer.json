@@ -6,6 +6,7 @@
     "consultorios/core-common": "*",
     "consultorios/orm": "*",
     "doctrine/orm": "^2.12",
+    "doctrine/persistence": "^3.0",
     "ramsey/uuid": "^4.3"
   },
   "require-dev": {
