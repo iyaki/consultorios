@@ -31,7 +31,7 @@ unused-packages \
   --excludePackage=mezzio/mezzio-helpers \
   --excludePackage=mezzio/mezzio &
 
-find-transitive-depndencies --config-file="$SCRIPT_DIR/../require-checker.json" &
+find-transitive-depndencies &
 
 find-magic-numbers \
   --exclude-path="Clockwork/" \
