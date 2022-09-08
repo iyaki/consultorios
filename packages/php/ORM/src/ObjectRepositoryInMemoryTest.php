@@ -65,7 +65,6 @@ final class ObjectRepositoryInMemoryTest extends TestCase
             'property' => $property,
         ]);
 
-        $this->assertIsArray($entities);
         $this->assertContainsOnlyInstancesOf(EntityDummy::class, $entities);
         $this->assertCount(count($entitiesList), $entities);
         $this->assertContains($entity1, $entities);

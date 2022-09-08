@@ -21,7 +21,8 @@
     "files": [
       "cli-config.php",
       "migrations.php"
-    ]
+    ],
+    "exclude-from-classmap": ["*Test.php"]
   },
   "autoload-dev": {
     "psr-4": {
