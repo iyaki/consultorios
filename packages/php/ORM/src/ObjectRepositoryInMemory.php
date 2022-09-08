@@ -82,10 +82,10 @@ final class ObjectRepositoryInMemory implements ObjectRepository
         );
     }
 
-    public function findOneBy(array $criteria): object|bool
+    public function findOneBy(array $criteria): ?object
     {
         $coincidences = $this->findBy($criteria);
-        return \reset($coincidences);
+        return \reset($coincidences) ?: null;
     }
 
     public function getClassName(): string

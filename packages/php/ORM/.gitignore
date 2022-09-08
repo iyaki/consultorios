@@ -1,3 +1,4 @@
-/composer.lock
+/.phpunit.cache
 /.psalm-cache
+/composer.lock
 /vendor

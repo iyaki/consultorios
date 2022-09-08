@@ -11,7 +11,8 @@
     "symfony/cache": "^6.1"
   },
   "require-dev": {
-    "consultorios/dev-tools-settings": "*"
+    "consultorios/dev-tools-settings": "*",
+    "ramsey/uuid": "^4.4"
   },
   "autoload": {
     "psr-4": {
@@ -21,6 +22,11 @@
       "cli-config.php",
       "migrations.php"
     ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+        "Consultorios\\ORM\\Fixtures\\": "fixtures"
+    }
   },
   "config": {
     "platform": {
