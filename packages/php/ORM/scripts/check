@@ -38,6 +38,8 @@ find-copy-pasted-code "$CODE_DIRECOTRY" &
 
 static-analysis &
 
+unit-tests &
+
 wait
 
 remake-autoloader
