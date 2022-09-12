@@ -137,12 +137,13 @@
             "dist": {
                 "type": "path",
                 "url": "../../Core/Agendas",
-                "reference": "97f89bbd2c995b2c1286362720737ddd608c6b35"
+                "reference": "f7bb4a08a9505b11201a69723e17c84229df68e9"
             },
             "require": {
                 "consultorios/core-common": "*",
                 "consultorios/orm": "*",
                 "doctrine/orm": "^2.12",
+                "doctrine/persistence": "^3.0",
                 "php": "~8.1",
                 "ramsey/uuid": "^4.3"
             },
@@ -194,7 +195,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../packages/php/ORM",
-                "reference": "87d807743fe1221736ba8feda0abdf80bf9a8663"
+                "reference": "76211cef93bcc3b60282dbc8a1f4fb4b2194e5d5"
             },
             "require": {
                 "doctrine/dbal": "^3.3",
@@ -206,7 +207,8 @@
                 "symfony/cache": "^6.1"
             },
             "require-dev": {
-                "consultorios/dev-tools-settings": "*"
+                "consultorios/dev-tools-settings": "*",
+                "ramsey/uuid": "^4.4"
             },
             "type": "library",
             "autoload": {
@@ -216,7 +218,15 @@
                 "files": [
                     "cli-config.php",
                     "migrations.php"
+                ],
+                "exclude-from-classmap": [
+                    "*Test.php"
                 ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Consultorios\\ORM\\Fixtures\\": "fixtures"
+                }
             },
             "transport-options": {
                 "symlink": true,
@@ -229,7 +239,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../packages/php/RESTFramework",
-                "reference": "0ac95a722bdf0b9ce1522b508935df8e48225f21"
+                "reference": "2b5b6e37ffc71f35a04cbd870461c24d7936bd44"
             },
             "require": {
                 "ext-json": "*",
@@ -5219,16 +5229,16 @@
         },
         {
             "name": "zircote/swagger-php",
-            "version": "4.4.8",
+            "version": "4.4.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zircote/swagger-php.git",
-                "reference": "34c0980c4cd4f32a1a43f995463001e450d18896"
+                "reference": "0c1cdd31e8cfeb7116c54696aafdab9c778070fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/34c0980c4cd4f32a1a43f995463001e450d18896",
-                "reference": "34c0980c4cd4f32a1a43f995463001e450d18896",
+                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/0c1cdd31e8cfeb7116c54696aafdab9c778070fd",
+                "reference": "0c1cdd31e8cfeb7116c54696aafdab9c778070fd",
                 "shasum": ""
             },
             "require": {
@@ -5290,9 +5300,9 @@
             ],
             "support": {
                 "issues": "https://github.com/zircote/swagger-php/issues",
-                "source": "https://github.com/zircote/swagger-php/tree/4.4.8"
+                "source": "https://github.com/zircote/swagger-php/tree/4.4.9"
             },
-            "time": "2022-08-16T23:21:13+00:00"
+            "time": "2022-09-11T20:51:43+00:00"
         }
     ],
     "packages-dev": [
