@@ -57,6 +57,7 @@ function initialize_shared_variable() {
 # 3. Value to add to the array variable
 function add_to_shared_variable() {
   SHARED_VARIABLE_PATH="$(get_shared_variable_path "${1}")"
+  # shellcheck source=/dev/null
   source "$SHARED_VARIABLE_PATH"
 
   eval "${1}[\"${2}\"]=\"$3\""
@@ -78,22 +79,27 @@ function add_to_try() {
 
 function show_summary() {
   local RED
-  RED=$(tput setaf 1)
-  local GREEN=$(tput setaf 2)
-  local NORMAL=$(tput sgr0)
+  RED="$(tput setaf 1)"
+  local GREEN
+  GREEN="$(tput setaf 2)"
+  local NORMAL
+  NORMAL="$(tput sgr0)"
 
+  # shellcheck source=/dev/null
   source "$(get_shared_variable_path "$SUMMARY_VARNAME")"
+  # shellcheck source=/dev/null
   source "$(get_shared_variable_path "$ON_ERROR_TRY_VARNAME")"
 
   for validation in $(variable_keys "${SUMMARY_VARNAME}")
   do
-    local STATUS="$(variable_value "$SUMMARY_VARNAME" "$validation")";
+    local STATUS
+    STATUS="$(variable_value "$SUMMARY_VARNAME" "$validation")";
     check_exit_status "$STATUS"
     if [ "$STATUS" == 0 ]
     then
-      printf "$validation - ${GREEN}OK${NORMAL}\n"
+      printf "%s - %sOK%s\n" "$validation" "$GREEN" "$NORMAL"
     else
-      printf "$validation - ${RED}FAILED${NORMAL} - Try: $(variable_value "$ON_ERROR_TRY_VARNAME" "$validation")\n"
+      printf "%s - %sFAILED%s - Try: %s\n" "$validation" "$RED" "$NORMAL" "$(variable_value "$ON_ERROR_TRY_VARNAME" "$validation")"
     fi
   done
 }

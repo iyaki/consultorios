@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-WEBAPP_DIR="$(dirname $(realpath "$0"))/../"
+WEBAPP_DIR="$(dirname "$(realpath "$0")")/../"
 
 ( "$WEBAPP_DIR/backend/scripts/serve" & "$WEBAPP_DIR/frontend/scripts/serve" )

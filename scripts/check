@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
+
+source "$SCRIPT_DIR/../packages/bash/ci_utils.sh"
+
+source "$SCRIPT_DIR/../packages/bash/bash_utils.sh"
+
+validate-shell-scripts "$SCRIPT_DIR"/*
+
+show_summary
+
+exit "$EXIT_STATUS"

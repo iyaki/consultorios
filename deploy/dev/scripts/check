@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
+
+# shellcheck disable=SC2034
+NAMESPACE="$(basename "$(realpath "$SCRIPT_DIR/../")")"
+source "$SCRIPT_DIR/../../../packages/bash/ci_utils.sh"
+
+source "$SCRIPT_DIR/../../../packages/bash/bash_utils.sh"
+
+cd "$SCRIPT_DIR/../" || exit
+
+validate-shell-scripts up down
+
+show_summary
+
+exit "$EXIT_STATUS"

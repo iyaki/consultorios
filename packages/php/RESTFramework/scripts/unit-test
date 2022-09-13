@@ -2,7 +2,6 @@
 
 SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-# shellcheck source=/dev/null
 source "$SCRIPT_DIR/../../../bash/php_utils.sh"
 
 php-ci-setup "$SCRIPT_DIR"

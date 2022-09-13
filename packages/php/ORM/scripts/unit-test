@@ -2,14 +2,13 @@
 
 SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-# shellcheck source=/dev/null
 source "$SCRIPT_DIR/../../../bash/php_utils.sh"
 
 php-ci-setup "$SCRIPT_DIR"
 
 if [ "$1" = "coverage-serve" ]
 then
-  php -S localhost:${2:-8080} -t phpunit-coverage
+  php -S localhost:"${2:-8080}" -t phpunit-coverage
 
   exit
 fi

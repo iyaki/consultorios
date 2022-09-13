@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR="$(dirname $(realpath "$0"))"
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
 source "$SCRIPT_DIR/../../../packages/bash/ci_utils.sh"
+
+source "$SCRIPT_DIR/../../../packages/bash/bash_utils.sh"
 
 function style-conventions() {
   ./node_modules/.bin/standard
@@ -20,9 +22,9 @@ function tests() {
   add_to_try "npm test --no-cache"
 }
 
-cd "$SCRIPT_DIR/../"
+cd "$SCRIPT_DIR/../" || exit
 
-if [ ! -d "${SCRIPT_DIR}/../node_modules" ] && [ ! -z "$CI" ]
+if [ ! -d "${SCRIPT_DIR}/../node_modules" ] && [ -n "$CI" ]
 then
   "$SCRIPT_DIR/setup"
 fi
@@ -31,8 +33,10 @@ style-conventions &
 
 tests &
 
+validate-shell-scripts scripts/* &
+
 wait
 
 show_summary
 
-exit $EXIT_STATUS
+exit "$EXIT_STATUS"

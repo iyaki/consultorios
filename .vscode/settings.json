@@ -4,5 +4,8 @@
   "intelephense.rename.exclude": [],
   "intelephense.environment.includePaths": [
     "/root/.composer/vendor/"
+  ],
+  "shellcheck.exclude": [
+    "SC1091"
   ]
 }

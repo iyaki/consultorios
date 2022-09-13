@@ -31,6 +31,7 @@ done
 # delete duplicate options
 OPTIONS=("$(echo "${OPTIONS[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')")
 
+# shellcheck disable=SC2068
 docker compose --project-name ${PROJECT_NAME} up --detach ${OPTIONS[@]} dev
 
 docker exec -it consultorios-dev-1 "/application/scripts/setup"

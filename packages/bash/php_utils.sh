@@ -72,7 +72,7 @@ function coding-standars() {
 }
 
 function unused-packages() {
-  composer-unused --no-progress --quiet $@
+  composer-unused --no-progress --quiet "$@"
 
   add_to_summary "$?"
 
@@ -81,7 +81,7 @@ function unused-packages() {
 
 function find-transitive-depndencies() {
 
-  composer-require-checker --quiet $@
+  composer-require-checker --quiet "$@"
 
   add_to_summary "$?"
 
@@ -94,7 +94,7 @@ function find-magic-numbers() {
     --strings \
     --include-numeric-string \
     --quiet \
-    $@
+    "$@"
 
   add_to_summary "$?"
 
@@ -140,12 +140,14 @@ function unit-tests() {
 }
 
 function validate-doctrine-schema() {
-  local SKIP_SYNC_PARAM="--skip-sync"
+  local SKIP_SYNC_PARAM
+  SKIP_SYNC_PARAM="--skip-sync"
   if [ -z "$CI" ]
   then
     SKIP_SYNC_PARAM=""
   fi
 
+  # shellcheck disable=SC2086
   ./vendor/bin/doctrine orm:validate-schema $SKIP_SYNC_PARAM
 
   add_to_summary "$?"
@@ -154,7 +156,7 @@ function validate-doctrine-schema() {
 }
 
 function validate-architecture() {
-  phparkitect check
+  phparkitect check --quiet
 
   add_to_summary "$?"
 

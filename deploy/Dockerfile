@@ -301,6 +301,7 @@ RUN apt update \
     gnupg \
     mariadb-client \
     openssh-client \
+    shellcheck \
     vim \
 # More utilities
   && composer global require \

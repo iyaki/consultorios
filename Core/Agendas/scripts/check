@@ -6,11 +6,11 @@ SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
 # shellcheck disable=SC2034
 NAMESPACE="$(basename "$(realpath "$SCRIPT_DIR/../")")"
-# shellcheck source=/dev/null
 source "$SCRIPT_DIR/../../../packages/bash/ci_utils.sh"
 
-# shellcheck source=/dev/null
 source "$SCRIPT_DIR/../../../packages/bash/php_utils.sh"
+
+source "$SCRIPT_DIR/../../../packages/bash/bash_utils.sh"
 
 cd "$SCRIPT_DIR/../" || exit
 
@@ -43,6 +43,8 @@ static-analysis &
 validate-doctrine-schema &
 
 unit-tests &
+
+validate-shell-scripts scripts/* &
 
 wait
 

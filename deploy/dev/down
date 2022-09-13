@@ -2,8 +2,6 @@
 
 PROJECT_NAME='consultorios'
 
-OPTIONS=( $@ )
+cd "$(dirname "$(realpath "$0")")" || exit
 
-cd "$(dirname "$0")" || exit
-
-docker compose --project-name ${PROJECT_NAME} down ${OPTIONS[@]}
+docker compose --project-name ${PROJECT_NAME} down

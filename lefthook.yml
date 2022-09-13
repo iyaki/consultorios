@@ -49,3 +49,9 @@ pre-push:
       run: WebApp/backend/scripts/check > /dev/null
     webapp/frontend:
       run: WebApp/frontend/scripts/check > /dev/null
+    consultorios:
+      run: scripts/check > /dev/null
+    packages/bash:
+      run: packages/bash/scripts/check > /dev/null
+    deploy:
+      run: deploy/dev/scripts/check > /dev/null

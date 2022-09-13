@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Import git fuctions for completions
-# shellcheck source=/dev/null
 . /usr/share/bash-completion/completions/git
 
 function __branch_completion() {

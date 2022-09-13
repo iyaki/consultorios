@@ -9,6 +9,7 @@ function setup-agendas() {
 
   cd "$SCRIPT_DIR/../" || exit
 
+  # shellcheck source=/dev/null
   source "$SCRIPT_DIR/../../../packages/bash/php_utils.sh"
 
   composer_setup \

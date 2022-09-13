@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-PORT="${1:-8080}"
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-SCRIPT_DIR="$(dirname $(realpath "$0"))"
-
-cd "$SCRIPT_DIR/../"
+cd "$SCRIPT_DIR/../" || exit
 
 "$SCRIPT_DIR/setup"
 
-php -S "localhost:$PORT" -t public -c "${SCRIPT_DIR}/../../../deploy/dev/php/composer-autoload.ini"
+php -S "localhost:${1:-8080}" -t public -c "${SCRIPT_DIR}/../../../deploy/dev/php/composer-autoload.ini"
