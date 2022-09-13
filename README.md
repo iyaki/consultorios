@@ -21,3 +21,15 @@ El container "app" esta diseñado para trabajar directamente dentro del mismo
 [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 del [Visual Studio Code](https://code.visualstudio.com/)) y cuenta con
 multiples utilidades para el desarrollo y analisis del código generado.
+
+## Scripts
+
+Cada paquete contenido en este proyecto **DEBE** tener una carpeta `scripts/` con las siguientes utilidades:
+
+- check: Script para verificar la integridad y buenas practicas del paquete.
+- setup: Script para inicializar el paquete y permitir trabajar en él.
+
+Ademas la carpeta scripts puede contener:
+
+- unit-test: Script para ejecutar test unitarios del paquete.
+- serve: Script para lanzar un servidor de desarrollo.
