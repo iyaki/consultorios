@@ -11,6 +11,7 @@
 >
     <projectFiles>
         <directory name="app"/>
+        <directory name="tests"/>
         <ignoreFiles>
             <directory name="/root/.composer/vendor/phpunit/phpunit"/>
             <directory name="vendor"/>

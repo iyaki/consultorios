@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Consultorios\WebApp\Agendas;
 
-use Consultorios\Core\Agendas\UseCases\Especialidades;
+use Consultorios\Core\Agendas\UseCases\EspecialidadesInterface;
 use Consultorios\RESTFramework\RequestBodyHelper;
 use Consultorios\RESTFramework\ResponseFactory;
 use OpenApi\Attributes as OA;
@@ -18,7 +18,7 @@ final class EspecialidadesPostHandler implements RequestHandlerInterface
 
     public function __construct(
         private readonly ResponseFactory $responseFactory,
-        private readonly Especialidades $especialidades,
+        private readonly EspecialidadesInterface $especialidades,
     ) {
     }
 

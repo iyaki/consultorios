@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Consultorios\WebApp\Agendas;
 
 use Consultorios\Core\Agendas\Domain\EspecialidadId;
-use Consultorios\Core\Agendas\UseCases\Especialidades;
+use Consultorios\Core\Agendas\UseCases\EspecialidadesInterface;
 use Consultorios\RESTFramework\RequestBodyHelper;
 use Consultorios\RESTFramework\ResponseFactory;
 use Consultorios\RESTFramework\UriHelper;
@@ -22,7 +22,7 @@ final class EspecialidadesPatchHandler implements RequestHandlerInterface
 
     public function __construct(
         private readonly ResponseFactory $responseFactory,
-        private readonly Especialidades $especialidades,
+        private readonly EspecialidadesInterface $especialidades,
     ) {
     }
 
