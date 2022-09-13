@@ -55,22 +55,20 @@ final class EspecialidadesTestDouble implements EspecialidadesInterface
 
     public function editar(EspecialidadId $id, string $nombre): Especialidad
     {
+        $especialidad = $this->especialidades[(string) $id] ?? throw new \UnexpectedValueException('Error');
 
-            $especialidad = $this->especialidades[(string) $id] ?? throw new \UnexpectedValueException('Error');
+        $especialidad->renombrar($nombre);
 
-            $especialidad->renombrar($nombre);
+        $this->assertTieneNombreUnico($especialidad);
 
-            $this->assertTieneNombreUnico($especialidad);
-
-            return $especialidad;
+        return $especialidad;
     }
 
     public function eliminar(EspecialidadId $id): void
     {
-        if (!isset($this->especialidades[(string) $id])) {
+        if (! isset($this->especialidades[(string) $id])) {
             throw new \UnexpectedValueException('Error');
         }
-
     }
 
     private function assertTieneNombreUnico(Especialidad $especialidadAValidar): void

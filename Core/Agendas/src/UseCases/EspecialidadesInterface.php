@@ -49,5 +49,4 @@ interface EspecialidadesInterface
      * una especialidad inexistente.
      */
     public function eliminar(EspecialidadId $id): void;
-
 }
