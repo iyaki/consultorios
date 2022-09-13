@@ -1,6 +1,19 @@
 # syntax=docker/dockerfile:1
 
-FROM alpine:latest as asdf-vm-base
+FROM alpine:latest as base-alpine
+
+FROM ubuntu:latest as base-ubuntu
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+ENV TZ=America/Argentina/Buenos_Aires
+
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
+SHELL ["/bin/bash", "-c"]
+
+FROM base-alpine as asdf-vm-base
 
 RUN apk add --no-cache git \
   && git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2 \
@@ -25,11 +38,7 @@ RUN apk add --no-cache git \
     ~/.asdf/Vagrantfile \
     ~/.asdf/VERSION
 
-FROM ubuntu:latest as php-dependecies
-
-ARG DEBIAN_FRONTEND=noninteractive
-
-ENV TZ=America/Argentina/Buenos_Aires
+FROM base-ubuntu as php-dependecies
 
 RUN apt update \
   && apt install \
@@ -72,8 +81,6 @@ FROM php-dependecies as php-build
 ARG PHP_VERSION
 
 COPY --from=asdf-vm-base /root/.asdf /root/.asdf
-
-SHELL ["/bin/bash", "-c"]
 
 RUN apt update \
   && apt install \
@@ -119,7 +126,7 @@ ENV PATH="/root/.asdf/installs/php/${PHP_VERSION}/bin:/root/.composer/vendor/bin
 # Set php.ini path
 # ENV PHPRC="/root/.asdf/installs/php/${PHP_VERSION}/conf.d/php.ini" El auto_prepend_file del php.ini rompe rector
 
-FROM alpine:latest as php-phive
+FROM base-alpine as php-phive
 
 WORKDIR /root
 
@@ -202,13 +209,11 @@ RUN apt update \
     ~/php/php-fpm.d/* \
     ~/php/sbin/php-fpm
 
-FROM ubuntu:latest as node-build
+FROM base-ubuntu as node-build
 
 ARG NODE_VERSION=14.18.1
 
 COPY --from=asdf-vm-base /root/.asdf /root/.asdf
-
-SHELL ["/bin/bash", "-c"]
 
 RUN apt update \
   && apt install \
@@ -271,9 +276,6 @@ ENV PATH="/root/nodejs/bin:${PATH}"
 FROM php-ci as dev-env
 
 LABEL org.opencontainers.image.source="https://github.com/iyaki/consultorios"
-
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
 
 ARG PHP_VERSION
 
