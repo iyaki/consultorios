@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Consultorios\WebApp\Agendas;
+namespace Consultorios\WebAppTests\Agendas;
 
 use Consultorios\Core\Agendas\Domain\Especialidad;
 use Consultorios\Core\Agendas\UseCases\EspecialidadesTestDouble;
 use Consultorios\RESTFramework\ResponseFactory;
+use Consultorios\WebApp\Agendas\EspecialidadesPostHandler;
+use Consultorios\WebApp\Agendas\EspecialidadTransformer;
 use Laminas\Diactoros\ResponseFactory as DiactorosResponseFactory;
 use Laminas\Diactoros\ServerRequest;
 use PHPUnit\Framework\TestCase;

@@ -160,6 +160,7 @@ RUN apt update \
     brianium/paratest \
     php-parallel-lint/php-console-highlighter \
     php-parallel-lint/php-var-dump-check \
+    phparkitect/phparkitect \
     phpunit/phpunit ^9 \
     povils/phpmnd \
     psalm/plugin-phpunit \

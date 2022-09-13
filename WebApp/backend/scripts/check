@@ -37,6 +37,8 @@ find-magic-numbers -- "$CODE_DIRECOTRY" &
 
 find-copy-pasted-code "$CODE_DIRECOTRY" &
 
+validate-architecture &
+
 static-analysis &
 
 wait

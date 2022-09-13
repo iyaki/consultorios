@@ -153,6 +153,14 @@ function validate-doctrine-schema() {
   add_to_try "./vendor/bin/doctrine orm:validate-schema $SKIP_SYNC_PARAM"
 }
 
+function validate-architecture() {
+  phparkitect check
+
+  add_to_summary "$?"
+
+  add_to_try "phparkitect check"
+}
+
 function remake-autoloader() {
   composer dump-autoload \
     --optimize \
