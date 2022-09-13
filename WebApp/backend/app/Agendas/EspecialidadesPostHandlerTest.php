@@ -50,9 +50,6 @@ final class EspecialidadesPostHandlerTest extends TestCase
         $handler->handle($request);
     }
 
-    /**
-     * @psalm-pure
-     */
     private function handler(): EspecialidadesPostHandler
     {
         return new EspecialidadesPostHandler(
@@ -66,9 +63,6 @@ final class EspecialidadesPostHandlerTest extends TestCase
         );
     }
 
-    /**
-     * @psalm-pure
-     */
     private function request(string $nombre): ServerRequestInterface
     {
         $request = new ServerRequest(

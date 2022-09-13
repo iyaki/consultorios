@@ -39,9 +39,6 @@ final class EspecialidadesDeleteHandlerTest extends TestCase
         $handler->handle($request);
     }
 
-    /**
-     * @psalm-pure
-     */
     private function handler(): EspecialidadesDeleteHandler
     {
         return new EspecialidadesDeleteHandler(
@@ -55,9 +52,6 @@ final class EspecialidadesDeleteHandlerTest extends TestCase
         );
     }
 
-    /**
-     * @psalm-pure
-     */
     private function request(string $id): ServerRequestInterface
     {
         return new ServerRequest(

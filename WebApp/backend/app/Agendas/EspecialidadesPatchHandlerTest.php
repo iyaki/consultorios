@@ -61,9 +61,6 @@ final class EspecialidadesPatchHandlerTest extends TestCase
         $handler->handle($request);
     }
 
-    /**
-     * @psalm-pure
-     */
     private function handler(): EspecialidadesPatchHandler
     {
         return new EspecialidadesPatchHandler(
@@ -77,9 +74,6 @@ final class EspecialidadesPatchHandlerTest extends TestCase
         );
     }
 
-    /**
-     * @psalm-pure
-     */
     private function request(string $id, string $nombre): ServerRequestInterface
     {
         $request = new ServerRequest(

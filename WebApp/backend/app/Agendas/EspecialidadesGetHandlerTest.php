@@ -53,9 +53,6 @@ final class EspecialidadesGetHandlerTest extends TestCase
         );
     }
 
-    /**
-     * @psalm-pure
-     */
     private function handler(): EspecialidadesGetHandler
     {
         return new EspecialidadesGetHandler(
@@ -69,9 +66,6 @@ final class EspecialidadesGetHandlerTest extends TestCase
         );
     }
 
-    /**
-     * @psalm-pure
-     */
     private function request(): ServerRequestInterface
     {
         return new ServerRequest(
