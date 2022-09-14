@@ -19,7 +19,7 @@ jobs:
             --progress plain \
             --target php-ci \
             --tag ghcr.io/iyaki/consultorios-ci-php:latest \
-            --file deploy/Dockerfile
+            --file deploy/Dockerfile \
             .
 
       - name: Build ci-nodejs image
@@ -28,7 +28,7 @@ jobs:
             --progress plain \
             --target node-runtime \
             --tag ghcr.io/iyaki/consultorios-ci-nodejs:latest \
-            --file deploy/Dockerfile
+            --file deploy/Dockerfile \
             .
 
       - name: Login into ghcr.io
