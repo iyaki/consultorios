@@ -1,0 +1,24 @@
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**/scripts/**'
+      - '/**/*.sh'
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+    paths:
+      - '**/scripts/**'
+      - '/**/*.sh'
+
+jobs:
+  continuous_integration:
+    runs-on: ubuntu-latest
+    name: Integración continua para shell scripts
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
