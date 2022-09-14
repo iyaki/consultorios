@@ -78,6 +78,11 @@ function add_to_try() {
 }
 
 function show_summary() {
+  if [ -z "$TERM" ]
+  then
+    TERM="xterm"
+  fi
+
   local RED
   RED="$(tput setaf 1)"
   local GREEN
