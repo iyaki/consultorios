@@ -357,6 +357,7 @@ RUN apt update \
   COPY --from=node-build /root/nodejs /root/nodejs
 
   COPY ./deploy/dev/bin/jq /usr/local/bin/jq
+  COPY ./deploy/dev/bin/hadolint /usr/local/bin/hadolint
 
   ENV PATH="/root/nodejs/bin:${PATH}"
 
