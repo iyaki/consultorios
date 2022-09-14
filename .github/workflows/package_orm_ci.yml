@@ -1,6 +1,8 @@
 on:
   workflow_dispatch:
   push:
+    branches:
+      - 'master'
     paths:
       - 'packages/php/ORM/**'
       - 'packages/bash/**'
