@@ -1,0 +1,26 @@
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'deploy/Dockerfile'
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+    paths:
+      - 'deploy/Dockerfile'
+
+jobs:
+  continuous_integration:
+    runs-on: ubuntu-latest
+    name: Integración continua para Dockerfile
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: hadolint/hadolint-action@v2.0.0
+      with:
+        dockerfile: deploy/Dockerfile
+        config: deploy/hadolint.yaml

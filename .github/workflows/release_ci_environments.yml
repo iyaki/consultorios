@@ -5,6 +5,8 @@ on:
       - 'master'
     paths:
       - 'deploy/Dockerfile'
+      - 'deploy/dev/packages/*'
+      - 'deploy/dev/bin/*'
 
 jobs:
   release_ci_image:

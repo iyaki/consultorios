@@ -1,8 +1,10 @@
 # syntax=docker/dockerfile:1
 
-FROM alpine:latest as base-alpine
+FROM alpine:3 as base-alpine
 
-FROM ubuntu:latest as base-ubuntu
+WORKDIR /root
+
+FROM ubuntu:jammy as base-ubuntu
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -12,6 +14,8 @@ ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
 SHELL ["/bin/bash", "-c"]
+
+WORKDIR /root
 
 FROM base-alpine as asdf-vm-base
 
@@ -40,8 +44,8 @@ RUN apk add --no-cache git \
 
 FROM base-ubuntu as php-dependecies
 
-RUN apt update \
-  && apt install \
+RUN apt-get update \
+  && apt-get install \
     --assume-yes \
     --quiet \
     --no-install-recommends \
@@ -82,8 +86,8 @@ ARG PHP_VERSION
 
 COPY --from=asdf-vm-base /root/.asdf /root/.asdf
 
-RUN apt update \
-  && apt install \
+RUN apt-get update \
+  && apt-get install \
     --assume-yes \
     --quiet \
     --no-install-recommends \
@@ -92,11 +96,11 @@ RUN apt update \
     g++ \
     gcc \
     make \
-  && source ~/.asdf/asdf.sh \
+  && . ~/.asdf/asdf.sh \
   && asdf plugin add php https://github.com/asdf-community/asdf-php.git \
   && asdf install php ${PHP_VERSION} \
   && cp -r ~/.asdf/installs/php/${PHP_VERSION} ~/php \
-  && apt purge \
+  && apt-get purge \
     --assume-yes \
     --quiet \
     autoconf \
@@ -128,8 +132,6 @@ ENV PATH="/root/.asdf/installs/php/${PHP_VERSION}/bin:/root/.composer/vendor/bin
 
 FROM base-alpine as php-phive
 
-WORKDIR /root
-
 RUN apk add --no-cache \
     curl \
     gnupg \
@@ -149,8 +151,8 @@ COPY --from=php-phive /root/phive.phar /root/.asdf/installs/php/${PHP_VERSION}/b
 
 COPY ./deploy/dev/packages/lefthook_1.1.1_amd64.deb ./lefthook.deb
 
-RUN apt update \
-  && apt install \
+RUN apt-get update \
+  && apt-get install \
     --assume-yes \
     --quiet \
     --no-install-recommends \
@@ -186,7 +188,7 @@ RUN apt update \
     composer-require-checker \
     composer-unused \
     phpcpd \
-  && apt purge \
+  && apt-get purge \
     --assume-yes \
     --quiet \
     alsa-topology-conf \
@@ -196,7 +198,7 @@ RUN apt update \
     gnupg \
     manpages \
     manpages-dev \
-  && apt autoremove \
+  && apt-get autoremove \
     --assume-yes \
     --quiet \
     --purge \
@@ -215,8 +217,8 @@ ARG NODE_VERSION=14.18.1
 
 COPY --from=asdf-vm-base /root/.asdf /root/.asdf
 
-RUN apt update \
-  && apt install \
+RUN apt-get update \
+  && apt-get install \
     --assume-yes \
     --reinstall \
     --quiet \
@@ -226,11 +228,11 @@ RUN apt update \
     curl \
     git \
     gnupg \
-  && source ~/.asdf/asdf.sh \
+  && . ~/.asdf/asdf.sh \
   && asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git \
   && asdf install nodejs ${NODE_VERSION} \
   && cp -r ~/.asdf/installs/nodejs/${NODE_VERSION} ~/nodejs \
-  && apt purge \
+  && apt-get purge \
     --assume-yes \
     --quiet \
     alsa-topology-conf \
@@ -240,7 +242,7 @@ RUN apt update \
     gnupg \
     manpages \
     manpages-dev \
-  && apt autoremove \
+  && apt-get autoremove \
     --assume-yes \
     --quiet \
     --purge \
@@ -283,13 +285,13 @@ COPY --from=php-phive /root/phive.phar /root/.asdf/installs/php/${PHP_VERSION}/b
 
 COPY ./deploy/dev/packages/git-delta_0.13.0_amd64.deb ./git-delta.deb
 
-RUN apt update \
-  && apt upgrade \
+RUN apt-get update \
+  && apt-get upgrade \
     --assume-yes \
     --quiet \
     --no-install-recommends \
     --purge \
-  && apt install \
+  && apt-get install \
     --assume-yes \
     --quiet \
     --no-install-recommends \
@@ -325,8 +327,8 @@ RUN apt update \
     churn \
     phploc \
   && pecl install xdebug \
-  && apt update \
-  && apt autoremove \
+  && apt-get update \
+  && apt-get autoremove \
     --assume-yes \
     --quiet \
     --purge \

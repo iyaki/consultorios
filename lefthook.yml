@@ -55,3 +55,5 @@ pre-push:
       run: packages/bash/scripts/check > /dev/null
     deploy:
       run: deploy/dev/scripts/check > /dev/null
+    dockerfile:
+      run: hadolint --config deploy/hadolint.yaml deploy/Dockerfile

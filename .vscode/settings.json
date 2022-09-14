@@ -8,5 +8,9 @@
   "shellcheck.exclude": [
     "SC1091",
     "SC1090",
-  ]
+  ],
+  "hadolint.cliOptions": [
+    "--no-color",
+    "--config", "/application/deploy/hadolint.yaml"
+  ],
 }

@@ -1,0 +1,5 @@
+ignored:
+  # Deshabilitado por estar trabajando en un entorno de desarrollo
+  - DL3018
+  # Deshabilitado por estar trabajando en un entorno de desarrollo
+  - DL3008
