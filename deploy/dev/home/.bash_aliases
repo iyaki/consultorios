@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 # Easier navigation
 alias ..='cd ..'
 alias cd..='cd ..'

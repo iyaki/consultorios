@@ -1,4 +1,4 @@
-#!/bin/bash
+# shellcheck shell=bash
 
 # Create a new directory and enter it
 function md() {
@@ -20,7 +20,7 @@ function csvpreview() {
 }
 
 function get_repository_path() {
-  echo "$( git rev-parse --show-toplevel )"
+  git rev-parse --show-toplevel
 }
 
 function php_deploy() {
@@ -65,7 +65,7 @@ Example:
     BRANCH_NAME="${1}_${2}"
   fi &&
 
-  git checkout -t ${REMOTE}/${1} -B ${BRANCH_NAME} &&
+  git checkout -t ${REMOTE}/"${1}" -B "${BRANCH_NAME}" &&
 
   project_deploy
 }
@@ -75,7 +75,7 @@ Example:
 function gcpr() {
   REMOTE='origin'
 
-  git fetch -f ${REMOTE} pull/${1}/head:pr-${1} && git checkout pr-${1} &&
+  git fetch -f ${REMOTE} pull/"${1}"/head:pr-"${1}" && git checkout pr-"${1}" &&
 
   project_deploy
 }
@@ -84,16 +84,17 @@ function gcpr() {
 # Use together with !<number of history line> to re-execute a command
 # The use case is similar to the usage of the shortcut "Ctrl+r"
 function hg() {
-  history | grep --color=auto $@
+  history | grep --color=auto "$@"
 }
 
 # du -sh (Disk Usage Summarizing and Human readable)
 # Arguemnts:
 # 1. Extra arguments (flags and path). If none is provided path * is used
+# shellcheck disable=SC2120
 function dush() {
   if [ -z "$1" ]
   then
-    du -sh * 2>&1 | ignore_permision_denied
+    du -sh ./* 2>&1 | ignore_permision_denied
   else
     du -sh "$@" 2>&1 | ignore_permision_denied
   fi
@@ -107,7 +108,7 @@ function dush-sort() {
   then
     dush | sort -hr | head -n10
   else
-    dush | sort -hr | head -n${1}
+    dush | sort -hr | head -n"${1}"
   fi
 }
 

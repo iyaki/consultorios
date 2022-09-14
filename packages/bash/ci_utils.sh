@@ -57,7 +57,6 @@ function initialize_shared_variable() {
 # 3. Value to add to the array variable
 function add_to_shared_variable() {
   SHARED_VARIABLE_PATH="$(get_shared_variable_path "${1}")"
-  # shellcheck source=/dev/null
   source "$SHARED_VARIABLE_PATH"
 
   eval "${1}[\"${2}\"]=\"$3\""
@@ -90,9 +89,7 @@ function show_summary() {
   local NORMAL
   NORMAL="$(tput sgr0)"
 
-  # shellcheck source=/dev/null
   source "$(get_shared_variable_path "$SUMMARY_VARNAME")"
-  # shellcheck source=/dev/null
   source "$(get_shared_variable_path "$ON_ERROR_TRY_VARNAME")"
 
   for validation in $(variable_keys "${SUMMARY_VARNAME}")

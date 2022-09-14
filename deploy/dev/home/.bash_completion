@@ -1,10 +1,11 @@
-#!/bin/bash
+# shellcheck shell=bash
 
 # Import git fuctions for completions
 . /usr/share/bash-completion/completions/git
 
 function __branch_completion() {
-    COMPREPLY=($(compgen -W "$(__git_heads)" "${COMP_WORDS[1]}"))
+  # shellcheck disable=SC2207
+  COMPREPLY=($(compgen -W "$(__git_heads)" "${COMP_WORDS[1]}"))
 }
 
 # Completion for branches

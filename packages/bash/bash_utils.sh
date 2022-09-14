@@ -8,7 +8,7 @@ then
 fi
 
 function validate-shell-scripts() {
-  shellcheck --exclude=SC1091 "$@"
+  shellcheck --exclude=SC1091,SC1090 "$@"
 
   add_to_summary "$?"
 

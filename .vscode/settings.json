@@ -6,6 +6,7 @@
     "/root/.composer/vendor/"
   ],
   "shellcheck.exclude": [
-    "SC1091"
+    "SC1091",
+    "SC1090",
   ]
 }
