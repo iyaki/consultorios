@@ -2,14 +2,17 @@
 
 CODE_DIRECOTRY='src/'
 
-SCRIPT_DIR="$(dirname $(realpath "$0"))"
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-NAMESPACE="$(basename $(realpath "$SCRIPT_DIR/../"))"
+# shellcheck disable=SC2034
+NAMESPACE="$(basename "$(realpath "$SCRIPT_DIR/../")")"
 source "$SCRIPT_DIR/../../../packages/bash/ci_utils.sh"
 
 source "$SCRIPT_DIR/../../../packages/bash/php_utils.sh"
 
-cd "$SCRIPT_DIR/../"
+source "$SCRIPT_DIR/../../../packages/bash/bash_utils.sh"
+
+cd "$SCRIPT_DIR/../" || exit
 
 php-ci-setup "$SCRIPT_DIR"
 
@@ -35,10 +38,12 @@ find-copy-pasted-code "$CODE_DIRECOTRY" &
 
 static-analysis &
 
+validate-shell-scripts scripts/* &
+
 wait
 
 remake-autoloader
 
 show_summary
 
-exit $EXIT_STATUS
+exit "$EXIT_STATUS"
