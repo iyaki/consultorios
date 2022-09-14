@@ -327,6 +327,8 @@ RUN apt-get update \
     churn \
     phploc \
   && pecl install xdebug \
+  && bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) \
+  && mv actionlint /usr/local/bin/actionlint \
   && apt-get update \
   && apt-get autoremove \
     --assume-yes \

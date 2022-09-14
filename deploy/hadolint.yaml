@@ -3,3 +3,5 @@ ignored:
   - DL3018
   # Deshabilitado por estar trabajando en un entorno de desarrollo
   - DL3008
+  # Utilizamos bash
+  - SC3001

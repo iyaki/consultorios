@@ -57,3 +57,5 @@ pre-push:
       run: deploy/dev/scripts/check > /dev/null
     dockerfile:
       run: hadolint --config deploy/hadolint.yaml deploy/Dockerfile
+    github_actions:
+      run: actionlint
