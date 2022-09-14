@@ -19,7 +19,8 @@ jobs:
             --progress plain \
             --target php-ci \
             --tag ghcr.io/iyaki/consultorios-ci-php:latest \
-            deploy/
+            --file deploy/Dockerfile
+            .
 
       - name: Build ci-nodejs image
         run: |
@@ -27,7 +28,8 @@ jobs:
             --progress plain \
             --target node-runtime \
             --tag ghcr.io/iyaki/consultorios-ci-nodejs:latest \
-            deploy/
+            --file deploy/Dockerfile
+            .
 
       - name: Login into ghcr.io
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
