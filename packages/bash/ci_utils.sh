@@ -80,7 +80,7 @@ function add_to_try() {
 function show_summary() {
   if [ -z "$TERM" ]
   then
-    TERM="xterm"
+    export TERM="xterm"
   fi
 
   local RED
