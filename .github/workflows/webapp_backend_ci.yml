@@ -44,5 +44,14 @@ jobs:
           key: ${{ env.cache-name }}-${{ hashFiles('.github/.cache-version') }}-${{ hashFiles('WebApp/backend/composer.lock') }}
           restore-keys: ${{ env.cache-name }}-${{ hashFiles('.github/.cache-version') }}-
 
+      - name: Cache check tools
+        id: cache-check-toolsw-ebapp-backend
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./WebApp/backend/.ecs-cache
+            ./WebApp/backend/.psalm-cache
+          key: check-tools-webapp-backend-${{ hashFiles('.github/.cache-version') }}
+
       - name: Validaciones
         run: WebApp/backend/scripts/check

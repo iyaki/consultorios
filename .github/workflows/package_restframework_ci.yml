@@ -44,6 +44,15 @@ jobs:
           key: ${{ env.cache-name }}-${{ hashFiles('.github/.cache-version') }}-${{ hashFiles('packages/php/RESTFramework/composer.json') }}
           restore-keys: ${{ env.cache-name }}-${{ hashFiles('.github/.cache-version') }}-
 
+      - name: Cache check tools
+        id: cache-check-tools-restframework
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./packages/php/RESTFramework/.ecs-cache
+            ./packages/php/RESTFramework/.psalm-cache
+          key: check-tools-restframework}-${{ hashFiles('.github/.cache-version') }}
+
       - name: Validaciones
         run: packages/php/RESTFramework/scripts/check
         env:

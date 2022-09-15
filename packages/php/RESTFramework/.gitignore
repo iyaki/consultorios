@@ -1,4 +1,5 @@
-/vendor
+/.ecs-cache
 /.phpunit.cache
-/junit.xml
 /.psalm-cache
+/junit.xml
+/vendor

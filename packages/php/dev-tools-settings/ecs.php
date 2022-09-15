@@ -29,6 +29,8 @@ if (! \function_exists('\Consultorios\DevToolsSettings\getECSConfigurator')) {
                 SetList::CLEAN_CODE,
                 SetList::COMMON
             ]);
+
+            $ecsConfig->cacheDirectory('.ecs-cache');
         };
     }
 }

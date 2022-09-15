@@ -1,3 +1,4 @@
+/.ecs-cache
 /.phpunit.cache
 /.psalm-cache
 /vendor
