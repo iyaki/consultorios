@@ -24,7 +24,8 @@ multiples utilidades para el desarrollo y analisis del código generado.
 
 ## Scripts
 
-Cada paquete contenido en este proyecto **DEBE** tener una carpeta `scripts/` con las siguientes utilidades:
+Cada paquete contenido en este proyecto **DEBE** tener una carpeta `scripts/`
+con las siguientes utilidades:
 
 - check: Script para verificar la integridad y buenas practicas del paquete.
 - setup: Script para inicializar el paquete y permitir trabajar en él.

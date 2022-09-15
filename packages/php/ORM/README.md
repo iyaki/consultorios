@@ -4,11 +4,11 @@
 
 ### Instalación
 
-1. Configurar composer para aceptar repositorios locales:
+1 - Configurar composer para aceptar repositorios locales:
 
   composer.json
 
-```
+```json
 "repositories": [
     {
       "type": "path",
@@ -23,14 +23,13 @@
 
 El campo `url` debe apuntar al path contenedor de ORM (`packages/php/`)
 
+2 - Ejecutar en una shell:
 
-2. Ejecutar en una shell:
-   
 ```shell
 composer require consultorios/orm
 ```
 
-Tambien se sugiere instalar `doctrine/orm` para evitar *weak dependencies* y 
+Tambien se sugiere instalar `doctrine/orm` para evitar *weak dependencies* y
 `ramsey/uuid` para la generaciín de UUID para las entidades:
 
 ```shell
@@ -40,6 +39,7 @@ composer require \
 ```
 
 Documentación útil:
+
 - [Doctrine ORM](https://www.doctrine-project.org/projects/orm.html)
 - [Doctrine Migrations](https://www.doctrine-project.org/projects/migrations.html)
 - [PDO_MySQL](https://www.php.net/manual/en/ref.pdo-mysql.php)

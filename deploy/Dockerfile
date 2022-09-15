@@ -281,6 +281,10 @@ LABEL org.opencontainers.image.source="https://github.com/iyaki/consultorios"
 
 ARG PHP_VERSION
 
+COPY --from=node-build /root/nodejs /root/nodejs
+
+ENV PATH="/root/nodejs/bin:${PATH}"
+
 COPY --from=php-phive /root/phive.phar /root/.asdf/installs/php/${PHP_VERSION}/bin/phive
 
 COPY ./deploy/dev/packages/git-delta_0.13.0_amd64.deb ./git-delta.deb
@@ -359,16 +363,12 @@ RUN apt-get update \
   && lefthook completion bash > lefthook_completion.bash \
   && mv lefthook_completion.bash /etc/bash_completion.d/lefthook
 
-  COPY --from=node-build /root/nodejs /root/nodejs
-
-  COPY ./deploy/dev/bin/jq /usr/local/bin/jq
-  COPY ./deploy/dev/bin/hadolint /usr/local/bin/hadolint
-
-  ENV PATH="/root/nodejs/bin:${PATH}"
+COPY ./deploy/dev/bin/jq /usr/local/bin/jq
+COPY ./deploy/dev/bin/hadolint /usr/local/bin/hadolint
 
 # Path para ejecutar binarios por proyecto
-  ENV PATH="./node_modules/.bin:${PATH}"
-  ENV PATH="./vendor/bin:${PATH}"
-  ENV PATH="./scripts:${PATH}"
+ENV PATH="./node_modules/.bin:${PATH}"
+ENV PATH="./vendor/bin:${PATH}"
+ENV PATH="./scripts:${PATH}"
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
