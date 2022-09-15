@@ -50,12 +50,19 @@ jobs:
 
       - name: Averiguaciones
         run: |
+          printf "pwd\n"
           pwd
+          printf "ls -la\n"
           ls -la
+          printf "echo \$HOME\n"
           echo "$HOME"
+          printf "echo \$XDG_CACHE_HOME\n"
           echo "$XDG_CACHE_HOME"
+          printf "whoami\n"
           whoami
+          printf "ls -la \$HOME\n"
           ls -la "$HOME"
+          printf "ls -la \$XDG_CACHE_HOME\n"
           ls -la "$XDG_CACHE_HOME"
+          printf "composer config --global home\n"
           composer config --global home
-          ls -la "$(composer config --global home)"
