@@ -329,6 +329,7 @@ RUN apt-get update \
   && pecl install xdebug \
   && bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) \
   && mv actionlint /usr/local/bin/actionlint \
+  && npm install --global markdownlint-cli2@^0.5.1 \
   && apt-get update \
   && apt-get autoremove \
     --assume-yes \
