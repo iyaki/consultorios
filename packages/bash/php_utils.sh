@@ -1,10 +1,9 @@
 # shellcheck shell=bash
 
 composer_setup() {
-  composer "${2:-install}" \
+  COMPOSER_PREFER_STABLE=1 composer "${2:-install}" \
     --working-dir="${1:-.}" \
     --optimize-autoloader \
-    --no-cache \
     --no-interaction
 
   composer check-platform-reqs \

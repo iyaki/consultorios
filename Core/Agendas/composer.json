@@ -19,6 +19,7 @@
     "exclude-from-classmap": ["*Test.php"]
   },
   "config": {
+    "lock": false,
     "platform": {
       "php": "8.1"
     },
