@@ -30,10 +30,8 @@ jobs:
       - name: Cache composer packages
         id: cache-composer
         uses: actions/cache@v3
-        env:
-          cache-name: cache-composer-packages
         with:
-          path: ./vendor
+          path: vendor
           key: composer
           restore-keys: |
             composer
