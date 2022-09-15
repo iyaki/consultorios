@@ -57,3 +57,5 @@ jobs:
           whoami
           ls -la "$HOME"
           ls -la "$XDG_CACHE_HOME"
+          composer config --global home
+          ls -la "$(composer config --global home)"
