@@ -27,14 +27,29 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Cache composer cache
+        id: cache-composer-cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.composer/cache
+          key: composer-cache
+          restore-keys: |
+            composer-cache
+
       - name: Cache composer packages
-        id: cache-composer
+        id: cache-composer-packages-restframework
         uses: actions/cache@v3
         with:
           path: vendor
-          key: composer
+          key: composer-restframework
           restore-keys: |
-            composer
+            composer-restframework
 
       - name: Validaciones
         run: packages/php/RESTFramework/scripts/check
+
+      - name: Averiguaciones
+        run: |
+          pwd
+          ls -la
+          echo "$HOME"
