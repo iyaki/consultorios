@@ -45,7 +45,7 @@ jobs:
           restore-keys: ${{ env.cache-name }}-${{ hashFiles('.github/.cache-version') }}-
 
       - name: Cache check tools
-        id: cache-check-toolsw-ebapp-backend
+        id: cache-check-tools-webapp-backend
         uses: actions/cache@v3
         with:
           path: |
