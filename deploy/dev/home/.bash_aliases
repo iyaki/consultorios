@@ -31,7 +31,7 @@ alias glo='git log --color --pretty=format:"%Cred%H%Creset - %C(blue)(%G? %GT)%C
 alias glol='git log --color --graph --pretty=format:"%Cred%h%Creset - %C(blue)(%G? %GT)%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --'
 alias gp='git push '
 alias gpsu='git push --set-upstream '
-alias gpr='git pull --rebase --autostash '
+alias gpr='git pull --rebase --autostash origin '
 alias gr='git reset '
 alias gs='git status '
 alias gtd='git tag --delete '
