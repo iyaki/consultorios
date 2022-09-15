@@ -27,5 +27,21 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Cache composer cache
+        id: cache-composer-cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.composer/cache
+          key: composer-cache
+          restore-keys: composer-cache
+
+      - name: Cache composer packages
+        id: cache-composer-packages-common
+        uses: actions/cache@v3
+        with:
+          path: ./Core/Common/vendor
+          key: composer-common
+          restore-keys: composer-common
+
       - name: Validaciones
         run: Core/Common/scripts/check

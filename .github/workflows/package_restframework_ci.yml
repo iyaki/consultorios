@@ -33,8 +33,7 @@ jobs:
         with:
           path: ~/.composer/cache
           key: composer-cache
-          restore-keys: |
-            composer-cache
+          restore-keys: composer-cache
 
       - name: Cache composer packages
         id: cache-composer-packages-restframework
@@ -42,23 +41,9 @@ jobs:
         with:
           path: ./packages/php/RESTFramework/vendor
           key: composer-restframework
-          restore-keys: |
-            composer-restframework
+          restore-keys: composer-restframework
 
       - name: Validaciones
         run: packages/php/RESTFramework/scripts/check
-
-      - name: Averiguaciones
-        run: |
-          printf "pwd\n"
-          pwd
-          printf "ls -la\n"
-          ls -la
-          printf "echo \$HOME\n"
-          echo "$HOME"
-          printf "whoami\n"
-          whoami
-          printf "ls -la ~/.composer\n"
-          ls -la ~/.composer
-          printf "composer config --global home\n"
-          composer config --global home
+        env:
+          COMPOSER_NO_AUDIT: 1

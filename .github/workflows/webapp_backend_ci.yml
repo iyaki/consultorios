@@ -27,5 +27,21 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Cache composer cache
+        id: cache-composer-cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.composer/cache
+          key: composer-cache
+          restore-keys: composer-cache
+
+      - name: Cache composer packages
+        id: cache-composer-packages-webapp-backend
+        uses: actions/cache@v3
+        with:
+          path: ./WebApp/backend/vendor
+          key: composer-webapp-backend
+          restore-keys: composer-webapp-backend
+
       - name: Validaciones
         run: WebApp/backend/scripts/check

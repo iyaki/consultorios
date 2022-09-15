@@ -27,5 +27,21 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Cache npm cache
+        id: cache-npm-cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-cache
+          restore-keys: npm-cache
+
+      - name: Cache node packages
+        id: cache-node-packages-webapp-frontend
+        uses: actions/cache@v3
+        with:
+          path: ./WebApp/frontend/node_modules
+          key: composer-webapp-frontend
+          restore-keys: composer-webapp-frontend
+
       - name: Validaciones
         run: WebApp/frontend/scripts/check
