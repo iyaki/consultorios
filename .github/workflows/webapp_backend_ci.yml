@@ -32,16 +32,17 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.composer/cache
-          key: composer-cache
-          restore-keys: composer-cache
+          key: composer-cache-${{ hashFiles('.github/.cache-version') }}
 
       - name: Cache composer packages
         id: cache-composer-packages-webapp-backend
         uses: actions/cache@v3
+        env:
+          cache-name: composer-webapp-backend
         with:
           path: ./WebApp/backend/vendor
-          key: composer-webapp-backend
-          restore-keys: composer-webapp-backend
+          key: ${{ env.cache-name }}-${{ hashFiles('.github/.cache-version') }}-${{ hashFiles('WebApp/backend/composer.lock') }}
+          restore-keys: ${{ env.cache-name }}-${{ hashFiles('.github/.cache-version') }}-
 
       - name: Validaciones
         run: WebApp/backend/scripts/check

@@ -32,16 +32,17 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: npm-cache
-          restore-keys: npm-cache
+          key: npm-cache-${{ hashFiles('.github/.cache-version') }}
 
       - name: Cache node packages
         id: cache-node-packages-webapp-frontend
         uses: actions/cache@v3
+        env:
+          cache-name: npm-webapp-frontend
         with:
           path: ./WebApp/frontend/node_modules
-          key: composer-webapp-frontend
-          restore-keys: composer-webapp-frontend
+          key: ${{ env.cache-name }}-${{ hashFiles('.github/.cache-version') }}-${{ hashFiles('WebApp/frontend/package-lock.json') }}
+          restore-keys: ${{ env.cache-name }}-${{ hashFiles('.github/.cache-version') }}-
 
       - name: Validaciones
         run: WebApp/frontend/scripts/check

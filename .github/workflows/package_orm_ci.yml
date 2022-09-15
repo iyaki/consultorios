@@ -32,16 +32,17 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.composer/cache
-          key: composer-cache
-          restore-keys: composer-cache
+          key: composer-cache-${{ hashFiles('.github/.cache-version') }}
 
       - name: Cache composer packages
         id: cache-composer-packages-orm
         uses: actions/cache@v3
+        env:
+          cache-name: composer-orm
         with:
           path: ./packages/php/ORM/vendor
-          key: composer-orm
-          restore-keys: composer-orm
+          key: ${{ env.cache-name }}-${{ hashFiles('.github/.cache-version') }}-${{ hashFiles('packages/php/ORM/composer.json') }}
+          restore-keys: ${{ env.cache-name }}-${{ hashFiles('.github/.cache-version') }}-
 
       - name: Validaciones
         run: packages/php/ORM/scripts/check
