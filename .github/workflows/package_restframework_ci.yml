@@ -40,7 +40,7 @@ jobs:
         id: cache-composer-packages-restframework
         uses: actions/cache@v3
         with:
-          path: vendor
+          path: ./packages/php/RESTFramework/vendor
           key: composer-restframework
           restore-keys: |
             composer-restframework
@@ -53,3 +53,7 @@ jobs:
           pwd
           ls -la
           echo "$HOME"
+          echo "$XDG_CACHE_HOME"
+          whoami
+          ls -la "$HOME"
+          ls -la "$XDG_CACHE_HOME"
