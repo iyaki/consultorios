@@ -22,6 +22,16 @@ El container "app" esta diseñado para trabajar directamente dentro del mismo
 del [Visual Studio Code](https://code.visualstudio.com/)) y cuenta con
 multiples utilidades para el desarrollo y analisis del código generado.
 
+### Dependencias
+
+- Docker
+- Docker compose
+- nodejs & npm
+- Python
+- C/C++ compiler
+
+Para trabajar con Visual Studio Code se recomienda instalar la extensión `ms-vscode-remote.remote-containers`
+
 ## Scripts
 
 Cada paquete contenido en este proyecto **DEBE** tener una carpeta `scripts/`
