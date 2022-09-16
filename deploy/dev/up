@@ -1,37 +1,11 @@
 #!/usr/bin/env bash
 
-PROJECT_NAME='consultorios'
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-CACHE_DIR='.cache/dev'
+cd "$SCRIPT_DIR/../.." || exit
 
-OPTIONS=( "$@" )
+source .env
 
-cd "$(dirname "$0")" || exit
+npm install --save-exact
 
-mkdir -p ${CACHE_DIR}
-
-declare -a DOCKERFILE_FOLDERS=(
-  ".."
-)
-
-for FOLDER in "${DOCKERFILE_FOLDERS[@]}"
-do
-  mkdir -p "${CACHE_DIR}/${FOLDER}"
-
-  DOCKERFILE="${FOLDER}/Dockerfile"
-  DOCKERFILE_SUM="${CACHE_DIR}/${FOLDER}/Dockerfile.sum"
-
-  if [ ! -f "${DOCKERFILE_SUM}" ] || [ "$(sha256sum "${DOCKERFILE}")" != "$(cat "${DOCKERFILE_SUM}")" ]
-  then
-    OPTIONS+=("--build")
-    sha256sum "${DOCKERFILE}" > "${DOCKERFILE_SUM}"
-  fi
-done
-
-# delete duplicate options
-OPTIONS=("$(echo "${OPTIONS[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')")
-
-# shellcheck disable=SC2068
-docker compose --project-name ${PROJECT_NAME} up --detach ${OPTIONS[@]} dev
-
-docker exec -it consultorios-dev-1 "/application/scripts/setup"
+node_modules/.bin/devcontainer up --workspace-folder .

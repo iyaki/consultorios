@@ -22,5 +22,10 @@
         "bmewburn.vscode-intelephense-client"
       ]
     }
-  }
+  },
+  "features": {
+		"git": "latest"
+		// "github-cli": "latest",
+		// "homebrew": "latest"
+	}
 }

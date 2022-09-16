@@ -1,0 +1,25 @@
+{
+  "name": "consultorios",
+  "version": "0.0.0",
+  "description": "Proyecto \"de juguete\" para realizar pruebas de concepto de diseño de sistemas y uso de tecnologías.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iyaki/consultorios.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iyaki/consultorios/issues"
+  },
+  "homepage": "https://github.com/iyaki/consultorios#readme",
+  "dependencies": {
+    "@devcontainers/cli": "^0.14.2"
+  }
+}

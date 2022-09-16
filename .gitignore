@@ -1,3 +1,4 @@
 code-metrics/
 phpunit-coverage/
 !/.vscode/
+/node_modules

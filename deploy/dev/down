@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-PROJECT_NAME='consultorios'
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
+source "$SCRIPT_DIR/../../.env"
 
-cd "$(dirname "$(realpath "$0")")" || exit
-
-docker compose --project-name ${PROJECT_NAME} down
+docker compose --project-name "${COMPOSE_PROJECT_NAME}" down
