@@ -203,6 +203,7 @@ RUN apt-get update \
     --quiet \
     --purge \
   && rm -rf \
+    ./lefthook.deb \
     /tmp/* \
     /root/.asdf/installs/php/${PHP_VERSION}/bin/phive \
     /var/lib/apt/lists/* \
