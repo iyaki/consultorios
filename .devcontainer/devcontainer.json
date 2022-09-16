@@ -1,0 +1,26 @@
+{
+  // "image": "consultorios_dev",
+  "name": "consultorios",
+  "dockerComposeFile": "../deploy/dev/docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/application",
+  "shutdownAction": "stopCompose",
+  "postStartCommand": "/application/scripts/setup",
+  "forwardPorts": [],
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": [
+        "muath-ye.composer-Intelephense",
+        "EditorConfig.EditorConfig",
+        "VisualStudioExptTeam.vscodeintellicode",
+        "remcohaszing.schemastore",
+        "DavidAnson.vscode-markdownlint",
+        "timonwong.shellcheck",
+        "exiasr.hadolint",
+        "bmewburn.vscode-intelephense-client"
+      ]
+    }
+  }
+}
