@@ -137,7 +137,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../Core/Agendas",
-                "reference": "f7bb4a08a9505b11201a69723e17c84229df68e9"
+                "reference": "b67258c4a49b5f52eb2fa57016fa3158abc33cdc"
             },
             "require": {
                 "consultorios/core-common": "*",
@@ -170,7 +170,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../Core/Common",
-                "reference": "090bcb506b4d2c931722e472265b5e54c8d3fc6a"
+                "reference": "3700fab7cc8ef5d615cada56ba30dd288dfc6316"
             },
             "require": {
                 "php": "~8.1"
@@ -195,7 +195,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../packages/php/ORM",
-                "reference": "76211cef93bcc3b60282dbc8a1f4fb4b2194e5d5"
+                "reference": "876e19f0454866d01f17727634d2f74d83c0ac9a"
             },
             "require": {
                 "doctrine/dbal": "^3.3",
@@ -239,7 +239,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../packages/php/RESTFramework",
-                "reference": "2b5b6e37ffc71f35a04cbd870461c24d7936bd44"
+                "reference": "6637362ab847feae0ce304a0880063a73a5f154e"
             },
             "require": {
                 "ext-json": "*",
@@ -5097,16 +5097,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v6.1.4",
+            "version": "v6.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "86ee4d8fa594ed45e40d86eedfda1bcb66c8d919"
+                "reference": "66c6b0cf52b00f74614a2cf7ae7db08ea1095931"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/86ee4d8fa594ed45e40d86eedfda1bcb66c8d919",
-                "reference": "86ee4d8fa594ed45e40d86eedfda1bcb66c8d919",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/66c6b0cf52b00f74614a2cf7ae7db08ea1095931",
+                "reference": "66c6b0cf52b00f74614a2cf7ae7db08ea1095931",
                 "shasum": ""
             },
             "require": {
@@ -5151,7 +5151,7 @@
             "description": "Loads and dumps YAML files",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/yaml/tree/v6.1.4"
+                "source": "https://github.com/symfony/yaml/tree/v6.1.6"
             },
             "funding": [
                 {
@@ -5167,7 +5167,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-08-02T16:17:38+00:00"
+            "time": "2022-10-07T08:04:03+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -5229,16 +5229,16 @@
         },
         {
             "name": "zircote/swagger-php",
-            "version": "4.4.9",
+            "version": "4.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zircote/swagger-php.git",
-                "reference": "0c1cdd31e8cfeb7116c54696aafdab9c778070fd"
+                "reference": "6bd53355eb6505e1a1825f163dced55c240a3102"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/0c1cdd31e8cfeb7116c54696aafdab9c778070fd",
-                "reference": "0c1cdd31e8cfeb7116c54696aafdab9c778070fd",
+                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/6bd53355eb6505e1a1825f163dced55c240a3102",
+                "reference": "6bd53355eb6505e1a1825f163dced55c240a3102",
                 "shasum": ""
             },
             "require": {
@@ -5246,6 +5246,7 @@
                 "ext-json": "*",
                 "php": ">=7.2",
                 "psr/log": "^1.1 || ^2.0 || ^3.0",
+                "symfony/deprecation-contracts": "^2 || ^3",
                 "symfony/finder": ">=2.2",
                 "symfony/yaml": ">=3.3"
             },
@@ -5300,9 +5301,9 @@
             ],
             "support": {
                 "issues": "https://github.com/zircote/swagger-php/issues",
-                "source": "https://github.com/zircote/swagger-php/tree/4.4.9"
+                "source": "https://github.com/zircote/swagger-php/tree/4.5.0"
             },
-            "time": "2022-09-11T20:51:43+00:00"
+            "time": "2022-11-03T19:42:57+00:00"
         }
     ],
     "packages-dev": [
@@ -5312,7 +5313,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../packages/php/dev-tools-settings",
-                "reference": "08a4cb4632983a64bb507b7eef16dba05e89e188"
+                "reference": "b880e4467854f754b1a41dd1b3363b32773692de"
             },
             "require": {
                 "php": "~8.1"
