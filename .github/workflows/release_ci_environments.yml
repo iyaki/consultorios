@@ -32,7 +32,7 @@ jobs:
           echo "PHP_VERSION=${PHP_VERSION}" >> "$GITHUB_ENV"
 
       - name: Build and push ci-php image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: .
           file: deploy/Dockerfile
@@ -44,7 +44,7 @@ jobs:
           tags: ghcr.io/iyaki/consultorios-ci-php:latest
 
       - name: Build and push ci-nodejs image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: .
           file: deploy/Dockerfile
